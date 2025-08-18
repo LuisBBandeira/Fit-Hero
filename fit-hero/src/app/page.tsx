@@ -1,11 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 
 export default function Home() {
-  const [currentLevel, setCurrentLevel] = useState(42);
-  const [xp, setXp] = useState(8547);
-  const [maxXp, setMaxXp] = useState(10000);
+  const [currentLevel] = useState(42);
+  const [xp] = useState(8547);
+  const [maxXp] = useState(10000);
   const [activeUsers, setActiveUsers] = useState(500);
   const [isTyping, setIsTyping] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
@@ -66,8 +67,8 @@ export default function Home() {
           </div>
           
           <div className="flex items-center gap-2 sm:gap-4">
-            <button className="btn btn-success text-xs sm:text-sm px-2 py-1 sm:px-3 sm:py-2 hover-lift">LOGIN</button>
-            <button className="btn btn-primary text-xs sm:text-sm px-2 py-1 sm:px-3 sm:py-2 hover-lift animate-glow">START</button>
+            <Link href="/login" className="btn btn-success text-xs sm:text-sm px-2 py-1 sm:px-3 sm:py-2 hover-lift">LOGIN</Link>
+            <Link href="/signup" className="btn btn-primary text-xs sm:text-sm px-2 py-1 sm:px-3 sm:py-2 hover-lift animate-glow">START</Link>
           </div>
         </div>
       </div>
@@ -99,16 +100,16 @@ export default function Home() {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mb-8 sm:mb-12 px-4">
-            <button className="btn btn-primary text-sm sm:text-lg px-4 sm:px-8 py-3 sm:py-4 hover-lift animate-glow">
+            <Link href="/signup" className="btn btn-primary text-sm sm:text-lg px-4 sm:px-8 py-3 sm:py-4 hover-lift animate-glow">
               <span className="animate-rotate-slow inline-block">⚡</span>
               <span className="hidden sm:inline">$ git clone fitness</span>
               <span className="sm:hidden">Get Started</span>
-            </button>
-            <button className="btn btn-success text-sm sm:text-lg px-4 sm:px-8 py-3 sm:py-4 hover-lift">
-              <span className="animate-bounce-slow inline-block">🚀</span>
-              <span className="hidden sm:inline">$ ./start_journey.sh</span>
-              <span className="sm:hidden">Start Journey</span>
-            </button>
+            </Link>
+            <Link href="/character-creation" className="btn btn-success text-sm sm:text-lg px-4 sm:px-8 py-3 sm:py-4 hover-lift">
+              <span className="animate-bounce-slow inline-block">🎮</span>
+              <span className="hidden sm:inline">$ ./create_character.sh</span>
+              <span className="sm:hidden">Create Hero</span>
+            </Link>
           </div>
 
           {/* Animated XP Progress Bar */}
@@ -123,7 +124,7 @@ export default function Home() {
             <div className="w-full bg-gray-800 rounded-full h-3 sm:h-4 overflow-hidden border border-green-800 hover-glow">
               <div 
                 className={`h-full bg-gradient-to-r from-green-500 to-cyan-500 transition-all duration-2000 ease-out ${progressStarted ? 'animate-progress-fill' : 'w-0'}`}
-                style={{ '--progress-width': `${(xp / maxXp) * 100}%` } as any}
+                style={{ '--progress-width': `${(xp / maxXp) * 100}%` } as React.CSSProperties}
               ></div>
             </div>
           </div>
@@ -160,7 +161,7 @@ export default function Home() {
             <div className="text-3xl sm:text-4xl mb-3 sm:mb-4 animate-pulse">🧪</div>
             <div className="text-red-400 text-lg sm:text-xl font-bold mb-2">03. OPTIMIZE STATS</div>
             <div className="text-gray-300 mb-3 sm:mb-4 text-sm sm:text-base">
-              AI-powered nutrition planning helps you maximize your character's performance and recovery.
+              AI-powered nutrition planning helps you maximize your character&apos;s performance and recovery.
             </div>
             <div className="text-cyan-400 text-xs sm:text-sm font-mono bg-black px-2 sm:px-3 py-1 rounded border border-cyan-600 hover-glow">
               optimize_nutrition()
@@ -205,17 +206,17 @@ export default function Home() {
         <div className={`text-center border border-green-800 rounded-lg bg-gray-900 p-4 sm:p-8 hover-lift transition-all duration-1000 delay-1200 ${isVisible ? 'animate-slide-in-right' : 'opacity-0'}`}>
           <div className="text-green-400 text-xl sm:text-2xl font-bold mb-3 sm:mb-4 animate-pulse">Ready to start your fitness journey?</div>
           <div className="text-gray-300 mb-4 sm:mb-6 hover:text-green-300 transition-colors duration-300 text-sm sm:text-base px-4">
-            Join thousands of developers who've gamified their way to better health.
+            Join thousands of developers who&apos;ve gamified their way to better health.
           </div>
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-            <button className="btn btn-success text-sm sm:text-lg px-6 sm:px-8 py-3 sm:py-4 hover-lift animate-glow">
+            <Link href="/signup" className="btn btn-success text-sm sm:text-lg px-6 sm:px-8 py-3 sm:py-4 hover-lift animate-glow">
               <span className="animate-rotate-slow inline-block">🎯</span>
-              INIT SESSION
-            </button>
-            <button className="btn btn-primary text-sm sm:text-lg px-6 sm:px-8 py-3 sm:py-4 hover-lift">
-              <span className="animate-bounce-slow inline-block">📚</span>
-              VIEW DOCS
-            </button>
+              START JOURNEY
+            </Link>
+            <Link href="/login" className="btn btn-primary text-sm sm:text-lg px-6 sm:px-8 py-3 sm:py-4 hover-lift">
+              <span className="animate-bounce inline-block">�</span>
+              LOGIN
+            </Link>
           </div>
         </div>
       </div>
