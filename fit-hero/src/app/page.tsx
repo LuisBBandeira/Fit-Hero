@@ -105,10 +105,10 @@ export default function Home() {
               <span className="hidden sm:inline">$ git clone fitness</span>
               <span className="sm:hidden">Get Started</span>
             </Link>
-            <Link href="/character-creation" className="btn btn-success text-sm sm:text-lg px-4 sm:px-8 py-3 sm:py-4 hover-lift">
-              <span className="animate-bounce-slow inline-block">🎮</span>
-              <span className="hidden sm:inline">$ ./create_character.sh</span>
-              <span className="sm:hidden">Create Hero</span>
+            <Link href="/login" className="btn btn-success text-sm sm:text-lg px-4 sm:px-8 py-3 sm:py-4 hover-lift">
+              <span className="animate-bounce-slow inline-block">🚀</span>
+              <span className="hidden sm:inline">$ ./start_journey.sh</span>
+              <span className="sm:hidden">Start Journey</span>
             </Link>
           </div>
 
@@ -137,7 +137,7 @@ export default function Home() {
             <div className="text-3xl sm:text-4xl mb-3 sm:mb-4 animate-bounce-slow">🎮</div>
             <div className="text-green-400 text-lg sm:text-xl font-bold mb-2">01. CREATE CHARACTER</div>
             <div className="text-gray-300 mb-3 sm:mb-4 text-sm sm:text-base">
-              Set your fitness goals and choose your difficulty level. Customize your avatar and starting stats.
+              Sign up and set your fitness goals. Choose your difficulty level and customize your avatar with starting stats.
             </div>
             <div className="text-cyan-400 text-xs sm:text-sm font-mono bg-black px-2 sm:px-3 py-1 rounded border border-cyan-600 hover-glow">
               init_character()
