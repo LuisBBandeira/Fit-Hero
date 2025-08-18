@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 
 export default function Home() {
   const [currentLevel] = useState(42);
@@ -66,8 +67,8 @@ export default function Home() {
           </div>
           
           <div className="flex items-center gap-2 sm:gap-4">
-            <button className="btn btn-success text-xs sm:text-sm px-2 py-1 sm:px-3 sm:py-2 hover-lift">LOGIN</button>
-            <button className="btn btn-primary text-xs sm:text-sm px-2 py-1 sm:px-3 sm:py-2 hover-lift animate-glow">START</button>
+            <Link href="/login" className="btn btn-success text-xs sm:text-sm px-2 py-1 sm:px-3 sm:py-2 hover-lift">LOGIN</Link>
+            <Link href="/signup" className="btn btn-primary text-xs sm:text-sm px-2 py-1 sm:px-3 sm:py-2 hover-lift animate-glow">START</Link>
           </div>
         </div>
       </div>
@@ -99,16 +100,16 @@ export default function Home() {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mb-8 sm:mb-12 px-4">
-            <button className="btn btn-primary text-sm sm:text-lg px-4 sm:px-8 py-3 sm:py-4 hover-lift animate-glow">
+            <Link href="/signup" className="btn btn-primary text-sm sm:text-lg px-4 sm:px-8 py-3 sm:py-4 hover-lift animate-glow">
               <span className="animate-rotate-slow inline-block">⚡</span>
               <span className="hidden sm:inline">$ git clone fitness</span>
               <span className="sm:hidden">Get Started</span>
-            </button>
-            <button className="btn btn-success text-sm sm:text-lg px-4 sm:px-8 py-3 sm:py-4 hover-lift">
+            </Link>
+            <Link href="/login" className="btn btn-success text-sm sm:text-lg px-4 sm:px-8 py-3 sm:py-4 hover-lift">
               <span className="animate-bounce-slow inline-block">🚀</span>
               <span className="hidden sm:inline">$ ./start_journey.sh</span>
               <span className="sm:hidden">Start Journey</span>
-            </button>
+            </Link>
           </div>
 
           {/* Animated XP Progress Bar */}
@@ -136,7 +137,7 @@ export default function Home() {
             <div className="text-3xl sm:text-4xl mb-3 sm:mb-4 animate-bounce-slow">🎮</div>
             <div className="text-green-400 text-lg sm:text-xl font-bold mb-2">01. CREATE CHARACTER</div>
             <div className="text-gray-300 mb-3 sm:mb-4 text-sm sm:text-base">
-              Set your fitness goals and choose your difficulty level. Customize your avatar and starting stats.
+              Sign up and set your fitness goals. Choose your difficulty level and customize your avatar with starting stats.
             </div>
             <div className="text-cyan-400 text-xs sm:text-sm font-mono bg-black px-2 sm:px-3 py-1 rounded border border-cyan-600 hover-glow">
               init_character()
@@ -208,14 +209,14 @@ export default function Home() {
             Join thousands of developers who&apos;ve gamified their way to better health.
           </div>
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-            <button className="btn btn-success text-sm sm:text-lg px-6 sm:px-8 py-3 sm:py-4 hover-lift animate-glow">
+            <Link href="/signup" className="btn btn-success text-sm sm:text-lg px-6 sm:px-8 py-3 sm:py-4 hover-lift animate-glow">
               <span className="animate-rotate-slow inline-block">🎯</span>
-              INIT SESSION
-            </button>
-            <button className="btn btn-primary text-sm sm:text-lg px-6 sm:px-8 py-3 sm:py-4 hover-lift">
-              <span className="animate-bounce-slow inline-block">📚</span>
-              VIEW DOCS
-            </button>
+              START JOURNEY
+            </Link>
+            <Link href="/login" className="btn btn-primary text-sm sm:text-lg px-6 sm:px-8 py-3 sm:py-4 hover-lift">
+              <span className="animate-bounce inline-block">�</span>
+              LOGIN
+            </Link>
           </div>
         </div>
       </div>
