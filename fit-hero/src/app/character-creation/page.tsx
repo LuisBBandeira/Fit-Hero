@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
@@ -23,7 +23,7 @@ export default function CharacterCreationPage() {
     fitnessGoal: ''
   });
 
-  const characters = [
+  const characters = useMemo(() => [
     {
       id: 'warrior',
       name: 'FITNESS WARRIOR',
@@ -88,7 +88,7 @@ export default function CharacterCreationPage() {
       description: 'Balanced approach. Focuses on overall health and recovery.',
       speciality: 'WELLNESS'
     }
-  ];
+  ], []);
 
   const fitnessGoals = [
     { id: 'muscle', name: 'BUILD MUSCLE', icon: '💪', description: 'Gain strength and muscle mass' },
