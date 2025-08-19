@@ -489,7 +489,10 @@ export default function DashboardPage() {
                 <div className="text-gray-400 text-xs font-mono">$ analyze --stats --charts</div>
               </div>
             </button>
-            <button className="border border-purple-800 bg-gray-900 hover:bg-gray-800 hover:border-purple-500 transition-all duration-300 p-6 rounded-lg hover-lift">
+            <button 
+              onClick={() => router.push('/achievements')}
+              className="border border-purple-800 bg-gray-900 hover:bg-gray-800 hover:border-purple-500 transition-all duration-300 p-6 rounded-lg hover-lift"
+            >
               <div className="text-center">
                 <span className="text-3xl mb-3 block animate-bounce-slow">🏆</span>
                 <div className="text-purple-400 font-bold text-lg mb-2">ACHIEVEMENTS</div>

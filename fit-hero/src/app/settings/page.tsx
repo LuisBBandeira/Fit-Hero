@@ -1,12 +1,10 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 
 export default function SettingsPage() {
-  const router = useRouter();
   const [isVisible, setIsVisible] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString());
   const [currentRotations, setCurrentRotations] = useState<{[key: string]: number}>({});
@@ -22,7 +20,7 @@ export default function SettingsPage() {
     dietaryRestrictions: [] as string[]
   });
 
-  const characters = [
+  const characters = useMemo(() => [
     {
       id: 'warrior',
       name: 'FITNESS WARRIOR',
@@ -83,7 +81,7 @@ export default function SettingsPage() {
       },
       description: 'Balanced approach. Focuses on overall health and recovery.'
     }
-  ];
+  ], []);
 
   const fitnessGoals = [
     { id: 'muscle', name: 'BUILD MUSCLE', icon: '💪', description: 'Gain strength and muscle mass' },
