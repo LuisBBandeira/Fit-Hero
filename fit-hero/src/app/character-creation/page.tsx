@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 export default function CharacterCreationPage() {
   const router = useRouter();
@@ -118,7 +119,7 @@ export default function CharacterCreationPage() {
     }, 800); // Change direction every 800ms
     
     return () => clearInterval(interval);
-  }, []);
+  }, [characters, rotationDirections.length]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -162,9 +163,9 @@ export default function CharacterCreationPage() {
     setIsLoading(false);
     console.log('Character created:', formData);
     
-    // Show success message and redirect to main page (or dashboard when available)
+    // Show success message and redirect to dashboard
     alert('Character created successfully! Welcome to FIT_HERO!');
-    router.push('/');
+    router.push('/dashboard');
   };
 
   const getStepProgress = () => {
@@ -199,7 +200,7 @@ export default function CharacterCreationPage() {
             <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse delay-200"></div>
             <span className="text-green-400 text-lg font-bold ml-4">FIT_HERO.exe</span>
           </div>
-          <div className="text-green-400 text-sm">
+          <div className="text-green-400 text-sm font-mono ml-8">
             [CHARACTER_CREATOR] - v3.0.1
           </div>
         </div>
@@ -370,10 +371,12 @@ export default function CharacterCreationPage() {
                   <div className="text-center">
                     {/* Rotating Pixel Art Character */}
                     <div className="mb-4 p-6 bg-black rounded border-2 border-green-800 hover:border-cyan-400 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-400/20">
-                      <img 
+                      <Image 
                         src={character.imagePaths[rotationDirections[currentRotations[character.id] || 0] as keyof typeof character.imagePaths]}
                         alt={character.name}
-                        className={`pixel-character-image w-32 h-32 mx-auto transition-all duration-300 ${
+                        width={128}
+                        height={128}
+                        className={`pixel-character-image mx-auto transition-all duration-300 ${
                           character.id === 'warrior' ? 'filter-orange hover:brightness-110' :
                           character.id === 'runner' ? 'filter-blue hover:brightness-110' :
                           character.id === 'ninja' ? 'filter-purple hover:brightness-110' :

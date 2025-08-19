@@ -1,0 +1,274 @@
+'use client';
+
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+
+export default function ViewProgressPage() {
+  const [isVisible, setIsVisible] = useState(false);
+  const [currentTime, setCurrentTime] = useState('');
+  const [weeklyWeight, setWeeklyWeight] = useState('');
+
+  // User progress data (in a real app, this would come from a database)
+  const [progressData, setProgressData] = useState({
+    workoutStreak: 12,
+    mealPlanStreak: 8,
+    totalWorkoutDays: 45,
+    totalMealPlanDays: 32,
+    currentWeight: 70,
+    startingWeight: 85,
+    weightLoss: 15
+  });
+
+  useEffect(() => {
+    setIsVisible(true);
+    
+    // Update time every second
+    const updateTime = () => {
+      const now = new Date();
+      setCurrentTime(now.toLocaleTimeString('en-US', { 
+        hour12: false,
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      }));
+    };
+    
+    updateTime();
+    const interval = setInterval(updateTime, 1000);
+    
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleWeightSubmit = () => {
+    if (weeklyWeight && !isNaN(parseFloat(weeklyWeight))) {
+      const newWeight = parseFloat(weeklyWeight);
+      
+      // Update current weight
+      setProgressData(prev => ({
+        ...prev,
+        currentWeight: newWeight,
+        weightLoss: prev.startingWeight - newWeight
+      }));
+      
+      // Clear input
+      setWeeklyWeight('');
+      
+      // Show success message
+      alert(`Weight updated to ${newWeight}kg successfully!`);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-black text-green-400 font-mono relative overflow-hidden">
+      {/* Matrix Background */}
+      <div className="matrix-bg"></div>
+      <div className="scanlines"></div>
+      
+      {/* Terminal Header */}
+      <div className={`bg-gray-900 border-b border-green-500 p-4 transition-all duration-1000 ${isVisible ? 'animate-slide-in-bottom' : 'opacity-0'}`}>
+        <div className="flex items-center justify-between max-w-6xl mx-auto">
+          <div className="flex items-center space-x-4">
+            <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
+            <div className="w-3 h-3 bg-yellow-500 rounded-full animate-pulse delay-100"></div>
+            <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse delay-200"></div>
+            <span className="text-green-400 text-lg font-bold ml-4">FIT_HERO.exe</span>
+          </div>
+          <div className="text-green-400 text-sm font-mono ml-8">
+            [PROGRESS_ANALYTICS] - {currentTime}
+          </div>
+        </div>
+      </div>
+
+      {/* Navigation */}
+      <div className={`bg-gray-800 p-3 border-b border-green-800 transition-all duration-1000 delay-300 ${isVisible ? 'animate-slide-in-left' : 'opacity-0'}`}>
+        <div className="max-w-6xl mx-auto flex items-center justify-between">
+          <Link href="/dashboard" className="text-cyan-400 hover:text-cyan-300 transition-colors duration-300 hover-glow">
+            ← BACK_TO_DASHBOARD
+          </Link>
+          <div className="text-cyan-400 text-sm font-mono bg-black px-3 py-1 rounded border border-cyan-600">
+            $ view_progress --analytics --stats
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-6xl mx-auto p-4 sm:p-6">
+        {/* Page Title */}
+        <div className={`text-center mb-8 transition-all duration-1000 delay-500 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
+          <div className="text-green-400 text-3xl font-bold mb-4 animate-pulse">
+            📊 PROGRESS ANALYTICS
+          </div>
+          <div className="text-gray-300 text-lg mb-4">
+            Track your fitness journey and achievements
+          </div>
+        </div>
+
+        {/* Streak Cards */}
+        <div className={`grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 mb-6 md:mb-10 transition-all duration-1000 delay-700 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
+          {/* Workout Streak */}
+          <div className="border-2 border-green-800 rounded-xl bg-gradient-to-br from-gray-900 to-gray-800 p-4 md:p-8 hover-lift shadow-xl hover:shadow-green-400/20 transition-all duration-300">
+            <div className="flex items-center justify-between mb-4 md:mb-6">
+              <div className="text-green-400 text-lg md:text-2xl font-bold">WORKOUT STREAK</div>
+              <div className="text-3xl md:text-5xl animate-bounce-slow">🔥</div>
+            </div>
+            
+            <div className="text-center">
+              <div className="text-4xl md:text-7xl font-bold text-cyan-400 mb-2 md:mb-3 drop-shadow-lg" style={{textShadow: '0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00ffff'}}>
+                {progressData.workoutStreak}
+              </div>
+              <div className="text-gray-300 text-base md:text-xl mb-4 md:mb-6 font-semibold">DAYS IN A ROW</div>
+              
+              <div className="bg-black p-3 md:p-4 rounded-lg border-2 border-green-600 shadow-inner">
+                <div className="text-green-400 text-sm md:text-base font-mono">
+                  TOTAL WORKOUT DAYS: <span className="text-cyan-400 font-bold">{progressData.totalWorkoutDays}</span>
+                </div>
+                <div className="text-gray-400 text-xs md:text-sm mt-2">
+                  Keep going! You&apos;re on fire! 🚀
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Meal Plan Streak */}
+          <div className="border-2 border-green-800 rounded-xl bg-gradient-to-br from-gray-900 to-gray-800 p-4 md:p-8 hover-lift shadow-xl hover:shadow-yellow-400/20 transition-all duration-300">
+            <div className="flex items-center justify-between mb-4 md:mb-6">
+              <div className="text-green-400 text-lg md:text-2xl font-bold">MEAL PLAN STREAK</div>
+              <div className="text-3xl md:text-5xl animate-bounce-slow">🥗</div>
+            </div>
+            
+            <div className="text-center">
+              <div className="text-4xl md:text-7xl font-bold text-yellow-400 mb-2 md:mb-3 drop-shadow-lg" style={{textShadow: '0 0 10px #fbbf24, 0 0 20px #fbbf24, 0 0 30px #fbbf24'}}>
+                {progressData.mealPlanStreak}
+              </div>
+              <div className="text-gray-300 text-base md:text-xl mb-4 md:mb-6 font-semibold">DAYS COMPLETED</div>
+              
+              <div className="bg-black p-3 md:p-4 rounded-lg border-2 border-green-600 shadow-inner">
+                <div className="text-green-400 text-base font-mono">
+                  TOTAL MEAL DAYS: <span className="text-yellow-400 font-bold">{progressData.totalMealPlanDays}</span>
+                </div>
+                <div className="text-gray-400 text-sm mt-2">
+                  Nutrition is 80% of success! 💪
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Weight Progress Section */}
+        <div className={`border-2 border-green-800 rounded-xl bg-gradient-to-br from-gray-900 to-gray-800 p-4 md:p-8 mb-6 md:mb-10 transition-all duration-1000 delay-900 shadow-xl ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
+          <div className="flex items-center justify-between mb-4 md:mb-8">
+            <div className="text-green-400 text-xl md:text-3xl font-bold">WEIGHT TRACKING</div>
+            <div className="text-3xl md:text-5xl animate-bounce-slow">⚖️</div>
+          </div>
+
+          {/* Weight Stats */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 mb-4 md:mb-8">
+            <div className="text-center p-4 md:p-6 bg-black rounded-lg border-2 border-green-600 shadow-lg hover:shadow-green-400/20 transition-all duration-300">
+              <div className="text-cyan-400 text-sm md:text-base mb-2 font-bold">CURRENT WEIGHT</div>
+              <div className="text-2xl md:text-4xl font-bold text-green-400" style={{textShadow: '0 0 10px #10b981, 0 0 20px #10b981'}}>{progressData.currentWeight}kg</div>
+            </div>
+            
+            <div className="text-center p-4 md:p-6 bg-black rounded-lg border-2 border-green-600 shadow-lg hover:shadow-gray-400/20 transition-all duration-300">
+              <div className="text-cyan-400 text-sm md:text-base mb-2 font-bold">STARTING WEIGHT</div>
+              <div className="text-2xl md:text-4xl font-bold text-gray-400">{progressData.startingWeight}kg</div>
+            </div>
+            
+            <div className="text-center p-4 md:p-6 bg-black rounded-lg border-2 border-green-600 shadow-lg hover:shadow-yellow-400/20 transition-all duration-300">
+              <div className="text-cyan-400 text-sm md:text-base mb-2 font-bold">TOTAL LOSS</div>
+              <div className="text-2xl md:text-4xl font-bold text-yellow-400" style={{textShadow: '0 0 10px #fbbf24, 0 0 20px #fbbf24'}}>-{progressData.weightLoss}kg</div>
+            </div>
+          </div>
+
+          {/* Weight Loss Summary */}
+          <div className="mb-4 md:mb-6">
+            <div className="text-center mb-4">
+              <div className="text-green-400 text-base md:text-lg font-bold">
+                WEIGHT LOSS SUMMARY
+              </div>
+              <div className="text-gray-400 text-xs md:text-sm">
+                Total weight lost over different time periods
+              </div>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+              {/* Last Month */}
+              <div className="text-center p-4 md:p-6 bg-black rounded-lg border-2 border-green-600 shadow-lg hover:shadow-green-400/20 transition-all duration-300">
+                <div className="text-cyan-400 text-sm md:text-base mb-2 font-bold">LAST MONTH</div>
+                <div className="text-3xl md:text-4xl font-bold text-yellow-400" style={{textShadow: '0 0 10px #fbbf24, 0 0 20px #fbbf24'}}>-2.5kg</div>
+                <div className="text-gray-400 text-xs md:text-sm mt-2">Past 30 days</div>
+              </div>
+              
+              {/* Last 6 Months */}
+              <div className="text-center p-4 md:p-6 bg-black rounded-lg border-2 border-green-600 shadow-lg hover:shadow-green-400/20 transition-all duration-300">
+                <div className="text-cyan-400 text-sm md:text-base mb-2 font-bold">LAST 6 MONTHS</div>
+                <div className="text-3xl md:text-4xl font-bold text-green-400" style={{textShadow: '0 0 10px #10b981, 0 0 20px #10b981'}}>-9.5kg</div>
+                <div className="text-gray-400 text-xs md:text-sm mt-2">Past 180 days</div>
+              </div>
+              
+              {/* Last Year */}
+              <div className="text-center p-4 md:p-6 bg-black rounded-lg border-2 border-green-600 shadow-lg hover:shadow-cyan-400/20 transition-all duration-300">
+                <div className="text-cyan-400 text-sm md:text-base mb-2 font-bold">LAST YEAR</div>
+                <div className="text-3xl md:text-4xl font-bold text-cyan-400" style={{textShadow: '0 0 10px #00ffff, 0 0 20px #00ffff'}}>-15kg</div>
+                <div className="text-gray-400 text-xs md:text-sm mt-2">Past 365 days</div>
+              </div>
+            </div>
+
+            {/* Additional Progress Info */}
+            <div className="mt-6 p-4 bg-gradient-to-r from-gray-800 to-gray-900 rounded-lg border border-green-600">
+              <div className="text-center">
+                <div className="text-green-400 text-sm md:text-base font-bold mb-2">AVERAGE WEIGHT LOSS PER MONTH</div>
+                <div className="text-2xl md:text-3xl font-bold text-yellow-400" style={{textShadow: '0 0 10px #fbbf24, 0 0 20px #fbbf24'}}>-1.25kg</div>
+                <div className="text-gray-400 text-xs md:text-sm mt-2">You&apos;re on track to reach your goal! 🎯</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Weekly Weight Input */}
+        <div className={`border border-green-800 rounded-lg bg-gray-900 p-4 md:p-6 transition-all duration-1000 delay-1100 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
+                    <div className="flex items-center justify-between mb-4 md:mb-6">
+            <div className="text-green-400 text-lg md:text-xl font-bold">UPDATE WEEKLY WEIGHT</div>
+            <div className="text-2xl md:text-3xl animate-bounce-slow">📝</div>
+          </div>
+
+          <div className="max-w-md mx-auto">
+            <div className="text-center mb-4">
+              <div className="text-gray-300 mb-2 text-sm md:text-base">
+                Enter your current weight (updated weekly)
+              </div>
+              <div className="text-xs md:text-sm text-cyan-400 bg-black px-2 md:px-3 py-1 rounded border border-cyan-600 inline-block">
+                Last updated: Week {Math.floor(Date.now() / (7 * 24 * 60 * 60 * 1000)) % 52}
+              </div>
+            </div>
+
+            <div className="flex flex-col md:flex-row gap-3 md:gap-4">
+              <input
+                type="number"
+                value={weeklyWeight}
+                onChange={(e) => setWeeklyWeight(e.target.value)}
+                placeholder="Enter weight in kg"
+                step="0.1"
+                min="30"
+                max="300"
+                className="flex-1 bg-black border border-green-600 rounded px-3 md:px-4 py-2 md:py-3 text-green-400 focus:border-cyan-400 focus:outline-none transition-colors duration-300 font-mono text-center text-sm md:text-base"
+              />
+              
+              <button
+                onClick={handleWeightSubmit}
+                disabled={!weeklyWeight || isNaN(parseFloat(weeklyWeight))}
+                className="btn btn-primary px-4 md:px-6 py-2 md:py-3 disabled:opacity-50 disabled:cursor-not-allowed hover-lift text-sm md:text-base"
+              >
+                UPDATE
+              </button>
+            </div>
+
+            <div className="mt-3 md:mt-4 text-center">
+              <div className="text-xs text-gray-500">
+                💡 Tip: Weigh yourself at the same time each week for consistent tracking
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
