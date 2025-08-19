@@ -496,7 +496,10 @@ export default function DashboardPage() {
                 <div className="text-gray-400 text-xs font-mono">$ unlock --trophies --badges</div>
               </div>
             </button>
-            <button className="border border-cyan-800 bg-gray-900 hover:bg-gray-800 hover:border-cyan-500 transition-all duration-300 p-6 rounded-lg hover-lift">
+            <button 
+              onClick={() => router.push('/settings')}
+              className="border border-cyan-800 bg-gray-900 hover:bg-gray-800 hover:border-cyan-500 transition-all duration-300 p-6 rounded-lg hover-lift"
+            >
               <div className="text-center">
                 <span className="text-3xl mb-3 block animate-rotate-slow">⚙️</span>
                 <div className="text-cyan-400 font-bold text-lg mb-2">SETTINGS</div>
