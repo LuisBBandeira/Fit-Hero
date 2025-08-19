@@ -25,6 +25,9 @@ export default function LoginPage() {
     setIsLoading(false);
     // Handle login logic here
     console.log('Login attempt:', formData);
+    
+    // For now, just show success - will add proper routing later
+    alert('Login successful! Dashboard coming soon...');
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

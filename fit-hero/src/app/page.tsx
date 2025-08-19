@@ -214,8 +214,12 @@ export default function Home() {
               START JOURNEY
             </Link>
             <Link href="/login" className="btn btn-primary text-sm sm:text-lg px-6 sm:px-8 py-3 sm:py-4 hover-lift">
-              <span className="animate-bounce inline-block">�</span>
+              <span className="animate-bounce inline-block">🔐</span>
               LOGIN
+            </Link>
+            <Link href="/dashboard" className="btn btn-accent text-sm sm:text-lg px-6 sm:px-8 py-3 sm:py-4 hover-lift">
+              <span className="animate-pulse inline-block">⚡</span>
+              DASHBOARD
             </Link>
           </div>
         </div>

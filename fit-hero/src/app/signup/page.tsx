@@ -2,10 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 
 export default function SignupPage() {
-  const router = useRouter();
   const [isVisible, setIsVisible] = useState(false);
   const [formData, setFormData] = useState({
     username: '',
@@ -47,9 +45,6 @@ export default function SignupPage() {
     setIsLoading(false);
     // Handle signup logic here
     console.log('Signup attempt:', formData);
-    
-    // Redirect to character creation after successful signup
-    router.push('/character-creation');
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
