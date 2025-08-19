@@ -20,7 +20,10 @@ export default function CharacterCreationPage() {
     height: '',
     weight: '',
     selectedCharacter: '',
-    fitnessGoal: ''
+    fitnessGoal: '',
+    trainingLocation: '',
+    forbiddenFoods: '',
+    dietaryRestrictions: [] as string[]
   });
 
   const characters = useMemo(() => [
@@ -97,6 +100,15 @@ export default function CharacterCreationPage() {
     { id: 'general', name: 'GENERAL FITNESS', icon: '⚡', description: 'Overall health improvement' }
   ];
 
+  const trainingLocations = [
+    { id: 'gym', name: 'GYM TRAINING', icon: '🏋️', description: 'Full equipment access and group motivation' },
+    { id: 'home', name: 'HOME TRAINING', icon: '🏠', description: 'Bodyweight and minimal equipment workouts' }
+  ];
+
+  const commonDietaryRestrictions = [
+    'Vegetarian', 'Vegan', 'Gluten-Free', 'Dairy-Free', 'Nut-Free', 'Low-Carb', 'Keto', 'Paleo'
+  ];
+
   useEffect(() => {
     setIsVisible(true);
     
@@ -142,8 +154,31 @@ export default function CharacterCreationPage() {
     });
   };
 
+  const handleTrainingLocationSelect = (locationId: string) => {
+    setFormData({
+      ...formData,
+      trainingLocation: locationId
+    });
+  };
+
+  const handleForbiddenFoodsChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setFormData({
+      ...formData,
+      forbiddenFoods: e.target.value
+    });
+  };
+
+  const handleDietaryRestrictionToggle = (restriction: string) => {
+    setFormData({
+      ...formData,
+      dietaryRestrictions: formData.dietaryRestrictions.includes(restriction)
+        ? formData.dietaryRestrictions.filter(r => r !== restriction)
+        : [...formData.dietaryRestrictions, restriction]
+    });
+  };
+
   const nextStep = () => {
-    if (currentStep < 3) {
+    if (currentStep < 5) {
       setCurrentStep(currentStep + 1);
     }
   };
@@ -169,7 +204,7 @@ export default function CharacterCreationPage() {
   };
 
   const getStepProgress = () => {
-    return (currentStep / 3) * 100;
+    return (currentStep / 5) * 100;
   };
 
   const isStepValid = () => {
@@ -180,6 +215,10 @@ export default function CharacterCreationPage() {
         return formData.selectedCharacter;
       case 3:
         return formData.fitnessGoal;
+      case 4:
+        return formData.trainingLocation;
+      case 5:
+        return true; // Dietary preferences are optional
       default:
         return false;
     }
@@ -213,7 +252,7 @@ export default function CharacterCreationPage() {
             ← BACK_TO_MAIN
           </Link>
           <div className="flex items-center space-x-4">
-            <span className="text-gray-400 text-sm">STEP {currentStep}/3</span>
+            <span className="text-gray-400 text-sm">STEP {currentStep}/5</span>
             <div className="w-32 bg-gray-700 rounded-full h-2">
               <div 
                 className="bg-green-500 h-2 rounded-full transition-all duration-500"
@@ -432,6 +471,103 @@ export default function CharacterCreationPage() {
           </div>
         )}
 
+        {/* Step 4: Training Environment */}
+        {currentStep === 4 && (
+          <div className={`transition-all duration-1000 delay-500 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
+            <div className="text-center mb-8">
+              <div className="text-green-400 text-3xl font-bold mb-4 animate-pulse">
+                🏋️ CHOOSE TRAINING ENVIRONMENT
+              </div>
+              <div className="text-gray-300 text-lg mb-4">
+                Select where you prefer to train for customized workout plans
+              </div>
+              <div className="text-cyan-400 text-sm font-mono bg-black px-3 py-1 rounded border border-cyan-600 inline-block">
+                $ configure_training --location
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+              {trainingLocations.map((location) => (
+                <div
+                  key={location.id}
+                  onClick={() => handleTrainingLocationSelect(location.id)}
+                  className={`border-2 rounded-lg p-8 cursor-pointer transition-all duration-300 hover-lift text-center ${
+                    formData.trainingLocation === location.id
+                      ? 'border-cyan-400 bg-cyan-900/20 shadow-lg shadow-cyan-400/30'
+                      : 'border-green-800 bg-gray-900 hover:border-green-400 hover:shadow-lg hover:shadow-green-400/20'
+                  }`}
+                >
+                  <div className="text-8xl mb-6 animate-bounce-slow">{location.icon}</div>
+                  <div className="text-green-400 font-bold text-xl mb-4">{location.name}</div>
+                  <div className="text-gray-300 text-sm">{location.description}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Step 5: Dietary Preferences */}
+        {currentStep === 5 && (
+          <div className={`transition-all duration-1000 delay-500 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
+            <div className="text-center mb-8">
+              <div className="text-green-400 text-3xl font-bold mb-4 animate-pulse">
+                🍽️ DIETARY PREFERENCES
+              </div>
+              <div className="text-gray-300 text-lg mb-4">
+                Configure your meal plan preferences and restrictions
+              </div>
+              <div className="text-cyan-400 text-sm font-mono bg-black px-3 py-1 rounded border border-cyan-600 inline-block">
+                $ set_diet_preferences --restrictions --forbidden
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {/* Forbidden Foods */}
+              <div className="border border-green-800 rounded-lg bg-gray-900 p-6">
+                <div className="text-green-400 text-xl font-bold mb-4">🚫 FORBIDDEN FOODS</div>
+                <label className="block text-green-400 text-sm mb-3">
+                  FOODS TO AVOID IN MEAL PLAN:
+                </label>
+                <textarea
+                  value={formData.forbiddenFoods}
+                  onChange={handleForbiddenFoodsChange}
+                  className="w-full bg-black border border-green-600 rounded px-3 py-2 text-green-400 focus:border-cyan-400 focus:outline-none transition-colors duration-300 font-mono h-32 resize-none"
+                  placeholder="e.g., Seafood, Mushrooms, Spicy foods, Dairy products..."
+                />
+                <div className="text-gray-400 text-xs mt-2">
+                  List foods you want to exclude (separated by commas) - Optional
+                </div>
+              </div>
+
+              {/* Dietary Restrictions */}
+              <div className="border border-green-800 rounded-lg bg-gray-900 p-6">
+                <div className="text-green-400 text-xl font-bold mb-4">📋 DIETARY RESTRICTIONS</div>
+                <label className="block text-green-400 text-sm mb-3">
+                  SELECT YOUR DIETARY PREFERENCES:
+                </label>
+                <div className="grid grid-cols-2 gap-3">
+                  {commonDietaryRestrictions.map((restriction) => (
+                    <button
+                      key={restriction}
+                      onClick={() => handleDietaryRestrictionToggle(restriction)}
+                      className={`text-sm p-3 rounded border transition-all duration-200 ${
+                        formData.dietaryRestrictions.includes(restriction)
+                          ? 'border-cyan-400 bg-cyan-900/20 text-cyan-400'
+                          : 'border-green-800 bg-gray-800 text-green-400 hover:border-green-400'
+                      }`}
+                    >
+                      {restriction}
+                    </button>
+                  ))}
+                </div>
+                <div className="text-gray-400 text-xs mt-3">
+                  Click to toggle dietary restrictions - All are optional
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Navigation Buttons */}
         <div className="flex justify-between items-center mt-12">
           <button
@@ -448,7 +584,7 @@ export default function CharacterCreationPage() {
             </div>
           </div>
 
-          {currentStep < 3 ? (
+          {currentStep < 5 ? (
             <button
               onClick={nextStep}
               disabled={!isStepValid()}
