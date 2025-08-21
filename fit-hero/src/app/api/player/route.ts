@@ -16,6 +16,9 @@ export async function POST(request: NextRequest) {
 
     const {
       name,
+      age,
+      height,
+      weight,
       character,
       objective,
       trainingEnvironment,
@@ -47,6 +50,9 @@ export async function POST(request: NextRequest) {
       data: {
         userId: session.user.id,
         name,
+        age,
+        height,
+        weight,
         character,
         objective,
         trainingEnvironment,

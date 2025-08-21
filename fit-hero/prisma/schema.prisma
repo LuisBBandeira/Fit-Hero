@@ -94,6 +94,11 @@ model Player {
   // Forbidden foods - array of strings
   forbiddenFoods String[] @map("forbidden_foods")
 
+  // Personal stats for BMI calculation
+  age    Int?    // Age in years
+  height Float?  // Height in cm
+  weight Float?  // Weight in kg
+
   // Experience and level system
   level      Int @default(1)
   experience Int @default(0)
