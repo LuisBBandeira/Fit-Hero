@@ -2,17 +2,22 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 export default function SignupPage() {
   const [isVisible, setIsVisible] = useState(false);
   const [formData, setFormData] = useState({
-    username: '',
+    name: '',
     email: '',
     password: '',
     confirmPassword: ''
   });
   const [isLoading, setIsLoading] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState(0);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+  const router = useRouter();
 
   useEffect(() => {
     setIsVisible(true);
@@ -31,20 +36,61 @@ export default function SignupPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError('');
+    setSuccess('');
     
     if (formData.password !== formData.confirmPassword) {
-      alert('Passwords do not match!');
+      setError('Passwords do not match!');
+      return;
+    }
+    
+    if (passwordStrength < 50) {
+      setError('Password is too weak. Please use a stronger password.');
       return;
     }
     
     setIsLoading(true);
     
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    setIsLoading(false);
-    // Handle signup logic here
-    console.log('Signup attempt:', formData);
+    try {
+      const response = await fetch('/api/auth/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          password: formData.password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setSuccess('Account created successfully! Signing you in...');
+        // Auto-sign in the user after successful signup
+        const signInResult = await signIn('credentials', {
+          email: formData.email,
+          password: formData.password,
+          redirect: false,
+        });
+        
+        if (signInResult?.ok) {
+          router.push('/character-creation');
+        } else {
+          setSuccess('Account created successfully! Please log in.');
+          setTimeout(() => {
+            router.push('/login');
+          }, 2000);
+        }
+      } else {
+        setError(data.error || 'Failed to create account');
+      }
+    } catch (error) {
+      setError('An error occurred. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -68,15 +114,14 @@ export default function SignupPage() {
     return 'VERY_WEAK';
   };
 
-  const handleSocialSignup = (provider: string) => {
-    console.log(`Signup with ${provider}`);
-    // Here you would integrate with your OAuth provider
-    // For now, just simulate the action
+  const handleSocialSignup = async (provider: string) => {
     setIsLoading(true);
-    setTimeout(() => {
+    try {
+      await signIn(provider, { callbackUrl: '/character-creation' });
+    } catch (error) {
+      setError(`Failed to sign up with ${provider}`);
       setIsLoading(false);
-      alert(`${provider} signup would redirect here`);
-    }, 1000);
+    }
   };
 
   return (
@@ -147,8 +192,8 @@ export default function SignupPage() {
                   </label>
                   <input
                     type="text"
-                    name="username"
-                    value={formData.username}
+                    name="name"
+                    value={formData.name}
                     onChange={handleInputChange}
                     className="w-full bg-black border border-green-600 rounded px-3 py-2 text-green-400 focus:border-cyan-400 focus:outline-none transition-colors duration-300 font-mono"
                     placeholder="hero_player_001"
@@ -227,6 +272,18 @@ export default function SignupPage() {
                   )}
                 </div>
 
+                {error && (
+                  <div className="bg-red-900/30 border border-red-600 text-red-400 px-4 py-3 rounded mb-4">
+                    {error}
+                  </div>
+                )}
+
+                {success && (
+                  <div className="bg-green-900/30 border border-green-600 text-green-400 px-4 py-3 rounded mb-4">
+                    {success}
+                  </div>
+                )}
+
                 <button
                   type="submit"
                   disabled={isLoading || formData.password !== formData.confirmPassword}
@@ -256,7 +313,7 @@ export default function SignupPage() {
                 <div className="space-y-3">
                   <button
                     type="button"
-                    onClick={() => handleSocialSignup('Google')}
+                    onClick={() => handleSocialSignup('google')}
                     disabled={isLoading}
                     className="w-full bg-gray-800 hover:bg-gray-700 border border-green-600 text-green-400 font-bold py-3 rounded transition-all duration-300 hover-lift flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
                   >
@@ -271,7 +328,7 @@ export default function SignupPage() {
 
                   <button
                     type="button"
-                    onClick={() => handleSocialSignup('GitHub')}
+                    onClick={() => handleSocialSignup('github')}
                     disabled={isLoading}
                     className="w-full bg-gray-800 hover:bg-gray-700 border border-green-600 text-green-400 font-bold py-3 rounded transition-all duration-300 hover-lift flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
                   >

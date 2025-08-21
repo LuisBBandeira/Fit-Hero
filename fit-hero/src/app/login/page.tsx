@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { signIn, getSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
   const [isVisible, setIsVisible] = useState(false);
@@ -10,6 +12,8 @@ export default function LoginPage() {
     password: ''
   });
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+  const router = useRouter();
 
   useEffect(() => {
     setIsVisible(true);
@@ -18,16 +22,26 @@ export default function LoginPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    setError('');
     
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    setIsLoading(false);
-    // Handle login logic here
-    console.log('Login attempt:', formData);
-    
-    // For now, just show success - will add proper routing later
-    alert('Login successful! Dashboard coming soon...');
+    try {
+      const result = await signIn('credentials', {
+        email: formData.email,
+        password: formData.password,
+        redirect: false,
+      });
+
+      if (result?.error) {
+        setError('Invalid credentials. Please try again.');
+      } else {
+        // Successful login
+        router.push('/dashboard');
+      }
+    } catch (error) {
+      setError('An error occurred. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,15 +51,14 @@ export default function LoginPage() {
     });
   };
 
-  const handleSocialLogin = (provider: string) => {
-    console.log(`Login with ${provider}`);
-    // Here you would integrate with your OAuth provider
-    // For now, just simulate the action
+  const handleSocialLogin = async (provider: string) => {
     setIsLoading(true);
-    setTimeout(() => {
+    try {
+      await signIn(provider, { callbackUrl: '/dashboard' });
+    } catch (error) {
+      setError(`Failed to sign in with ${provider}`);
       setIsLoading(false);
-      alert(`${provider} login would redirect here`);
-    }, 1000);
+    }
   };
 
   return (
@@ -140,6 +153,12 @@ export default function LoginPage() {
                   />
                 </div>
 
+                {error && (
+                  <div className="bg-red-900/30 border border-red-600 text-red-400 px-4 py-3 rounded mb-4">
+                    {error}
+                  </div>
+                )}
+
                 <button
                   type="submit"
                   disabled={isLoading}
@@ -169,7 +188,7 @@ export default function LoginPage() {
                 <div className="space-y-3">
                   <button
                     type="button"
-                    onClick={() => handleSocialLogin('Google')}
+                    onClick={() => handleSocialLogin('google')}
                     disabled={isLoading}
                     className="w-full bg-gray-800 hover:bg-gray-700 border border-green-600 text-green-400 font-bold py-3 rounded transition-all duration-300 hover-lift flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
                   >
@@ -184,7 +203,7 @@ export default function LoginPage() {
 
                   <button
                     type="button"
-                    onClick={() => handleSocialLogin('GitHub')}
+                    onClick={() => handleSocialLogin('github')}
                     disabled={isLoading}
                     className="w-full bg-gray-800 hover:bg-gray-700 border border-green-600 text-green-400 font-bold py-3 rounded transition-all duration-300 hover-lift flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
                   >
