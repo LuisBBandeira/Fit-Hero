@@ -3,26 +3,49 @@
 import { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 export default function SettingsPage() {
+  const router = useRouter();
+  const { data: session, status } = useSession();
   const [isVisible, setIsVisible] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString());
   const [currentRotations, setCurrentRotations] = useState<{[key: string]: number}>({});
   const [isLoading, setIsLoading] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [playerData, setPlayerData] = useState<{
+    id: string;
+    name: string;
+    age?: number;
+    height?: number;
+    weight?: number;
+    character: string;
+    objective: string;
+    trainingEnvironment: string;
+    dietaryRestrictions: string[];
+    forbiddenFoods: string[];
+  } | null>(null);
+  const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
   
   const rotationDirections = ['south', 'south-west', 'west', 'north-west', 'north', 'north-east', 'east', 'south-east'];
 
   const [settingsData, setSettingsData] = useState({
-    selectedCharacter: 'warrior',
-    fitnessGoal: 'muscle',
+    name: '',
+    age: '',
+    height: '',
+    weight: '',
+    selectedCharacter: '',
+    fitnessGoal: '',
     forbiddenFoods: '',
-    trainingLocation: 'gym',
+    trainingLocation: '',
     dietaryRestrictions: [] as string[]
   });
 
   const characters = useMemo(() => [
     {
-      id: 'warrior',
+      id: 'FITNESS_WARRIOR',
       name: 'FITNESS WARRIOR',
       imagePaths: {
         south: '/orange_wariar%20/rotations/south.png',
@@ -37,7 +60,7 @@ export default function SettingsPage() {
       description: 'Strength focused. Masters heavy lifting and power training.'
     },
     {
-      id: 'runner',
+      id: 'CARDIO_RUNNER',
       name: 'CARDIO RUNNER',
       imagePaths: {
         south: '/blue_runner/rotations/south.png',
@@ -52,7 +75,7 @@ export default function SettingsPage() {
       description: 'Endurance specialist. Excels in cardio and stamina challenges.'
     },
     {
-      id: 'ninja',
+      id: 'AGILITY_NINJA',
       name: 'AGILITY NINJA',
       imagePaths: {
         south: '/purple_ninja/rotations/south.png',
@@ -67,7 +90,7 @@ export default function SettingsPage() {
       description: 'Speed and flexibility master. Perfect for HIIT and mobility.'
     },
     {
-      id: 'guardian',
+      id: 'VITALITY_GUARDIAN',
       name: 'VITALITY GUARDIAN',
       imagePaths: {
         south: '/sean_guardian/rotations/south.png',
@@ -84,22 +107,67 @@ export default function SettingsPage() {
   ], []);
 
   const fitnessGoals = [
-    { id: 'muscle', name: 'BUILD MUSCLE', icon: '💪', description: 'Gain strength and muscle mass' },
-    { id: 'cardio', name: 'IMPROVE CARDIO', icon: '❤️', description: 'Enhance cardiovascular fitness' },
-    { id: 'weight', name: 'LOSE WEIGHT', icon: '📉', description: 'Reduce body fat percentage' },
-    { id: 'general', name: 'GENERAL FITNESS', icon: '⚡', description: 'Overall health improvement' }
+    { id: 'BUILD_MUSCLE', name: 'BUILD MUSCLE', icon: '💪', description: 'Gain strength and muscle mass' },
+    { id: 'IMPROVE_CARDIO', name: 'IMPROVE CARDIO', icon: '❤️', description: 'Enhance cardiovascular fitness' },
+    { id: 'LOSE_WEIGHT', name: 'LOSE WEIGHT', icon: '📉', description: 'Reduce body fat percentage' },
+    { id: 'GENERAL_FITNESS', name: 'GENERAL FITNESS', icon: '⚡', description: 'Overall health improvement' }
   ];
 
   const trainingLocations = [
-    { id: 'gym', name: 'GYM TRAINING', icon: '🏋️', description: 'Full equipment access and group motivation' },
-    { id: 'home', name: 'HOME TRAINING', icon: '🏠', description: 'Bodyweight and minimal equipment workouts' }
+    { id: 'GYM_TRAINING', name: 'GYM TRAINING', icon: '🏋️', description: 'Full equipment access and group motivation' },
+    { id: 'HOME_TRAINING', name: 'HOME TRAINING', icon: '🏠', description: 'Bodyweight and minimal equipment workouts' }
   ];
 
   const commonDietaryRestrictions = [
-    'Vegetarian', 'Vegan', 'Gluten-Free', 'Dairy-Free', 'Nut-Free', 'Low-Carb', 'Keto', 'Paleo'
+    'VEGETARIAN', 'VEGAN', 'GLUTEN_FREE', 'DAIRY_FREE', 'NUT_FREE', 'LOW_CARB', 'KETO', 'PALEO'
   ];
 
+  const loadPlayerData = async () => {
+    setIsLoading(true);
+    setError('');
+    
+    try {
+      const response = await fetch('/api/player');
+      const data = await response.json();
+
+      if (response.ok) {
+        setPlayerData(data.player);
+        // Populate form with existing data
+        setSettingsData({
+          name: data.player.name || '',
+          age: data.player.age?.toString() || '',
+          height: data.player.height?.toString() || '',
+          weight: data.player.weight?.toString() || '',
+          selectedCharacter: data.player.character || '',
+          fitnessGoal: data.player.objective || '',
+          forbiddenFoods: data.player.forbiddenFoods?.join(', ') || '',
+          trainingLocation: data.player.trainingEnvironment || '',
+          dietaryRestrictions: data.player.dietaryRestrictions || []
+        });
+      } else if (response.status === 404) {
+        // Player profile doesn't exist, redirect to character creation
+        router.push('/character-creation');
+      } else {
+        setError(data.error || 'Failed to load player data');
+      }
+    } catch (error) {
+      setError('Failed to load player data');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
+    // Check if user is authenticated
+    if (status === 'loading') return; // Still loading
+    if (status === 'unauthenticated') {
+      router.push('/login');
+      return;
+    }
+
+    // Load player data
+    loadPlayerData();
+    
     setIsVisible(true);
     
     // Update time every second
@@ -129,7 +197,14 @@ export default function SettingsPage() {
       clearInterval(timeInterval);
       clearInterval(rotationInterval);
     };
-  }, []);
+  }, [status, router]);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSettingsData(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }));
+  };
 
   const handleCharacterSelect = (characterId: string) => {
     setSettingsData(prev => ({
@@ -169,16 +244,47 @@ export default function SettingsPage() {
   };
 
   const handleSaveSettings = async () => {
-    setIsLoading(true);
+    setIsSaving(true);
+    setError('');
+    setSuccessMessage('');
     
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    setIsLoading(false);
-    console.log('Settings saved:', settingsData);
-    
-    // Show success message
-    alert('Settings saved successfully! Your preferences have been updated.');
+    try {
+      // Prepare data for API
+      const updateData = {
+        name: settingsData.name,
+        age: settingsData.age ? parseInt(settingsData.age) : null,
+        height: settingsData.height ? parseFloat(settingsData.height) : null,
+        weight: settingsData.weight ? parseFloat(settingsData.weight) : null,
+        character: settingsData.selectedCharacter,
+        objective: settingsData.fitnessGoal,
+        trainingEnvironment: settingsData.trainingLocation,
+        dietaryRestrictions: settingsData.dietaryRestrictions,
+        forbiddenFoods: settingsData.forbiddenFoods.split(',').map(food => food.trim()).filter(food => food.length > 0)
+      };
+
+      const response = await fetch('/api/player', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updateData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setSuccessMessage('Settings saved successfully!');
+        setPlayerData(data.player);
+        // Clear success message after 3 seconds
+        setTimeout(() => setSuccessMessage(''), 3000);
+      } else {
+        setError(data.error || 'Failed to save settings');
+      }
+    } catch (error) {
+      setError('An error occurred while saving settings');
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   return (
@@ -228,7 +334,116 @@ export default function SettingsPage() {
           </div>
         </div>
 
+        {/* Loading State */}
+        {isLoading && (
+          <div className="text-center py-8">
+            <div className="text-green-400 text-xl">
+              <span className="animate-spin mr-2">⚡</span>
+              LOADING PLAYER DATA...
+            </div>
+          </div>
+        )}
+
+        {/* Error Display */}
+        {error && (
+          <div className="bg-red-900/30 border border-red-600 text-red-400 px-4 py-3 rounded mb-6">
+            {error}
+          </div>
+        )}
+
+        {/* Success Message */}
+        {successMessage && (
+          <div className="bg-green-900/30 border border-green-600 text-green-400 px-4 py-3 rounded mb-6">
+            {successMessage}
+          </div>
+        )}
+
+        {/* Show content only when not loading */}
+        {!isLoading && (
         <div className="space-y-8">
+          {/* Personal Information Section */}
+          <div className={`transition-all duration-1000 delay-600 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
+            <div className="border border-green-800 rounded-lg bg-gray-900 p-6">
+              <div className="text-green-400 text-xl font-bold mb-6">👤 PERSONAL INFORMATION</div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div>
+                  <label className="block text-green-400 text-sm mb-2">
+                    HERO NAME:
+                  </label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={settingsData.name}
+                    onChange={handleInputChange}
+                    className="w-full bg-black border border-green-600 rounded px-3 py-2 text-green-400 focus:border-cyan-400 focus:outline-none transition-colors duration-300 font-mono"
+                    placeholder="Enter your hero name"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-green-400 text-sm mb-2">
+                    AGE (YEARS):
+                  </label>
+                  <input
+                    type="number"
+                    name="age"
+                    value={settingsData.age}
+                    onChange={handleInputChange}
+                    className="w-full bg-black border border-green-600 rounded px-3 py-2 text-green-400 focus:border-cyan-400 focus:outline-none transition-colors duration-300 font-mono"
+                    placeholder="25"
+                    min="13"
+                    max="100"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-green-400 text-sm mb-2">
+                    HEIGHT (CM):
+                  </label>
+                  <input
+                    type="number"
+                    name="height"
+                    value={settingsData.height}
+                    onChange={handleInputChange}
+                    className="w-full bg-black border border-green-600 rounded px-3 py-2 text-green-400 focus:border-cyan-400 focus:outline-none transition-colors duration-300 font-mono"
+                    placeholder="175"
+                    min="100"
+                    max="250"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-green-400 text-sm mb-2">
+                    WEIGHT (KG):
+                  </label>
+                  <input
+                    type="number"
+                    name="weight"
+                    value={settingsData.weight}
+                    onChange={handleInputChange}
+                    className="w-full bg-black border border-green-600 rounded px-3 py-2 text-green-400 focus:border-cyan-400 focus:outline-none transition-colors duration-300 font-mono"
+                    placeholder="70"
+                    min="30"
+                    max="300"
+                  />
+                </div>
+              </div>
+
+              {/* BMI Calculator */}
+              {settingsData.height && settingsData.weight && (
+                <div className="mt-6 p-4 bg-black rounded border border-cyan-600">
+                  <div className="text-cyan-400 text-sm font-mono">
+                    BMI: {(parseFloat(settingsData.weight) / Math.pow(parseFloat(settingsData.height) / 100, 2)).toFixed(1)}
+                  </div>
+                  <div className="text-gray-400 text-xs mt-1">
+                    Body Mass Index calculated automatically
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+
           {/* Character Selection - Full Width */}
           <div className={`transition-all duration-1000 delay-700 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
             <div className="border border-green-800 rounded-lg bg-gray-900 p-6">
@@ -372,10 +587,10 @@ export default function SettingsPage() {
           <div className={`text-center transition-all duration-1000 delay-1100 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
             <button
               onClick={handleSaveSettings}
-              disabled={isLoading}
+              disabled={isSaving}
               className="btn btn-success px-8 py-3 disabled:opacity-50 disabled:cursor-not-allowed hover-lift animate-glow"
             >
-              {isLoading ? (
+              {isSaving ? (
                 <span className="flex items-center">
                   <span className="animate-spin mr-2">⚡</span>
                   SAVING SETTINGS...
@@ -389,6 +604,7 @@ export default function SettingsPage() {
             </button>
           </div>
         </div>
+        )}
       </div>
     </div>
   );
