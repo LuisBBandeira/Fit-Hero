@@ -1,0 +1,248 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String  @map("user_id")
+  type              String
+  provider          String
+  providerAccountId String  @map("provider_account_id")
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique @map("session_token")
+  userId       String   @map("user_id")
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime? @map("email_verified")
+  image         String?
+  password      String?
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+  accounts      Account[]
+  player        Player?
+  sessions      Session[]
+
+  @@map("users")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
+
+model Player {
+  id                  String               @id @default(cuid())
+  userId              String               @unique @map("user_id")
+  name                String
+  createdAt           DateTime             @default(now()) @map("created_at")
+  updatedAt           DateTime             @updatedAt @map("updated_at")
+  character           Character            @default(FITNESS_WARRIOR)
+  objective           Objective            @default(GENERAL_FITNESS)
+  trainingEnvironment TrainingEnvironment  @default(GYM_TRAINING) @map("training_environment")
+  dietaryRestrictions DietaryRestriction[] @map("dietary_restrictions")
+  forbiddenFoods      String[]             @map("forbidden_foods")
+  level               Int                  @default(1)
+  experience          Int                  @default(0)
+  age                 Int?
+  height              Float?
+  weight              Float?
+  mealPlanEntries     MealPlanEntry[]
+  user                User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  progressStats       ProgressStats?
+  weightEntries       WeightEntry[]
+  workoutSessions     WorkoutSession[]
+  playerAchievements  PlayerAchievement[]
+
+  @@map("players")
+}
+
+model WorkoutSession {
+  id          String   @id @default(cuid())
+  playerId    String   @map("player_id")
+  date        DateTime @default(now())
+  completed   Boolean  @default(true)
+  workoutType String?  @map("workout_type")
+  duration    Int?
+  notes       String?
+  createdAt   DateTime @default(now()) @map("created_at")
+  player      Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
+
+  @@unique([playerId, date])
+  @@map("workout_sessions")
+}
+
+model MealPlanEntry {
+  id        String   @id @default(cuid())
+  playerId  String   @map("player_id")
+  date      DateTime @default(now())
+  completed Boolean  @default(true)
+  mealType  String?  @map("meal_type")
+  calories  Int?
+  notes     String?
+  createdAt DateTime @default(now()) @map("created_at")
+  player    Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
+
+  @@map("meal_plan_entries")
+}
+
+model WeightEntry {
+  id        String   @id @default(cuid())
+  playerId  String   @map("player_id")
+  weight    Float
+  date      DateTime @default(now())
+  notes     String?
+  createdAt DateTime @default(now()) @map("created_at")
+  player    Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
+
+  @@map("weight_entries")
+}
+
+model ProgressStats {
+  id                   String    @id @default(cuid())
+  playerId             String    @unique @map("player_id")
+  currentWorkoutStreak Int       @default(0) @map("current_workout_streak")
+  longestWorkoutStreak Int       @default(0) @map("longest_workout_streak")
+  totalWorkoutDays     Int       @default(0) @map("total_workout_days")
+  currentMealStreak    Int       @default(0) @map("current_meal_streak")
+  longestMealStreak    Int       @default(0) @map("longest_meal_streak")
+  totalMealPlanDays    Int       @default(0) @map("total_meal_plan_days")
+  startingWeight       Float?    @map("starting_weight")
+  currentWeight        Float?    @map("current_weight")
+  goalWeight           Float?    @map("goal_weight")
+  lastWorkoutDate      DateTime? @map("last_workout_date")
+  lastMealPlanDate     DateTime? @map("last_meal_plan_date")
+  lastWeightUpdate     DateTime? @map("last_weight_update")
+  updatedAt            DateTime  @default(now()) @updatedAt @map("updated_at")
+  player               Player    @relation(fields: [playerId], references: [id], onDelete: Cascade)
+
+  @@map("progress_stats")
+}
+
+enum Character {
+  FITNESS_WARRIOR   @map("fitness_warrior")
+  CARDIO_RUNNER     @map("cardio_runner")
+  AGILITY_NINJA     @map("agility_ninja")
+  VITALITY_GUARDIAN @map("vitality_guardian")
+
+  @@map("character")
+}
+
+enum Objective {
+  BUILD_MUSCLE    @map("build_muscle")
+  IMPROVE_CARDIO  @map("improve_cardio")
+  LOSE_WEIGHT     @map("lose_weight")
+  GENERAL_FITNESS @map("general_fitness")
+
+  @@map("objective")
+}
+
+enum TrainingEnvironment {
+  GYM_TRAINING  @map("gym_training")
+  HOME_TRAINING @map("home_training")
+
+  @@map("training_environment")
+}
+
+enum DietaryRestriction {
+  VEGETARIAN  @map("vegetarian")
+  VEGAN       @map("vegan")
+  GLUTEN_FREE @map("gluten_free")
+  DAIRY_FREE  @map("dairy_free")
+  NUT_FREE    @map("nut_free")
+  LOW_CARB    @map("low_carb")
+  KETO        @map("keto")
+  PALEO       @map("paleo")
+
+  @@map("dietary_restriction")
+}
+
+enum meal_type {
+  breakfast
+  lunch
+  dinner
+  snack
+}
+
+model Achievement {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String
+  icon        String
+  category    AchievementCategory
+  rarity      AchievementRarity
+  points      Int
+  requirement String // JSON string describing the requirement (e.g., {"type": "workout_streak", "value": 7})
+  maxProgress Int?     // For progressive achievements
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  
+  playerAchievements PlayerAchievement[]
+
+  @@map("achievements")
+}
+
+model PlayerAchievement {
+  id            String    @id @default(cuid())
+  playerId      String    @map("player_id")
+  achievementId String    @map("achievement_id")
+  unlockedAt    DateTime? @map("unlocked_at")
+  progress      Int       @default(0)
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+  
+  player      Player      @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  achievement Achievement @relation(fields: [achievementId], references: [id], onDelete: Cascade)
+
+  @@unique([playerId, achievementId])
+  @@map("player_achievements")
+}
+
+enum AchievementCategory {
+  WORKOUT    @map("workout")
+  WEIGHT     @map("weight")
+  NUTRITION  @map("nutrition")
+  SPECIAL    @map("special")
+
+  @@map("achievement_category")
+}
+
+enum AchievementRarity {
+  COMMON    @map("common")
+  UNCOMMON  @map("uncommon")
+  RARE      @map("rare")
+  EPIC      @map("epic")
+  LEGENDARY @map("legendary")
+
+  @@map("achievement_rarity")
+}

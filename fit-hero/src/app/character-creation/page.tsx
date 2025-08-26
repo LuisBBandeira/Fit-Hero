@@ -3,32 +3,35 @@
 import { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 
 export default function CharacterCreationPage() {
   const router = useRouter();
+  const { data: session, status } = useSession();
   const [isVisible, setIsVisible] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [currentRotations, setCurrentRotations] = useState<{[key: string]: number}>({});
+  const [error, setError] = useState('');
   
   const rotationDirections = ['south', 'south-west', 'west', 'north-west', 'north', 'north-east', 'east', 'south-east'];
 
   const [formData, setFormData] = useState({
-    nickname: '',
-    age: '',
-    height: '',
-    weight: '',
-    selectedCharacter: '',
-    fitnessGoal: '',
-    trainingLocation: '',
-    forbiddenFoods: '',
-    dietaryRestrictions: [] as string[]
+    nickname: '', // maps to 'name' in database
+    age: '', // maps to 'age' in database
+    height: '', // maps to 'height' in database  
+    weight: '', // maps to 'weight' in database
+    selectedCharacter: '', // maps to 'character' enum
+    fitnessGoal: '', // maps to 'objective' enum  
+    trainingLocation: '', // maps to 'trainingEnvironment' enum
+    forbiddenFoods: '', // maps to 'forbiddenFoods' array
+    dietaryRestrictions: [] as string[] // maps to 'dietaryRestrictions' enum array
   });
 
   const characters = useMemo(() => [
     {
-      id: 'warrior',
+      id: 'FITNESS_WARRIOR',
       name: 'FITNESS WARRIOR',
       imagePaths: {
         south: '/orange_wariar%20/rotations/south.png',
@@ -44,7 +47,7 @@ export default function CharacterCreationPage() {
       speciality: 'POWERLIFTING'
     },
     {
-      id: 'runner',
+      id: 'CARDIO_RUNNER',
       name: 'CARDIO RUNNER',
       imagePaths: {
         south: '/blue_runner/rotations/south.png',
@@ -60,7 +63,7 @@ export default function CharacterCreationPage() {
       speciality: 'MARATHON'
     },
     {
-      id: 'ninja',
+      id: 'AGILITY_NINJA',
       name: 'AGILITY NINJA',
       imagePaths: {
         south: '/purple_ninja/rotations/south.png',
@@ -76,7 +79,7 @@ export default function CharacterCreationPage() {
       speciality: 'FLEXIBILITY'
     },
     {
-      id: 'guardian',
+      id: 'VITALITY_GUARDIAN',
       name: 'VITALITY GUARDIAN',
       imagePaths: {
         south: '/sean_guardian/rotations/south.png',
@@ -94,22 +97,29 @@ export default function CharacterCreationPage() {
   ], []);
 
   const fitnessGoals = [
-    { id: 'muscle', name: 'BUILD MUSCLE', icon: '💪', description: 'Gain strength and muscle mass' },
-    { id: 'cardio', name: 'IMPROVE CARDIO', icon: '❤️', description: 'Enhance cardiovascular fitness' },
-    { id: 'weight', name: 'LOSE WEIGHT', icon: '📉', description: 'Reduce body fat percentage' },
-    { id: 'general', name: 'GENERAL FITNESS', icon: '⚡', description: 'Overall health improvement' }
+    { id: 'BUILD_MUSCLE', name: 'BUILD MUSCLE', icon: '💪', description: 'Gain strength and muscle mass' },
+    { id: 'IMPROVE_CARDIO', name: 'IMPROVE CARDIO', icon: '❤️', description: 'Enhance cardiovascular fitness' },
+    { id: 'LOSE_WEIGHT', name: 'LOSE WEIGHT', icon: '📉', description: 'Reduce body fat percentage' },
+    { id: 'GENERAL_FITNESS', name: 'GENERAL FITNESS', icon: '⚡', description: 'Overall health improvement' }
   ];
 
   const trainingLocations = [
-    { id: 'gym', name: 'GYM TRAINING', icon: '🏋️', description: 'Full equipment access and group motivation' },
-    { id: 'home', name: 'HOME TRAINING', icon: '🏠', description: 'Bodyweight and minimal equipment workouts' }
+    { id: 'GYM_TRAINING', name: 'GYM TRAINING', icon: '🏋️', description: 'Full equipment access and group motivation' },
+    { id: 'HOME_TRAINING', name: 'HOME TRAINING', icon: '🏠', description: 'Bodyweight and minimal equipment workouts' }
   ];
 
   const commonDietaryRestrictions = [
-    'Vegetarian', 'Vegan', 'Gluten-Free', 'Dairy-Free', 'Nut-Free', 'Low-Carb', 'Keto', 'Paleo'
+    'VEGETARIAN', 'VEGAN', 'GLUTEN_FREE', 'DAIRY_FREE', 'NUT_FREE', 'LOW_CARB', 'KETO', 'PALEO'
   ];
 
   useEffect(() => {
+    // Check if user is authenticated
+    if (status === 'loading') return; // Still loading
+    if (status === 'unauthenticated') {
+      router.push('/login');
+      return;
+    }
+    
     setIsVisible(true);
     
     // Initialize rotation animations for each character
@@ -131,7 +141,7 @@ export default function CharacterCreationPage() {
     }, 800); // Change direction every 800ms
     
     return () => clearInterval(interval);
-  }, [characters, rotationDirections.length]);
+  }, [characters, rotationDirections.length, status, router]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -191,16 +201,43 @@ export default function CharacterCreationPage() {
 
   const handleSubmit = async () => {
     setIsLoading(true);
+    setError('');
     
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    setIsLoading(false);
-    console.log('Character created:', formData);
-    
-    // Show success message and redirect to dashboard
-    alert('Character created successfully! Welcome to FIT_HERO!');
-    router.push('/dashboard');
+    try {
+      // Prepare data for API
+      const playerData = {
+        name: formData.nickname,
+        age: formData.age ? parseInt(formData.age) : null,
+        height: formData.height ? parseFloat(formData.height) : null,
+        weight: formData.weight ? parseFloat(formData.weight) : null,
+        character: formData.selectedCharacter,
+        objective: formData.fitnessGoal,
+        trainingEnvironment: formData.trainingLocation,
+        dietaryRestrictions: formData.dietaryRestrictions,
+        forbiddenFoods: formData.forbiddenFoods.split(',').map(food => food.trim()).filter(food => food.length > 0)
+      };
+
+      const response = await fetch('/api/player', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(playerData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // Success! Redirect to dashboard
+        router.push('/dashboard');
+      } else {
+        setError(data.error || 'Failed to create character');
+      }
+    } catch (error) {
+      setError('An error occurred. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const getStepProgress = () => {
@@ -210,7 +247,7 @@ export default function CharacterCreationPage() {
   const isStepValid = () => {
     switch (currentStep) {
       case 1:
-        return formData.nickname && formData.age && formData.height && formData.weight;
+        return formData.nickname.trim() !== '' && formData.age && formData.height && formData.weight;
       case 2:
         return formData.selectedCharacter;
       case 3:

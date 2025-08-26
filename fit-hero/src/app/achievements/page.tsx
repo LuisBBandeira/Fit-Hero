@@ -1,10 +1,11 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 
 interface Achievement {
-  id: number;
+  id: string;
   name: string;
   description: string;
   icon: string;
@@ -18,136 +19,40 @@ interface Achievement {
 }
 
 export default function AchievementsPage() {
+  const { data: session, status } = useSession();
   const [isVisible, setIsVisible] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString());
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [achievements, setAchievements] = useState<Achievement[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // Mock achievements data
-  const achievements: Achievement[] = [
-    // Workout Achievements
-    {
-      id: 1,
-      name: 'FIRST STEPS',
-      description: 'Complete your first workout session',
-      icon: '👟',
-      category: 'workout',
-      unlocked: true,
-      unlockedDate: '2024-12-15',
-      rarity: 'common',
-      points: 10
-    },
-    {
-      id: 2,
-      name: 'WEEK WARRIOR',
-      description: 'Complete 7 consecutive days of workouts',
-      icon: '🗓️',
-      category: 'workout',
-      unlocked: true,
-      unlockedDate: '2024-12-22',
-      rarity: 'uncommon',
-      points: 25
-    },
-    {
-      id: 3,
-      name: 'CENTURY CLUB',
-      description: 'Complete 100 total workout sessions',
-      icon: '💯',
-      category: 'workout',
-      unlocked: false,
-      progress: 67,
-      maxProgress: 100,
-      rarity: 'rare',
-      points: 100
-    },
-    {
-      id: 4,
-      name: 'IRON WILL',
-      description: 'Complete 30 consecutive days of workouts',
-      icon: '⚡',
-      category: 'workout',
-      unlocked: false,
-      progress: 15,
-      maxProgress: 30,
-      rarity: 'epic',
-      points: 150
-    },
-
-    // Weight Loss Achievements
-    {
-      id: 5,
-      name: 'FIRST POUND',
-      description: 'Lose your first kilogram',
-      icon: '📉',
-      category: 'weight',
-      unlocked: true,
-      unlockedDate: '2024-12-18',
-      rarity: 'common',
-      points: 15
-    },
-    {
-      id: 6,
-      name: 'TRANSFORMATION',
-      description: 'Lose 10 kilograms',
-      icon: '🦋',
-      category: 'weight',
-      unlocked: false,
-      progress: 3.5,
-      maxProgress: 10,
-      rarity: 'rare',
-      points: 200
-    },
-
-    // Nutrition Achievements
-    {
-      id: 7,
-      name: 'MEAL MASTER',
-      description: 'Complete 50 meal plans',
-      icon: '🍽️',
-      category: 'nutrition',
-      unlocked: true,
-      unlockedDate: '2025-01-05',
-      rarity: 'uncommon',
-      points: 30
-    },
-    {
-      id: 8,
-      name: 'HYDRATION HERO',
-      description: 'Drink 8 glasses of water for 7 consecutive days',
-      icon: '💧',
-      category: 'nutrition',
-      unlocked: false,
-      progress: 4,
-      maxProgress: 7,
-      rarity: 'common',
-      points: 20
-    },
-
-    // Special Achievements
-    {
-      id: 9,
-      name: 'PERFECTIONIST',
-      description: 'Complete every daily quest for a full week',
-      icon: '⭐',
-      category: 'special',
-      unlocked: false,
-      progress: 3,
-      maxProgress: 7,
-      rarity: 'legendary',
-      points: 500
-    },
-    {
-      id: 10,
-      name: 'EARLY BIRD',
-      description: 'Complete workouts before 8 AM for 10 days',
-      icon: '🌅',
-      category: 'special',
-      unlocked: false,
-      progress: 2,
-      maxProgress: 10,
-      rarity: 'epic',
-      points: 100
+  useEffect(() => {
+    if (status === 'authenticated') {
+      fetchAchievements();
+    } else if (status === 'unauthenticated') {
+      setError('Please log in to view achievements');
+      setLoading(false);
     }
-  ];
+  }, [session, status]);
+
+  const fetchAchievements = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch('/api/achievements');
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch achievements');
+      }
+      
+      const data = await response.json();
+      setAchievements(data.achievements);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to load achievements');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const categories = [
     { id: 'all', name: 'ALL ACHIEVEMENTS', icon: '🏆' },
@@ -188,6 +93,54 @@ export default function AchievementsPage() {
     if (!achievement.progress || !achievement.maxProgress) return 0;
     return (achievement.progress / achievement.maxProgress) * 100;
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-black text-green-400 font-mono flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-6xl mb-4 animate-pulse">🏆</div>
+          <div className="text-xl">Loading achievements...</div>
+        </div>
+      </div>
+    );
+  }
+
+  if (status === 'unauthenticated') {
+    return (
+      <div className="min-h-screen bg-black text-yellow-400 font-mono flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-6xl mb-4">🔒</div>
+          <div className="text-xl mb-4">Please log in to view achievements</div>
+          <Link href="/login" className="px-4 py-2 border border-yellow-600 rounded hover:bg-yellow-900/20 transition-colors">
+            Go to Login
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-black text-red-400 font-mono flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-6xl mb-4">❌</div>
+          <div className="text-xl mb-4">Error loading achievements</div>
+          <div className="text-sm mb-4">{error}</div>
+          <div className="space-x-4">
+            <button 
+              onClick={fetchAchievements}
+              className="px-4 py-2 border border-red-600 rounded hover:bg-red-900/20 transition-colors"
+            >
+              Retry
+            </button>
+            <Link href="/character-creation" className="px-4 py-2 border border-blue-600 rounded hover:bg-blue-900/20 transition-colors">
+              Create Character
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-black text-green-400 font-mono relative overflow-hidden">
