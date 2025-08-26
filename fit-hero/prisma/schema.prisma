@@ -82,6 +82,7 @@ model Player {
   progressStats       ProgressStats?
   weightEntries       WeightEntry[]
   workoutSessions     WorkoutSession[]
+  playerAchievements  PlayerAchievement[]
 
   @@map("players")
 }
@@ -191,4 +192,57 @@ enum meal_type {
   lunch
   dinner
   snack
+}
+
+model Achievement {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String
+  icon        String
+  category    AchievementCategory
+  rarity      AchievementRarity
+  points      Int
+  requirement String // JSON string describing the requirement (e.g., {"type": "workout_streak", "value": 7})
+  maxProgress Int?     // For progressive achievements
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  
+  playerAchievements PlayerAchievement[]
+
+  @@map("achievements")
+}
+
+model PlayerAchievement {
+  id            String    @id @default(cuid())
+  playerId      String    @map("player_id")
+  achievementId String    @map("achievement_id")
+  unlockedAt    DateTime? @map("unlocked_at")
+  progress      Int       @default(0)
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+  
+  player      Player      @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  achievement Achievement @relation(fields: [achievementId], references: [id], onDelete: Cascade)
+
+  @@unique([playerId, achievementId])
+  @@map("player_achievements")
+}
+
+enum AchievementCategory {
+  WORKOUT    @map("workout")
+  WEIGHT     @map("weight")
+  NUTRITION  @map("nutrition")
+  SPECIAL    @map("special")
+
+  @@map("achievement_category")
+}
+
+enum AchievementRarity {
+  COMMON    @map("common")
+  UNCOMMON  @map("uncommon")
+  RARE      @map("rare")
+  EPIC      @map("epic")
+  LEGENDARY @map("legendary")
+
+  @@map("achievement_rarity")
 }

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '../../../lib/auth'
 import { prisma } from '../../../lib/prisma'
+import { AchievementService } from '../../../lib/achievement-service'
 
 // Helper function to calculate streak
 function calculateStreak(entries: { date: Date }[]): number {
@@ -242,8 +243,14 @@ export async function POST(request: NextRequest) {
         )
     }
 
+    // Check and update achievements after any progress update
+    const unlockedAchievements = await AchievementService.checkAndUpdateAchievements(player.id);
+
     return NextResponse.json(
-      { message: 'Progress updated successfully' },
+      { 
+        message: 'Progress updated successfully',
+        newAchievements: unlockedAchievements
+      },
       { status: 200 }
     )
   } catch (error) {
