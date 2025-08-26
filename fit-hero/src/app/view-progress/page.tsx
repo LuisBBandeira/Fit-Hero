@@ -1,22 +1,33 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 
 export default function ViewProgressPage() {
+  const { data: session, status } = useSession();
   const [isVisible, setIsVisible] = useState(false);
   const [currentTime, setCurrentTime] = useState('');
   const [weeklyWeight, setWeeklyWeight] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
-  // User progress data (in a real app, this would come from a database)
+  // User progress data from database
   const [progressData, setProgressData] = useState({
-    workoutStreak: 12,
-    mealPlanStreak: 8,
-    totalWorkoutDays: 45,
-    totalMealPlanDays: 32,
-    currentWeight: 70,
-    startingWeight: 85,
-    weightLoss: 15
+    workoutStreak: 0,
+    mealPlanStreak: 0,
+    totalWorkoutDays: 0,
+    totalMealPlanDays: 0,
+    currentWeight: 0,
+    startingWeight: 0,
+    weightLoss: 0,
+    weightLossLastMonth: 0,
+    weightLossLastSixMonths: 0,
+    weightLossLastYear: 0,
+    averageWeightLossPerMonth: 0,
+    lastWorkoutDate: null,
+    lastMealPlanDate: null,
+    lastWeightUpdate: null
   });
 
   useEffect(() => {
@@ -39,22 +50,83 @@ export default function ViewProgressPage() {
     return () => clearInterval(interval);
   }, []);
 
-  const handleWeightSubmit = () => {
+  // Fetch progress data when session is available
+  useEffect(() => {
+    const fetchProgressData = async () => {
+      if (status === 'loading') return;
+      
+      if (!session?.user) {
+        setError('Please log in to view your progress');
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const response = await fetch('/api/progress');
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch progress data');
+        }
+
+        const data = await response.json();
+        setProgressData(data.progress);
+      } catch (err) {
+        console.error('Error fetching progress:', err);
+        setError('Failed to load progress data');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProgressData();
+  }, [session, status]);
+
+  const handleWeightSubmit = async () => {
     if (weeklyWeight && !isNaN(parseFloat(weeklyWeight))) {
       const newWeight = parseFloat(weeklyWeight);
       
-      // Update current weight
-      setProgressData(prev => ({
-        ...prev,
-        currentWeight: newWeight,
-        weightLoss: prev.startingWeight - newWeight
-      }));
-      
-      // Clear input
-      setWeeklyWeight('');
-      
-      // Show success message
-      alert(`Weight updated to ${newWeight}kg successfully!`);
+      try {
+        const response = await fetch('/api/progress', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            type: 'weight',
+            data: {
+              weight: newWeight,
+              date: new Date().toISOString()
+            }
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to update weight');
+        }
+
+        // Update local state
+        setProgressData(prev => ({
+          ...prev,
+          currentWeight: newWeight,
+          weightLoss: prev.startingWeight - newWeight
+        }));
+        
+        // Clear input
+        setWeeklyWeight('');
+        
+        // Show success message
+        alert(`Weight updated to ${newWeight}kg successfully!`);
+
+        // Refresh progress data
+        const progressResponse = await fetch('/api/progress');
+        if (progressResponse.ok) {
+          const data = await progressResponse.json();
+          setProgressData(data.progress);
+        }
+      } catch (err) {
+        console.error('Error updating weight:', err);
+        alert('Failed to update weight. Please try again.');
+      }
     }
   };
 
@@ -102,7 +174,37 @@ export default function ViewProgressPage() {
           </div>
         </div>
 
-        {/* Streak Cards */}
+        {/* Loading State */}
+        {loading && (
+          <div className="text-center py-12">
+            <div className="text-cyan-400 text-xl mb-4 animate-pulse">
+              🔄 LOADING PROGRESS DATA...
+            </div>
+            <div className="text-gray-400">
+              Analyzing your fitness journey...
+            </div>
+          </div>
+        )}
+
+        {/* Error State */}
+        {error && (
+          <div className="text-center py-12">
+            <div className="text-red-400 text-xl mb-4">
+              ❌ ERROR
+            </div>
+            <div className="text-gray-400 mb-4">
+              {error}
+            </div>
+            <Link href="/login" className="text-cyan-400 hover:text-cyan-300 underline">
+              Login to continue
+            </Link>
+          </div>
+        )}
+
+        {/* Progress Content - Only show when not loading and no error */}
+        {!loading && !error && (
+          <>
+            {/* Streak Cards */}
         <div className={`grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 mb-6 md:mb-10 transition-all duration-1000 delay-700 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
           {/* Workout Streak */}
           <div className="border-2 border-green-800 rounded-xl bg-gradient-to-br from-gray-900 to-gray-800 p-4 md:p-8 hover-lift shadow-xl hover:shadow-green-400/20 transition-all duration-300">
@@ -193,21 +295,21 @@ export default function ViewProgressPage() {
               {/* Last Month */}
               <div className="text-center p-4 md:p-6 bg-black rounded-lg border-2 border-green-600 shadow-lg hover:shadow-green-400/20 transition-all duration-300">
                 <div className="text-cyan-400 text-sm md:text-base mb-2 font-bold">LAST MONTH</div>
-                <div className="text-3xl md:text-4xl font-bold text-yellow-400" style={{textShadow: '0 0 10px #fbbf24, 0 0 20px #fbbf24'}}>-2.5kg</div>
+                <div className="text-3xl md:text-4xl font-bold text-yellow-400" style={{textShadow: '0 0 10px #fbbf24, 0 0 20px #fbbf24'}}>-{progressData.weightLossLastMonth.toFixed(1)}kg</div>
                 <div className="text-gray-400 text-xs md:text-sm mt-2">Past 30 days</div>
               </div>
               
               {/* Last 6 Months */}
               <div className="text-center p-4 md:p-6 bg-black rounded-lg border-2 border-green-600 shadow-lg hover:shadow-green-400/20 transition-all duration-300">
                 <div className="text-cyan-400 text-sm md:text-base mb-2 font-bold">LAST 6 MONTHS</div>
-                <div className="text-3xl md:text-4xl font-bold text-green-400" style={{textShadow: '0 0 10px #10b981, 0 0 20px #10b981'}}>-9.5kg</div>
+                <div className="text-3xl md:text-4xl font-bold text-green-400" style={{textShadow: '0 0 10px #10b981, 0 0 20px #10b981'}}>-{progressData.weightLossLastSixMonths.toFixed(1)}kg</div>
                 <div className="text-gray-400 text-xs md:text-sm mt-2">Past 180 days</div>
               </div>
               
               {/* Last Year */}
               <div className="text-center p-4 md:p-6 bg-black rounded-lg border-2 border-green-600 shadow-lg hover:shadow-cyan-400/20 transition-all duration-300">
                 <div className="text-cyan-400 text-sm md:text-base mb-2 font-bold">LAST YEAR</div>
-                <div className="text-3xl md:text-4xl font-bold text-cyan-400" style={{textShadow: '0 0 10px #00ffff, 0 0 20px #00ffff'}}>-15kg</div>
+                <div className="text-3xl md:text-4xl font-bold text-cyan-400" style={{textShadow: '0 0 10px #00ffff, 0 0 20px #00ffff'}}>-{progressData.weightLossLastYear.toFixed(1)}kg</div>
                 <div className="text-gray-400 text-xs md:text-sm mt-2">Past 365 days</div>
               </div>
             </div>
@@ -216,7 +318,7 @@ export default function ViewProgressPage() {
             <div className="mt-6 p-4 bg-gradient-to-r from-gray-800 to-gray-900 rounded-lg border border-green-600">
               <div className="text-center">
                 <div className="text-green-400 text-sm md:text-base font-bold mb-2">AVERAGE WEIGHT LOSS PER MONTH</div>
-                <div className="text-2xl md:text-3xl font-bold text-yellow-400" style={{textShadow: '0 0 10px #fbbf24, 0 0 20px #fbbf24'}}>-1.25kg</div>
+                <div className="text-2xl md:text-3xl font-bold text-yellow-400" style={{textShadow: '0 0 10px #fbbf24, 0 0 20px #fbbf24'}}>-{progressData.averageWeightLossPerMonth.toFixed(1)}kg</div>
                 <div className="text-gray-400 text-xs md:text-sm mt-2">You&apos;re on track to reach your goal! 🎯</div>
               </div>
             </div>
@@ -225,7 +327,7 @@ export default function ViewProgressPage() {
 
         {/* Weekly Weight Input */}
         <div className={`border border-green-800 rounded-lg bg-gray-900 p-4 md:p-6 transition-all duration-1000 delay-1100 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
-                    <div className="flex items-center justify-between mb-4 md:mb-6">
+          <div className="flex items-center justify-between mb-4 md:mb-6">
             <div className="text-green-400 text-lg md:text-xl font-bold">UPDATE WEEKLY WEIGHT</div>
             <div className="text-2xl md:text-3xl animate-bounce-slow">📝</div>
           </div>
@@ -236,7 +338,7 @@ export default function ViewProgressPage() {
                 Enter your current weight (updated weekly)
               </div>
               <div className="text-xs md:text-sm text-cyan-400 bg-black px-2 md:px-3 py-1 rounded border border-cyan-600 inline-block">
-                Last updated: Week {Math.floor(Date.now() / (7 * 24 * 60 * 60 * 1000)) % 52}
+                Last updated: {progressData.lastWeightUpdate ? new Date(progressData.lastWeightUpdate).toLocaleDateString() : 'Never'}
               </div>
             </div>
 
@@ -268,6 +370,8 @@ export default function ViewProgressPage() {
             </div>
           </div>
         </div>
+        </>
+        )}
       </div>
     </div>
   );
