@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, AchievementCategory, AchievementRarity } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
@@ -8,8 +8,8 @@ const achievements = [
     name: 'FIRST STEPS',
     description: 'Complete your first workout session',
     icon: '👟',
-    category: 'WORKOUT',
-    rarity: 'COMMON',
+    category: AchievementCategory.WORKOUT,
+    rarity: AchievementRarity.COMMON,
     points: 10,
     requirement: JSON.stringify({ type: 'workout_count', value: 1 }),
     maxProgress: 1
@@ -18,8 +18,8 @@ const achievements = [
     name: 'WEEK WARRIOR',
     description: 'Complete 7 consecutive days of workouts',
     icon: '🗓️',
-    category: 'WORKOUT',
-    rarity: 'UNCOMMON',
+    category: AchievementCategory.WORKOUT,
+    rarity: AchievementRarity.UNCOMMON,
     points: 25,
     requirement: JSON.stringify({ type: 'workout_streak', value: 7 }),
     maxProgress: 7
@@ -28,8 +28,8 @@ const achievements = [
     name: 'CENTURY CLUB',
     description: 'Complete 100 total workout sessions',
     icon: '💯',
-    category: 'WORKOUT',
-    rarity: 'RARE',
+    category: AchievementCategory.WORKOUT,
+    rarity: AchievementRarity.RARE,
     points: 100,
     requirement: JSON.stringify({ type: 'workout_count', value: 100 }),
     maxProgress: 100
@@ -38,8 +38,8 @@ const achievements = [
     name: 'IRON WILL',
     description: 'Complete 30 consecutive days of workouts',
     icon: '⚡',
-    category: 'WORKOUT',
-    rarity: 'EPIC',
+    category: AchievementCategory.WORKOUT,
+    rarity: AchievementRarity.EPIC,
     points: 150,
     requirement: JSON.stringify({ type: 'workout_streak', value: 30 }),
     maxProgress: 30
@@ -50,8 +50,8 @@ const achievements = [
     name: 'FIRST POUND',
     description: 'Lose your first kilogram',
     icon: '📉',
-    category: 'WEIGHT',
-    rarity: 'COMMON',
+    category: AchievementCategory.WEIGHT,
+    rarity: AchievementRarity.COMMON,
     points: 15,
     requirement: JSON.stringify({ type: 'weight_loss', value: 1 }),
     maxProgress: 1
@@ -60,8 +60,8 @@ const achievements = [
     name: 'TRANSFORMATION',
     description: 'Lose 10 kilograms',
     icon: '🦋',
-    category: 'WEIGHT',
-    rarity: 'RARE',
+    category: AchievementCategory.WEIGHT,
+    rarity: AchievementRarity.RARE,
     points: 200,
     requirement: JSON.stringify({ type: 'weight_loss', value: 10 }),
     maxProgress: 10
@@ -72,8 +72,8 @@ const achievements = [
     name: 'MEAL MASTER',
     description: 'Complete 50 meal plans',
     icon: '🍽️',
-    category: 'NUTRITION',
-    rarity: 'UNCOMMON',
+    category: AchievementCategory.NUTRITION,
+    rarity: AchievementRarity.UNCOMMON,
     points: 30,
     requirement: JSON.stringify({ type: 'meal_count', value: 50 }),
     maxProgress: 50
@@ -82,8 +82,8 @@ const achievements = [
     name: 'HYDRATION HERO',
     description: 'Drink 8 glasses of water for 7 consecutive days',
     icon: '💧',
-    category: 'NUTRITION',
-    rarity: 'COMMON',
+    category: AchievementCategory.NUTRITION,
+    rarity: AchievementRarity.COMMON,
     points: 20,
     requirement: JSON.stringify({ type: 'hydration_streak', value: 7 }),
     maxProgress: 7
@@ -94,8 +94,8 @@ const achievements = [
     name: 'PERFECTIONIST',
     description: 'Complete every daily quest for a full week',
     icon: '⭐',
-    category: 'SPECIAL',
-    rarity: 'LEGENDARY',
+    category: AchievementCategory.SPECIAL,
+    rarity: AchievementRarity.LEGENDARY,
     points: 500,
     requirement: JSON.stringify({ type: 'perfect_week', value: 1 }),
     maxProgress: 1
@@ -104,8 +104,8 @@ const achievements = [
     name: 'EARLY BIRD',
     description: 'Complete workouts before 8 AM for 10 days',
     icon: '🌅',
-    category: 'SPECIAL',
-    rarity: 'EPIC',
+    category: AchievementCategory.SPECIAL,
+    rarity: AchievementRarity.EPIC,
     points: 100,
     requirement: JSON.stringify({ type: 'early_workout', value: 10 }),
     maxProgress: 10

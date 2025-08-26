@@ -146,7 +146,7 @@ export class AchievementService {
     if (workoutSessions.length === 0) return 0;
 
     let streak = 0;
-    let currentDate = new Date();
+    const currentDate = new Date();
     currentDate.setHours(0, 0, 0, 0);
 
     const completedSessions = workoutSessions
@@ -172,7 +172,7 @@ export class AchievementService {
     if (mealEntries.length === 0) return 0;
 
     let streak = 0;
-    let currentDate = new Date();
+    const currentDate = new Date();
     currentDate.setHours(0, 0, 0, 0);
 
     const completedMeals = mealEntries

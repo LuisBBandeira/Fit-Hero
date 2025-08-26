@@ -12,7 +12,7 @@ function calculateStreak(entries: { date: Date }[]): number {
   const sortedEntries = entries.sort((a, b) => b.date.getTime() - a.date.getTime());
   
   let streak = 0;
-  let currentDate = new Date();
+  const currentDate = new Date();
   currentDate.setHours(0, 0, 0, 0);
   
   for (const entry of sortedEntries) {
@@ -110,9 +110,9 @@ export async function GET(request: NextRequest) {
       currentWeight: latestWeight,
       startingWeight,
       weightLoss: startingWeight && latestWeight ? startingWeight - latestWeight : 0,
-      weightLossLastMonth: weightOneMonthAgo - (latestWeight || 0),
-      weightLossLastSixMonths: weightSixMonthsAgo - (latestWeight || 0),
-      weightLossLastYear: weightOneYearAgo - (latestWeight || 0),
+      weightLossLastMonth: weightOneMonthAgo && latestWeight ? weightOneMonthAgo - latestWeight : 0,
+      weightLossLastSixMonths: weightSixMonthsAgo && latestWeight ? weightSixMonthsAgo - latestWeight : 0,
+      weightLossLastYear: weightOneYearAgo && latestWeight ? weightOneYearAgo - latestWeight : 0,
       averageWeightLossPerMonth: startingWeight && latestWeight && player.weightEntries.length > 0 
         ? (startingWeight - latestWeight) / Math.max(1, player.weightEntries.length / 4) 
         : 0,
