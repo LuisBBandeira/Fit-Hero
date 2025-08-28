@@ -7,112 +7,76 @@ import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import LogoutButton from '@/components/LogoutButton';
 
+interface DashboardData {
+  player: {
+    name: string;
+    level: number;
+    currentXP: number;
+    xpToNextLevel: number;
+    xpPercentage: number;
+    character: {
+      id: string;
+      name: string;
+      imagePath: string;
+    };
+  };
+  workoutPlan: Array<{
+    id: string;
+    name: string;
+    exercises: Array<{
+      id: string;
+      name: string;
+      completed: boolean;
+      xp: number;
+    }>;
+    icon: string;
+  }>;
+  mealPlan: {
+    [key: string]: {
+      name: string;
+      calories: number;
+      protein: string;
+      carbs: string;
+      fat: string;
+      ingredients: string[];
+      icon: string;
+      completed: boolean;
+    };
+  };
+  stats: {
+    currentWeight?: number;
+    workoutStreak: number;
+    mealStreak: number;
+    totalWorkoutDays: number;
+    totalMealPlanDays: number;
+  };
+}
+
 export default function DashboardPage() {
   const router = useRouter();
   const { data: session, status } = useSession();
   const [isVisible, setIsVisible] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString());
-  
-  // Player stats (in a real app, this would come from a database/API)
-  const [playerData] = useState({
-    name: 'FitWarrior_2024',
-    level: 12,
-    currentXP: 2847,
-    xpToNextLevel: 3500,
-    character: {
-      id: 'warrior',
-      name: 'FITNESS WARRIOR',
-      imagePath: '/orange_wariar%20/rotations/south.png'
-    }
-  });
+  const [dashboardData, setDashboardData] = useState<DashboardData | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  // Daily workout plan
-  const [workoutPlan, setWorkoutPlan] = useState([
-    {
-      id: 'warmup',
-      name: 'WARM-UP',
-      exercises: [
-        { id: 'jumping-jacks', name: '50 Jumping Jacks', completed: false, xp: 50 },
-        { id: 'arm-circles', name: '20 Arm Circles (each direction)', completed: true, xp: 30 },
-        { id: 'leg-swings', name: '15 Leg Swings (each leg)', completed: false, xp: 40 }
-      ],
-      icon: '🔥'
-    },
-    {
-      id: 'strength',
-      name: 'STRENGTH TRAINING',
-      exercises: [
-        { id: 'push-ups', name: '3 sets of 15 Push-ups', completed: false, xp: 100 },
-        { id: 'squats', name: '3 sets of 20 Squats', completed: false, xp: 120 },
-        { id: 'plank', name: '3 sets of 30s Plank', completed: true, xp: 80 },
-        { id: 'lunges', name: '3 sets of 12 Lunges (each leg)', completed: false, xp: 90 }
-      ],
-      icon: '💪'
-    },
-    {
-      id: 'cardio',
-      name: 'CARDIO BLAST',
-      exercises: [
-        { id: 'burpees', name: '3 sets of 10 Burpees', completed: false, xp: 150 },
-        { id: 'mountain-climbers', name: '3 sets of 20 Mountain Climbers', completed: false, xp: 110 },
-        { id: 'high-knees', name: '3 sets of 30s High Knees', completed: false, xp: 80 }
-      ],
-      icon: '❤️'
-    },
-    {
-      id: 'cooldown',
-      name: 'COOL DOWN',
-      exercises: [
-        { id: 'stretching', name: '10 minutes Full Body Stretching', completed: false, xp: 60 },
-        { id: 'breathing', name: '5 minutes Deep Breathing', completed: false, xp: 40 }
-      ],
-      icon: '🧘‍♂️'
+  // Fetch dashboard data from API
+  const fetchDashboardData = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch('/api/dashboard');
+      if (response.ok) {
+        const result = await response.json();
+        setDashboardData(result.data);
+      } else {
+        console.error('Failed to fetch dashboard data');
+      }
+    } catch (error) {
+      console.error('Error fetching dashboard data:', error);
+    } finally {
+      setLoading(false);
     }
-  ]);
-
-  // Daily meal plan
-  const [mealPlan, setMealPlan] = useState({
-    breakfast: {
-      name: 'PROTEIN POWER BOWL',
-      calories: 450,
-      protein: '35g',
-      carbs: '25g',
-      fat: '18g',
-      ingredients: ['Oatmeal', 'Greek Yogurt', 'Berries', 'Almonds', 'Honey'],
-      icon: '🥣',
-      completed: false
-    },
-    lunch: {
-      name: 'WARRIOR SALAD',
-      calories: 520,
-      protein: '42g',
-      carbs: '30g',
-      fat: '22g',
-      ingredients: ['Grilled Chicken', 'Mixed Greens', 'Quinoa', 'Avocado', 'Olive Oil'],
-      icon: '🥗',
-      completed: true
-    },
-    snack: {
-      name: 'ENERGY BOOST',
-      calories: 200,
-      protein: '15g',
-      carbs: '18g',
-      fat: '8g',
-      ingredients: ['Apple', 'Almond Butter', 'Protein Powder'],
-      icon: '🍎',
-      completed: false
-    },
-    dinner: {
-      name: 'HERO FEAST',
-      calories: 680,
-      protein: '48g',
-      carbs: '55g',
-      fat: '25g',
-      ingredients: ['Salmon', 'Sweet Potato', 'Broccoli', 'Brown Rice', 'Herbs'],
-      icon: '🍽️',
-      completed: false
-    }
-  });
+  };
 
   useEffect(() => {
     // Check authentication status
@@ -127,6 +91,7 @@ export default function DashboardPage() {
     if (status === 'authenticated') {
       console.log('✅ Dashboard: User authenticated, loading dashboard');
       setIsVisible(true);
+      fetchDashboardData();
     }
     
     // Update time every second
@@ -137,65 +102,175 @@ export default function DashboardPage() {
     return () => clearInterval(timeInterval);
   }, [status, router]);
 
-  const handleExerciseToggle = (sectionId: string, exerciseId: string) => {
-    setWorkoutPlan(prevPlan => 
-      prevPlan.map(section => 
-        section.id === sectionId 
-          ? {
-              ...section,
-              exercises: section.exercises.map(exercise =>
-                exercise.id === exerciseId 
-                  ? { ...exercise, completed: !exercise.completed }
-                  : exercise
-              )
-            }
-          : section
-      )
+  const handleExerciseToggle = async (sectionId: string, exerciseId: string) => {
+    if (!dashboardData) return;
+
+    // Find the exercise being toggled to get its XP value
+    const section = dashboardData.workoutPlan.find(s => s.id === sectionId);
+    const exercise = section?.exercises.find(e => e.id === exerciseId);
+    if (!exercise) return;
+
+    const wasCompleted = exercise.completed;
+    const exerciseXP = exercise.xp;
+
+    // Update local state immediately for better UX
+    const updatedWorkoutPlan = dashboardData.workoutPlan.map(section => 
+      section.id === sectionId 
+        ? {
+            ...section,
+            exercises: section.exercises.map(exercise =>
+              exercise.id === exerciseId 
+                ? { ...exercise, completed: !exercise.completed }
+                : exercise
+            )
+          }
+        : section
     );
+
+    // Calculate XP change based on checking/unchecking
+    let xpChange = 0;
+    if (!wasCompleted) {
+      // Checking the exercise - add XP
+      xpChange = exerciseXP;
+    } else {
+      // Unchecking the exercise - subtract XP
+      xpChange = -exerciseXP;
+    }
+
+    // Update XP and level
+    const newTotalXP = Math.max(0, dashboardData.player.currentXP + xpChange);
+    const newLevel = Math.floor(newTotalXP / 100) + 1;
+
+    setDashboardData({
+      ...dashboardData,
+      workoutPlan: updatedWorkoutPlan,
+      player: {
+        ...dashboardData.player,
+        currentXP: newTotalXP,
+        level: newLevel,
+        xpPercentage: (newTotalXP % 100)
+      }
+    });
+
+    // Make API call to persist the individual exercise completion and XP change
+    try {
+      await fetch('/api/dashboard', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          type: 'toggle_exercise',
+          data: {
+            exerciseId,
+            completed: !wasCompleted,
+            xpChange
+          }
+        }),
+      });
+    } catch (error) {
+      console.error('Error toggling exercise:', error);
+    }
   };
 
-  const handleMealToggle = (mealType: string) => {
-    setMealPlan(prevMeal => ({
-      ...prevMeal,
-      [mealType]: {
-        ...prevMeal[mealType as keyof typeof prevMeal],
-        completed: !prevMeal[mealType as keyof typeof prevMeal].completed
+  const handleMealToggle = async (mealType: string) => {
+    if (!dashboardData) return;
+
+    const wasCompleted = dashboardData.mealPlan[mealType].completed;
+    const mealXP = 25; // XP for each meal
+
+    // Calculate XP change based on checking/unchecking
+    let xpChange = 0;
+    if (!wasCompleted) {
+      // Checking the meal - add XP
+      xpChange = mealXP;
+    } else {
+      // Unchecking the meal - subtract XP
+      xpChange = -mealXP;
+    }
+
+    // Update XP and level
+    const newTotalXP = Math.max(0, dashboardData.player.currentXP + xpChange);
+    const newLevel = Math.floor(newTotalXP / 100) + 1;
+
+    // Update local state immediately for better UX
+    setDashboardData({
+      ...dashboardData,
+      mealPlan: {
+        ...dashboardData.mealPlan,
+        [mealType]: {
+          ...dashboardData.mealPlan[mealType],
+          completed: !wasCompleted
+        }
+      },
+      player: {
+        ...dashboardData.player,
+        currentXP: newTotalXP,
+        level: newLevel,
+        xpPercentage: (newTotalXP % 100)
       }
-    }));
+    });
+
+    // Make API call to persist the meal completion and XP change
+    try {
+      await fetch('/api/dashboard', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          type: 'toggle_meal',
+          data: {
+            mealType,
+            mealCompleted: !wasCompleted,
+            mealXpChange: xpChange,
+            calories: dashboardData.mealPlan[mealType].calories
+          }
+        }),
+      });
+    } catch (error) {
+      console.error('Error toggling meal:', error);
+    }
   };
 
   const getWorkoutProgress = () => {
-    const totalExercises = workoutPlan.reduce((total, section) => total + section.exercises.length, 0);
-    const completedExercises = workoutPlan.reduce((total, section) => 
+    if (!dashboardData) return 0;
+    const totalExercises = dashboardData.workoutPlan.reduce((total, section) => total + section.exercises.length, 0);
+    const completedExercises = dashboardData.workoutPlan.reduce((total, section) => 
       total + section.exercises.filter(exercise => exercise.completed).length, 0
     );
     return totalExercises > 0 ? (completedExercises / totalExercises) * 100 : 0;
   };
 
   const getTotalXPEarned = () => {
-    return workoutPlan.reduce((total, section) => 
+    if (!dashboardData) return 0;
+    return dashboardData.workoutPlan.reduce((total, section) => 
       total + section.exercises.filter(exercise => exercise.completed)
         .reduce((sectionTotal, exercise) => sectionTotal + exercise.xp, 0), 0
     );
   };
 
   const getTotalPossibleXP = () => {
-    return workoutPlan.reduce((total, section) => 
+    if (!dashboardData) return 0;
+    return dashboardData.workoutPlan.reduce((total, section) => 
       total + section.exercises.reduce((sectionTotal, exercise) => sectionTotal + exercise.xp, 0), 0
     );
   };
 
   const getXPPercentage = () => {
-    return (playerData.currentXP / playerData.xpToNextLevel) * 100;
+    if (!dashboardData) return 0;
+    return dashboardData.player.xpPercentage;
   };
 
   const getTotalDailyCalories = () => {
-    return Object.values(mealPlan).reduce((total, meal) => total + meal.calories, 0);
+    if (!dashboardData) return 0;
+    return Object.values(dashboardData.mealPlan).reduce((total, meal) => total + meal.calories, 0);
   };
 
   const getMealProgress = () => {
-    const totalMeals = Object.keys(mealPlan).length;
-    const completedMeals = Object.values(mealPlan).filter(meal => meal.completed).length;
+    if (!dashboardData) return 0;
+    const totalMeals = Object.keys(dashboardData.mealPlan).length;
+    const completedMeals = Object.values(dashboardData.mealPlan).filter(meal => meal.completed).length;
     return Math.round((completedMeals / totalMeals) * 100);
   };
 
@@ -209,13 +284,15 @@ export default function DashboardPage() {
   };
 
   // Show loading state while checking authentication
-  if (status === 'loading') {
+  if (status === 'loading' || loading) {
     return (
       <div className="min-h-screen bg-black text-green-400 font-mono flex items-center justify-center">
         <div className="text-center">
           <div className="text-6xl mb-4 animate-pulse">⚡</div>
           <div className="text-xl">Loading Dashboard...</div>
-          <div className="text-sm text-gray-400 mt-2">Authenticating user...</div>
+          <div className="text-sm text-gray-400 mt-2">
+            {status === 'loading' ? 'Authenticating user...' : 'Fetching player data...'}
+          </div>
         </div>
       </div>
     );
@@ -234,6 +311,27 @@ export default function DashboardPage() {
             className="px-4 py-2 border border-red-600 rounded hover:bg-red-900/20 transition-colors"
           >
             Go to Login
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // Show loading state if dashboard data is not available
+  if (!dashboardData) {
+    return (
+      <div className="min-h-screen bg-black text-green-400 font-mono flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-6xl mb-4 animate-pulse">🏃‍♂️</div>
+          <div className="text-xl">No player data found</div>
+          <div className="text-sm text-gray-400 mt-2">
+            Please complete your character creation first
+          </div>
+          <button 
+            onClick={() => router.push('/character-creation')}
+            className="mt-4 px-4 py-2 border border-green-600 rounded hover:bg-green-900/20 transition-colors"
+          >
+            Create Character
           </button>
         </div>
       </div>
@@ -285,15 +383,15 @@ export default function DashboardPage() {
             <div className="border border-green-800 rounded-lg bg-gray-900 p-6">
               <div className="flex items-center space-x-4">
                 <Image 
-                  src={playerData.character.imagePath}
-                  alt={playerData.character.name}
+                  src={dashboardData.player.character.imagePath}
+                  alt={dashboardData.player.character.name}
                   width={64}
                   height={64}
                   className="pixel-character-image filter-orange"
                 />
                 <div>
-                  <div className="text-cyan-400 text-xl font-bold">{playerData.name}</div>
-                  <div className="text-green-400 text-sm">{playerData.character.name}</div>
+                  <div className="text-cyan-400 text-xl font-bold">{dashboardData.player.name}</div>
+                  <div className="text-green-400 text-sm">{dashboardData.player.character.name}</div>
                   <div className="text-gray-400 text-xs">FITNESS WARRIOR</div>
                 </div>
               </div>
@@ -303,9 +401,9 @@ export default function DashboardPage() {
             <div className="border border-green-800 rounded-lg bg-gray-900 p-6">
               <div className="text-center">
                 <div className="text-green-400 text-sm mb-2">LEVEL</div>
-                <div className="text-cyan-400 text-3xl font-bold mb-2">{playerData.level}</div>
+                <div className="text-cyan-400 text-3xl font-bold mb-2">{dashboardData.player.level}</div>
                 <div className="text-gray-400 text-xs">
-                  {playerData.currentXP} / {playerData.xpToNextLevel} XP
+                  {dashboardData.player.currentXP} / {dashboardData.player.xpToNextLevel} XP
                 </div>
               </div>
             </div>
@@ -320,7 +418,7 @@ export default function DashboardPage() {
                 ></div>
               </div>
               <div className="text-cyan-400 text-xs text-center">
-                {Math.round(getXPPercentage())}% to Level {playerData.level + 1}
+                {Math.round(getXPPercentage())}% to Level {dashboardData.player.level + 1}
               </div>
             </div>
           </div>
@@ -339,7 +437,7 @@ export default function DashboardPage() {
               </div>
 
               <div className="space-y-6">
-                {workoutPlan.map((section) => (
+                {dashboardData.workoutPlan.map((section) => (
                   <div 
                     key={section.id}
                     className="border border-green-700 rounded-lg p-4 bg-gray-800"
@@ -396,9 +494,9 @@ export default function DashboardPage() {
                 <div className="flex items-center justify-between mb-2">
                   <div className="text-cyan-400 text-sm font-bold">WORKOUT PROGRESS</div>
                   <div className="text-yellow-400 text-sm font-bold">
-                    {workoutPlan.reduce((total, section) => 
+                    {dashboardData.workoutPlan.reduce((total, section) => 
                       total + section.exercises.filter(ex => ex.completed).length, 0
-                    )} / {workoutPlan.reduce((total, section) => total + section.exercises.length, 0)} EXERCISES
+                    )} / {dashboardData.workoutPlan.reduce((total, section) => total + section.exercises.length, 0)} EXERCISES
                   </div>
                 </div>
                 <div className="w-full bg-gray-700 rounded-full h-3 mb-3">
@@ -430,7 +528,7 @@ export default function DashboardPage() {
               </div>
 
               <div className="space-y-4">
-                {Object.entries(mealPlan).map(([mealType, meal]) => (
+                {Object.entries(dashboardData.mealPlan).map(([mealType, meal]) => (
                   <div 
                     key={mealType}
                     className={`border rounded-lg p-4 bg-gray-800 hover:border-green-500 transition-all duration-300 ${
