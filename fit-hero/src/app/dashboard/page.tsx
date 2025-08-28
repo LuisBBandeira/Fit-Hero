@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import LogoutButton from '@/components/LogoutButton';
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -218,9 +219,11 @@ export default function DashboardPage() {
       <div className={`bg-gray-800 p-3 border-b border-green-800 transition-all duration-1000 delay-300 ${isVisible ? 'animate-slide-in-left' : 'opacity-0'}`}>
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center space-x-6">
-            <Link href="/login" className="text-gray-400 hover:text-green-400 transition-colors duration-300">
-              LOGOUT
-            </Link>
+            <LogoutButton 
+              redirectTo="/"
+              variant="default"
+              className="font-mono"
+            />
           </div>
           <div className="text-cyan-400 text-sm font-mono">
             ONLINE: {currentTime}
