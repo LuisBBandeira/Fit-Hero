@@ -77,12 +77,13 @@ model Player {
   age                 Int?
   height              Float?
   weight              Float?
+  exerciseCompletions ExerciseCompletion[]
   mealPlanEntries     MealPlanEntry[]
+  playerAchievements  PlayerAchievement[]
   user                User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
   progressStats       ProgressStats?
   weightEntries       WeightEntry[]
   workoutSessions     WorkoutSession[]
-  playerAchievements  PlayerAchievement[]
 
   @@map("players")
 }
@@ -128,6 +129,19 @@ model WeightEntry {
   @@map("weight_entries")
 }
 
+model ExerciseCompletion {
+  id         String   @id @default(cuid())
+  playerId   String   @map("player_id")
+  exerciseId String   @map("exercise_id")
+  date       DateTime @default(now())
+  completed  Boolean  @default(true)
+  createdAt  DateTime @default(now()) @map("created_at")
+  player     Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
+
+  @@unique([playerId, exerciseId, date])
+  @@map("exercise_completions")
+}
+
 model ProgressStats {
   id                   String    @id @default(cuid())
   playerId             String    @unique @map("player_id")
@@ -147,6 +161,38 @@ model ProgressStats {
   player               Player    @relation(fields: [playerId], references: [id], onDelete: Cascade)
 
   @@map("progress_stats")
+}
+
+model Achievement {
+  id                 String              @id @default(cuid())
+  name               String              @unique
+  description        String
+  icon               String
+  category           AchievementCategory
+  rarity             AchievementRarity
+  points             Int
+  requirement        String
+  maxProgress        Int?
+  createdAt          DateTime            @default(now()) @map("created_at")
+  updatedAt          DateTime            @updatedAt @map("updated_at")
+  playerAchievements PlayerAchievement[]
+
+  @@map("achievements")
+}
+
+model PlayerAchievement {
+  id            String      @id @default(cuid())
+  playerId      String      @map("player_id")
+  achievementId String      @map("achievement_id")
+  unlockedAt    DateTime?   @map("unlocked_at")
+  progress      Int         @default(0)
+  createdAt     DateTime    @default(now()) @map("created_at")
+  updatedAt     DateTime    @updatedAt @map("updated_at")
+  achievement   Achievement @relation(fields: [achievementId], references: [id], onDelete: Cascade)
+  player        Player      @relation(fields: [playerId], references: [id], onDelete: Cascade)
+
+  @@unique([playerId, achievementId])
+  @@map("player_achievements")
 }
 
 enum Character {
@@ -194,45 +240,11 @@ enum meal_type {
   snack
 }
 
-model Achievement {
-  id          String   @id @default(cuid())
-  name        String   @unique
-  description String
-  icon        String
-  category    AchievementCategory
-  rarity      AchievementRarity
-  points      Int
-  requirement String // JSON string describing the requirement (e.g., {"type": "workout_streak", "value": 7})
-  maxProgress Int?     // For progressive achievements
-  createdAt   DateTime @default(now()) @map("created_at")
-  updatedAt   DateTime @updatedAt @map("updated_at")
-  
-  playerAchievements PlayerAchievement[]
-
-  @@map("achievements")
-}
-
-model PlayerAchievement {
-  id            String    @id @default(cuid())
-  playerId      String    @map("player_id")
-  achievementId String    @map("achievement_id")
-  unlockedAt    DateTime? @map("unlocked_at")
-  progress      Int       @default(0)
-  createdAt     DateTime  @default(now()) @map("created_at")
-  updatedAt     DateTime  @updatedAt @map("updated_at")
-  
-  player      Player      @relation(fields: [playerId], references: [id], onDelete: Cascade)
-  achievement Achievement @relation(fields: [achievementId], references: [id], onDelete: Cascade)
-
-  @@unique([playerId, achievementId])
-  @@map("player_achievements")
-}
-
 enum AchievementCategory {
-  WORKOUT    @map("workout")
-  WEIGHT     @map("weight")
-  NUTRITION  @map("nutrition")
-  SPECIAL    @map("special")
+  WORKOUT   @map("workout")
+  WEIGHT    @map("weight")
+  NUTRITION @map("nutrition")
+  SPECIAL   @map("special")
 
   @@map("achievement_category")
 }
