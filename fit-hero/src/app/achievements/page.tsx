@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 interface Achievement {
@@ -20,6 +21,7 @@ interface Achievement {
 
 export default function AchievementsPage() {
   const { data: session, status } = useSession();
+  const router = useRouter();
   const [isVisible, setIsVisible] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString());
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -28,13 +30,20 @@ export default function AchievementsPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (status === 'authenticated') {
-      fetchAchievements();
-    } else if (status === 'unauthenticated') {
-      setError('Please log in to view achievements');
-      setLoading(false);
+    // Check authentication status first
+    if (status === 'loading') return; // Still loading
+    
+    if (status === 'unauthenticated') {
+      console.log('🚫 Achievements: User not authenticated, redirecting to login');
+      router.push('/login');
+      return;
     }
-  }, [session, status]);
+
+    if (status === 'authenticated') {
+      console.log('✅ Achievements: User authenticated, loading achievements');
+      fetchAchievements();
+    }
+  }, [status, router]);
 
   const fetchAchievements = async () => {
     try {

@@ -3,11 +3,13 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import LogoutButton from '@/components/LogoutButton';
 
 export default function DashboardPage() {
   const router = useRouter();
+  const { data: session, status } = useSession();
   const [isVisible, setIsVisible] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString());
   
@@ -113,7 +115,19 @@ export default function DashboardPage() {
   });
 
   useEffect(() => {
-    setIsVisible(true);
+    // Check authentication status
+    if (status === 'loading') return; // Still loading
+    
+    if (status === 'unauthenticated') {
+      console.log('🚫 Dashboard: User not authenticated, redirecting to login');
+      router.push('/login');
+      return;
+    }
+
+    if (status === 'authenticated') {
+      console.log('✅ Dashboard: User authenticated, loading dashboard');
+      setIsVisible(true);
+    }
     
     // Update time every second
     const timeInterval = setInterval(() => {
@@ -121,7 +135,7 @@ export default function DashboardPage() {
     }, 1000);
     
     return () => clearInterval(timeInterval);
-  }, []);
+  }, [status, router]);
 
   const handleExerciseToggle = (sectionId: string, exerciseId: string) => {
     setWorkoutPlan(prevPlan => 
@@ -193,6 +207,38 @@ export default function DashboardPage() {
     if (progress >= 25) return "BEHIND";
     return "START NOW";
   };
+
+  // Show loading state while checking authentication
+  if (status === 'loading') {
+    return (
+      <div className="min-h-screen bg-black text-green-400 font-mono flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-6xl mb-4 animate-pulse">⚡</div>
+          <div className="text-xl">Loading Dashboard...</div>
+          <div className="text-sm text-gray-400 mt-2">Authenticating user...</div>
+        </div>
+      </div>
+    );
+  }
+
+  // Show unauthorized state (shouldn't happen due to middleware, but good fallback)
+  if (status === 'unauthenticated') {
+    return (
+      <div className="min-h-screen bg-black text-red-400 font-mono flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-6xl mb-4">🚫</div>
+          <div className="text-xl mb-4">Access Denied</div>
+          <div className="text-sm text-gray-400 mb-4">Please log in to access the dashboard</div>
+          <button 
+            onClick={() => router.push('/login')}
+            className="px-4 py-2 border border-red-600 rounded hover:bg-red-900/20 transition-colors"
+          >
+            Go to Login
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-black text-green-400 font-mono relative overflow-hidden">
