@@ -84,7 +84,7 @@ export default function DashboardPage() {
     
     if (status === 'unauthenticated') {
       console.log('🚫 Dashboard: User not authenticated, redirecting to login');
-      router.push('/login');
+      router.replace('/login');
       return;
     }
 
@@ -293,25 +293,6 @@ export default function DashboardPage() {
           <div className="text-sm text-gray-400 mt-2">
             {status === 'loading' ? 'Authenticating user...' : 'Fetching player data...'}
           </div>
-        </div>
-      </div>
-    );
-  }
-
-  // Show unauthorized state (shouldn't happen due to middleware, but good fallback)
-  if (status === 'unauthenticated') {
-    return (
-      <div className="min-h-screen bg-black text-red-400 font-mono flex items-center justify-center">
-        <div className="text-center">
-          <div className="text-6xl mb-4">🚫</div>
-          <div className="text-xl mb-4">Access Denied</div>
-          <div className="text-sm text-gray-400 mb-4">Please log in to access the dashboard</div>
-          <button 
-            onClick={() => router.push('/login')}
-            className="px-4 py-2 border border-red-600 rounded hover:bg-red-900/20 transition-colors"
-          >
-            Go to Login
-          </button>
         </div>
       </div>
     );
