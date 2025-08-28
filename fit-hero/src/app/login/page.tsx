@@ -54,8 +54,8 @@ export default function LoginPage() {
       if (result?.error) {
         setError('Authentication failed. Please try again.');
       } else {
-        // Successful login
-        router.push('/dashboard');
+        // Successful login - use smart callback to determine redirect
+        router.push('/auth/callback');
       }
     } catch (error) {
       setError('An error occurred. Please try again.');
@@ -74,7 +74,7 @@ export default function LoginPage() {
   const handleSocialLogin = async (provider: string) => {
     setIsLoading(true);
     try {
-      await signIn(provider, { callbackUrl: '/dashboard' });
+      await signIn(provider, { callbackUrl: '/auth/callback' });
     } catch (error) {
       setError(`Failed to sign in with ${provider}`);
       setIsLoading(false);

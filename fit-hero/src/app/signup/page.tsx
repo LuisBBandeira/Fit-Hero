@@ -76,7 +76,7 @@ export default function SignupPage() {
         });
         
         if (signInResult?.ok) {
-          router.push('/character-creation');
+          router.push('/auth/callback');
         } else {
           setSuccess('Account created successfully! Please log in.');
           setTimeout(() => {
@@ -117,7 +117,7 @@ export default function SignupPage() {
   const handleSocialSignup = async (provider: string) => {
     setIsLoading(true);
     try {
-      await signIn(provider, { callbackUrl: '/character-creation' });
+      await signIn(provider, { callbackUrl: '/auth/callback' });
     } catch (error) {
       setError(`Failed to sign up with ${provider}`);
       setIsLoading(false);

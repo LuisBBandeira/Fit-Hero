@@ -17,6 +17,7 @@ export default withAuth(
           '/',                    // Root page
           '/login',              // Login page
           '/signup',             // Signup page
+          '/auth/callback',      // Auth callback page for smart redirection
           // Note: /character-creation requires authentication (accessed after login)
           // Note: /dashboard, /settings, /achievements, /view-progress require authentication
         ]
@@ -27,6 +28,11 @@ export default withAuth(
           '/api/auth/signin',    // Custom signin API
           '/api/auth/signup',    // Custom signup API
         ]
+
+        // Semi-protected API routes (require authentication but are used in auth flow)
+        const authFlowApiRoutes = [
+          '/api/user/character-status', // Used in auth callback to determine redirect
+        ]
         
         // Check if the current path is a public route
         const isPublicRoute = publicRoutes.includes(pathname)
@@ -35,9 +41,19 @@ export default withAuth(
         const isPublicApiRoute = publicApiRoutes.some(route => 
           pathname.startsWith(route)
         )
+
+        // Check if the current path is an auth flow API route (requires auth but allowed in callback)
+        const isAuthFlowApiRoute = authFlowApiRoutes.some(route =>
+          pathname.startsWith(route)
+        )
         
         // Allow access to public routes regardless of authentication status
         if (isPublicRoute || isPublicApiRoute) {
+          return true
+        }
+
+        // Allow auth flow API routes if user has a token
+        if (isAuthFlowApiRoute && !!token) {
           return true
         }
         
