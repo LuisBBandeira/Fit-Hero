@@ -6,21 +6,64 @@ export async function POST(request: NextRequest) {
   try {
     const { email, password, name } = await request.json()
 
-    if (!email || !password) {
+    if (!email || !password || !name) {
       return NextResponse.json(
-        { error: 'Email and password are required' },
+        { error: 'Name, email and password are required' },
         { status: 400 }
       )
     }
 
-    // Check if user already exists
+    // Check if user already exists with detailed account information
     const existingUser = await prisma.user.findUnique({
-      where: { email }
+      where: { email },
+      include: {
+        accounts: true
+      }
     })
 
     if (existingUser) {
+      // Check if user has OAuth accounts
+      const hasGoogleAccount = existingUser.accounts.some(account => account.provider === 'google')
+      const hasGithubAccount = existingUser.accounts.some(account => account.provider === 'github')
+      const hasPassword = existingUser.password !== null
+
+      let errorMessage = 'This email is already registered'
+
+      if (hasGoogleAccount && hasGithubAccount && hasPassword) {
+        errorMessage = 'This email is already registered with Google, GitHub, and email/password login methods.'
+      } else if (hasGoogleAccount && hasGithubAccount) {
+        errorMessage = 'This email is already registered with Google and GitHub login methods. Please use one of those to sign in.'
+      } else if (hasGoogleAccount && hasPassword) {
+        errorMessage = 'This email is already registered with Google and email/password login methods. Please use one of those to sign in.'
+      } else if (hasGithubAccount && hasPassword) {
+        errorMessage = 'This email is already registered with GitHub and email/password login methods. Please use one of those to sign in.'
+      } else if (hasGoogleAccount) {
+        errorMessage = 'This email is already registered with a Google account. Please use Google login to sign in.'
+      } else if (hasGithubAccount) {
+        errorMessage = 'This email is already registered with a GitHub account. Please use GitHub login to sign in.'
+      } else if (hasPassword) {
+        errorMessage = 'This email is already registered. Please use the login page to sign in.'
+      }
+
       return NextResponse.json(
-        { error: 'User already exists' },
+        { error: errorMessage },
+        { status: 400 }
+      )
+    }
+
+    // Check if username/name is already taken
+    const existingUserByName = await prisma.user.findFirst({
+      where: { 
+        name: {
+          equals: name,
+          mode: 'insensitive'
+        }
+      }
+    })
+
+    if (existingUserByName) {
+      return NextResponse.json(
+        { error: 'This username is already taken. Please choose a different username.' },
         { status: 400 }
       )
     }

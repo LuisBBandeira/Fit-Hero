@@ -41,10 +41,19 @@ export const authOptions: NextAuthOptions = {
         const user = await prisma.user.findUnique({
           where: {
             email: credentials.email
+          },
+          include: {
+            accounts: true
           }
         })
 
-        if (!user || !user.password) {
+        if (!user) {
+          return null
+        }
+
+        // If user doesn't have a password (OAuth only), still return null
+        // The specific error handling is done in our custom API route
+        if (!user.password) {
           return null
         }
 

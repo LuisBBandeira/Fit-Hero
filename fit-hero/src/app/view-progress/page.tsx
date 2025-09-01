@@ -154,22 +154,23 @@ export default function ViewProgressPage() {
       {/* Navigation */}
       <div className={`bg-gray-800 p-3 border-b border-green-800 transition-all duration-1000 delay-300 ${isVisible ? 'animate-slide-in-left' : 'opacity-0'}`}>
         <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <Link href="/dashboard" className="text-cyan-400 hover:text-cyan-300 transition-colors duration-300 hover-glow">
+          <Link href="/dashboard" className="text-cyan-400 hover:text-cyan-300 transition-colors duration-300 hover-glow text-xs sm:text-sm md:text-base">
             ← BACK_TO_DASHBOARD
           </Link>
-          <div className="text-cyan-400 text-sm font-mono bg-black px-3 py-1 rounded border border-cyan-600">
-            $ view_progress --analytics --stats
+          <div className="text-cyan-400 text-xs sm:text-sm font-mono bg-black px-2 sm:px-3 py-1 rounded border border-cyan-600 whitespace-nowrap overflow-hidden">
+            <span className="hidden md:inline">$ view_progress --analytics --stats</span>
+            <span className="md:hidden">$ view_progress</span>
           </div>
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto p-4 sm:p-6">
+      <div className="max-w-6xl mx-auto p-3 sm:p-4 md:p-6">
         {/* Page Title */}
-        <div className={`text-center mb-8 transition-all duration-1000 delay-500 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
-          <div className="text-green-400 text-3xl font-bold mb-4 animate-pulse">
+        <div className={`text-center mb-4 md:mb-8 transition-all duration-1000 delay-500 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
+          <div className="text-green-400 text-2xl md:text-3xl font-bold mb-2 md:mb-4 animate-pulse">
             📊 PROGRESS ANALYTICS
           </div>
-          <div className="text-gray-300 text-lg mb-4">
+          <div className="text-gray-300 text-sm md:text-lg mb-2 md:mb-4">
             Track your fitness journey and achievements
           </div>
         </div>
@@ -205,25 +206,25 @@ export default function ViewProgressPage() {
         {!loading && !error && (
           <>
             {/* Streak Cards */}
-        <div className={`grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 mb-6 md:mb-10 transition-all duration-1000 delay-700 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
+        <div className={`grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-8 mb-4 md:mb-10 transition-all duration-1000 delay-700 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
           {/* Workout Streak */}
-          <div className="border-2 border-green-800 rounded-xl bg-gradient-to-br from-gray-900 to-gray-800 p-4 md:p-8 hover-lift shadow-xl hover:shadow-green-400/20 transition-all duration-300">
-            <div className="flex items-center justify-between mb-4 md:mb-6">
-              <div className="text-green-400 text-lg md:text-2xl font-bold">WORKOUT STREAK</div>
-              <div className="text-3xl md:text-5xl animate-bounce-slow">🔥</div>
+          <div className="border-2 border-green-800 rounded-xl bg-gradient-to-br from-gray-900 to-gray-800 p-3 md:p-8 hover-lift shadow-xl hover:shadow-green-400/20 transition-all duration-300">
+            <div className="flex items-center justify-between mb-3 md:mb-6">
+              <div className="text-green-400 text-sm md:text-2xl font-bold">WORKOUT STREAK</div>
+              <div className="text-2xl md:text-5xl animate-bounce-slow">🔥</div>
             </div>
             
             <div className="text-center">
-              <div className="text-4xl md:text-7xl font-bold text-cyan-400 mb-2 md:mb-3 drop-shadow-lg" style={{textShadow: '0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00ffff'}}>
+              <div className="text-3xl md:text-7xl font-bold text-cyan-400 mb-1 md:mb-3 drop-shadow-lg" style={{textShadow: '0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00ffff'}}>
                 {progressData.workoutStreak}
               </div>
-              <div className="text-gray-300 text-base md:text-xl mb-4 md:mb-6 font-semibold">DAYS IN A ROW</div>
+              <div className="text-gray-300 text-sm md:text-xl mb-3 md:mb-6 font-semibold">DAYS IN A ROW</div>
               
-              <div className="bg-black p-3 md:p-4 rounded-lg border-2 border-green-600 shadow-inner">
-                <div className="text-green-400 text-sm md:text-base font-mono">
+              <div className="bg-black p-2 md:p-4 rounded-lg border-2 border-green-600 shadow-inner">
+                <div className="text-green-400 text-xs md:text-base font-mono">
                   TOTAL WORKOUT DAYS: <span className="text-cyan-400 font-bold">{progressData.totalWorkoutDays}</span>
                 </div>
-                <div className="text-gray-400 text-xs md:text-sm mt-2">
+                <div className="text-gray-400 text-xs md:text-sm mt-1 md:mt-2">
                   Keep going! You&apos;re on fire! 🚀
                 </div>
               </div>
@@ -231,23 +232,23 @@ export default function ViewProgressPage() {
           </div>
 
           {/* Meal Plan Streak */}
-          <div className="border-2 border-green-800 rounded-xl bg-gradient-to-br from-gray-900 to-gray-800 p-4 md:p-8 hover-lift shadow-xl hover:shadow-yellow-400/20 transition-all duration-300">
-            <div className="flex items-center justify-between mb-4 md:mb-6">
-              <div className="text-green-400 text-lg md:text-2xl font-bold">MEAL PLAN STREAK</div>
-              <div className="text-3xl md:text-5xl animate-bounce-slow">🥗</div>
+          <div className="border-2 border-green-800 rounded-xl bg-gradient-to-br from-gray-900 to-gray-800 p-3 md:p-8 hover-lift shadow-xl hover:shadow-yellow-400/20 transition-all duration-300">
+            <div className="flex items-center justify-between mb-3 md:mb-6">
+              <div className="text-green-400 text-sm md:text-2xl font-bold">MEAL PLAN STREAK</div>
+              <div className="text-2xl md:text-5xl animate-bounce-slow">🥗</div>
             </div>
             
             <div className="text-center">
-              <div className="text-4xl md:text-7xl font-bold text-yellow-400 mb-2 md:mb-3 drop-shadow-lg" style={{textShadow: '0 0 10px #fbbf24, 0 0 20px #fbbf24, 0 0 30px #fbbf24'}}>
+              <div className="text-3xl md:text-7xl font-bold text-yellow-400 mb-1 md:mb-3 drop-shadow-lg" style={{textShadow: '0 0 10px #fbbf24, 0 0 20px #fbbf24, 0 0 30px #fbbf24'}}>
                 {progressData.mealPlanStreak}
               </div>
-              <div className="text-gray-300 text-base md:text-xl mb-4 md:mb-6 font-semibold">DAYS COMPLETED</div>
+              <div className="text-gray-300 text-sm md:text-xl mb-3 md:mb-6 font-semibold">DAYS COMPLETED</div>
               
-              <div className="bg-black p-3 md:p-4 rounded-lg border-2 border-green-600 shadow-inner">
-                <div className="text-green-400 text-base font-mono">
+              <div className="bg-black p-2 md:p-4 rounded-lg border-2 border-green-600 shadow-inner">
+                <div className="text-green-400 text-xs md:text-base font-mono">
                   TOTAL MEAL DAYS: <span className="text-yellow-400 font-bold">{progressData.totalMealPlanDays}</span>
                 </div>
-                <div className="text-gray-400 text-sm mt-2">
+                <div className="text-gray-400 text-xs md:text-sm mt-1 md:mt-2">
                   Nutrition is 80% of success! 💪
                 </div>
               </div>
@@ -256,34 +257,34 @@ export default function ViewProgressPage() {
         </div>
 
         {/* Weight Progress Section */}
-        <div className={`border-2 border-green-800 rounded-xl bg-gradient-to-br from-gray-900 to-gray-800 p-4 md:p-8 mb-6 md:mb-10 transition-all duration-1000 delay-900 shadow-xl ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
-          <div className="flex items-center justify-between mb-4 md:mb-8">
-            <div className="text-green-400 text-xl md:text-3xl font-bold">WEIGHT TRACKING</div>
-            <div className="text-3xl md:text-5xl animate-bounce-slow">⚖️</div>
+        <div className={`border-2 border-green-800 rounded-xl bg-gradient-to-br from-gray-900 to-gray-800 p-3 md:p-8 mb-4 md:mb-10 transition-all duration-1000 delay-900 shadow-xl ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
+          <div className="flex items-center justify-between mb-3 md:mb-8">
+            <div className="text-green-400 text-sm md:text-3xl font-bold">WEIGHT TRACKING</div>
+            <div className="text-2xl md:text-5xl animate-bounce-slow">⚖️</div>
           </div>
 
           {/* Weight Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 mb-4 md:mb-8">
-            <div className="text-center p-4 md:p-6 bg-black rounded-lg border-2 border-green-600 shadow-lg hover:shadow-green-400/20 transition-all duration-300">
-              <div className="text-cyan-400 text-sm md:text-base mb-2 font-bold">CURRENT WEIGHT</div>
-              <div className="text-2xl md:text-4xl font-bold text-green-400" style={{textShadow: '0 0 10px #10b981, 0 0 20px #10b981'}}>{progressData.currentWeight}kg</div>
+          <div className="grid grid-cols-3 md:grid-cols-3 gap-2 md:gap-8 mb-3 md:mb-8">
+            <div className="text-center p-2 md:p-6 bg-black rounded-lg border-2 border-green-600 shadow-lg hover:shadow-green-400/20 transition-all duration-300">
+              <div className="text-cyan-400 text-xs md:text-base mb-1 md:mb-2 font-bold">CURRENT</div>
+              <div className="text-lg md:text-4xl font-bold text-green-400" style={{textShadow: '0 0 10px #10b981, 0 0 20px #10b981'}}>{progressData.currentWeight}kg</div>
             </div>
             
-            <div className="text-center p-4 md:p-6 bg-black rounded-lg border-2 border-green-600 shadow-lg hover:shadow-gray-400/20 transition-all duration-300">
-              <div className="text-cyan-400 text-sm md:text-base mb-2 font-bold">STARTING WEIGHT</div>
-              <div className="text-2xl md:text-4xl font-bold text-gray-400">{progressData.startingWeight}kg</div>
+            <div className="text-center p-2 md:p-6 bg-black rounded-lg border-2 border-green-600 shadow-lg hover:shadow-gray-400/20 transition-all duration-300">
+              <div className="text-cyan-400 text-xs md:text-base mb-1 md:mb-2 font-bold">STARTING</div>
+              <div className="text-lg md:text-4xl font-bold text-gray-400">{progressData.startingWeight}kg</div>
             </div>
             
-            <div className="text-center p-4 md:p-6 bg-black rounded-lg border-2 border-green-600 shadow-lg hover:shadow-yellow-400/20 transition-all duration-300">
-              <div className="text-cyan-400 text-sm md:text-base mb-2 font-bold">TOTAL LOSS</div>
-              <div className="text-2xl md:text-4xl font-bold text-yellow-400" style={{textShadow: '0 0 10px #fbbf24, 0 0 20px #fbbf24'}}>-{progressData.weightLoss}kg</div>
+            <div className="text-center p-2 md:p-6 bg-black rounded-lg border-2 border-green-600 shadow-lg hover:shadow-yellow-400/20 transition-all duration-300">
+              <div className="text-cyan-400 text-xs md:text-base mb-1 md:mb-2 font-bold">LOSS</div>
+              <div className="text-lg md:text-4xl font-bold text-yellow-400" style={{textShadow: '0 0 10px #fbbf24, 0 0 20px #fbbf24'}}>-{progressData.weightLoss}kg</div>
             </div>
           </div>
 
-          {/* Weight Loss Summary */}
-          <div className="mb-4 md:mb-6">
-            <div className="text-center mb-4">
-              <div className="text-green-400 text-base md:text-lg font-bold">
+          {/* Weight Loss Summary - Mobile Optimized */}
+          <div className="mb-3 md:mb-6">
+            <div className="text-center mb-2 md:mb-4">
+              <div className="text-green-400 text-sm md:text-lg font-bold">
                 WEIGHT LOSS SUMMARY
               </div>
               <div className="text-gray-400 text-xs md:text-sm">
@@ -291,50 +292,57 @@ export default function ViewProgressPage() {
               </div>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+            {/* Mobile: Single column, Desktop: 3 columns */}
+            <div className="space-y-2 md:space-y-0 md:grid md:grid-cols-3 md:gap-6">
               {/* Last Month */}
-              <div className="text-center p-4 md:p-6 bg-black rounded-lg border-2 border-green-600 shadow-lg hover:shadow-green-400/20 transition-all duration-300">
-                <div className="text-cyan-400 text-sm md:text-base mb-2 font-bold">LAST MONTH</div>
-                <div className="text-3xl md:text-4xl font-bold text-yellow-400" style={{textShadow: '0 0 10px #fbbf24, 0 0 20px #fbbf24'}}>-{progressData.weightLossLastMonth.toFixed(1)}kg</div>
-                <div className="text-gray-400 text-xs md:text-sm mt-2">Past 30 days</div>
+              <div className="text-center p-3 md:p-6 bg-black rounded-lg border-2 border-green-600 shadow-lg hover:shadow-green-400/20 transition-all duration-300">
+                <div className="flex justify-between items-center md:block">
+                  <div className="text-cyan-400 text-xs md:text-base font-bold">LAST MONTH</div>
+                  <div className="text-lg md:text-4xl font-bold text-yellow-400" style={{textShadow: '0 0 10px #fbbf24, 0 0 20px #fbbf24'}}>-{progressData.weightLossLastMonth.toFixed(1)}kg</div>
+                </div>
+                <div className="text-gray-400 text-xs md:text-sm mt-0 md:mt-2 hidden md:block">Past 30 days</div>
               </div>
               
               {/* Last 6 Months */}
-              <div className="text-center p-4 md:p-6 bg-black rounded-lg border-2 border-green-600 shadow-lg hover:shadow-green-400/20 transition-all duration-300">
-                <div className="text-cyan-400 text-sm md:text-base mb-2 font-bold">LAST 6 MONTHS</div>
-                <div className="text-3xl md:text-4xl font-bold text-green-400" style={{textShadow: '0 0 10px #10b981, 0 0 20px #10b981'}}>-{progressData.weightLossLastSixMonths.toFixed(1)}kg</div>
-                <div className="text-gray-400 text-xs md:text-sm mt-2">Past 180 days</div>
+              <div className="text-center p-3 md:p-6 bg-black rounded-lg border-2 border-green-600 shadow-lg hover:shadow-green-400/20 transition-all duration-300">
+                <div className="flex justify-between items-center md:block">
+                  <div className="text-cyan-400 text-xs md:text-base font-bold">LAST 6 MONTHS</div>
+                  <div className="text-lg md:text-4xl font-bold text-green-400" style={{textShadow: '0 0 10px #10b981, 0 0 20px #10b981'}}>-{progressData.weightLossLastSixMonths.toFixed(1)}kg</div>
+                </div>
+                <div className="text-gray-400 text-xs md:text-sm mt-0 md:mt-2 hidden md:block">Past 180 days</div>
               </div>
               
               {/* Last Year */}
-              <div className="text-center p-4 md:p-6 bg-black rounded-lg border-2 border-green-600 shadow-lg hover:shadow-cyan-400/20 transition-all duration-300">
-                <div className="text-cyan-400 text-sm md:text-base mb-2 font-bold">LAST YEAR</div>
-                <div className="text-3xl md:text-4xl font-bold text-cyan-400" style={{textShadow: '0 0 10px #00ffff, 0 0 20px #00ffff'}}>-{progressData.weightLossLastYear.toFixed(1)}kg</div>
-                <div className="text-gray-400 text-xs md:text-sm mt-2">Past 365 days</div>
+              <div className="text-center p-3 md:p-6 bg-black rounded-lg border-2 border-green-600 shadow-lg hover:shadow-cyan-400/20 transition-all duration-300">
+                <div className="flex justify-between items-center md:block">
+                  <div className="text-cyan-400 text-xs md:text-base font-bold">LAST YEAR</div>
+                  <div className="text-lg md:text-4xl font-bold text-cyan-400" style={{textShadow: '0 0 10px #00ffff, 0 0 20px #00ffff'}}>-{progressData.weightLossLastYear.toFixed(1)}kg</div>
+                </div>
+                <div className="text-gray-400 text-xs md:text-sm mt-0 md:mt-2 hidden md:block">Past 365 days</div>
               </div>
             </div>
 
             {/* Additional Progress Info */}
-            <div className="mt-6 p-4 bg-gradient-to-r from-gray-800 to-gray-900 rounded-lg border border-green-600">
+            <div className="mt-4 md:mt-6 p-3 md:p-4 bg-gradient-to-r from-gray-800 to-gray-900 rounded-lg border border-green-600">
               <div className="text-center">
-                <div className="text-green-400 text-sm md:text-base font-bold mb-2">AVERAGE WEIGHT LOSS PER MONTH</div>
-                <div className="text-2xl md:text-3xl font-bold text-yellow-400" style={{textShadow: '0 0 10px #fbbf24, 0 0 20px #fbbf24'}}>-{progressData.averageWeightLossPerMonth.toFixed(1)}kg</div>
-                <div className="text-gray-400 text-xs md:text-sm mt-2">You&apos;re on track to reach your goal! 🎯</div>
+                <div className="text-green-400 text-xs md:text-base font-bold mb-1 md:mb-2">AVERAGE WEIGHT LOSS PER MONTH</div>
+                <div className="text-xl md:text-3xl font-bold text-yellow-400" style={{textShadow: '0 0 10px #fbbf24, 0 0 20px #fbbf24'}}>-{progressData.averageWeightLossPerMonth.toFixed(1)}kg</div>
+                <div className="text-gray-400 text-xs md:text-sm mt-1 md:mt-2">You&apos;re on track to reach your goal! 🎯</div>
               </div>
             </div>
           </div>
         </div>
 
         {/* Weekly Weight Input */}
-        <div className={`border border-green-800 rounded-lg bg-gray-900 p-4 md:p-6 transition-all duration-1000 delay-1100 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
-          <div className="flex items-center justify-between mb-4 md:mb-6">
-            <div className="text-green-400 text-lg md:text-xl font-bold">UPDATE WEEKLY WEIGHT</div>
-            <div className="text-2xl md:text-3xl animate-bounce-slow">📝</div>
+        <div className={`border border-green-800 rounded-lg bg-gray-900 p-3 md:p-6 transition-all duration-1000 delay-1100 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
+          <div className="flex items-center justify-between mb-3 md:mb-6">
+            <div className="text-green-400 text-sm md:text-xl font-bold">UPDATE WEEKLY WEIGHT</div>
+            <div className="text-xl md:text-3xl animate-bounce-slow">📝</div>
           </div>
 
           <div className="max-w-md mx-auto">
-            <div className="text-center mb-4">
-              <div className="text-gray-300 mb-2 text-sm md:text-base">
+            <div className="text-center mb-3 md:mb-4">
+              <div className="text-gray-300 mb-2 text-xs md:text-base">
                 Enter your current weight (updated weekly)
               </div>
               <div className="text-xs md:text-sm text-cyan-400 bg-black px-2 md:px-3 py-1 rounded border border-cyan-600 inline-block">
@@ -342,7 +350,7 @@ export default function ViewProgressPage() {
               </div>
             </div>
 
-            <div className="flex flex-col md:flex-row gap-3 md:gap-4">
+            <div className="flex flex-col md:flex-row gap-2 md:gap-4">
               <input
                 type="number"
                 value={weeklyWeight}
@@ -363,7 +371,7 @@ export default function ViewProgressPage() {
               </button>
             </div>
 
-            <div className="mt-3 md:mt-4 text-center">
+            <div className="mt-2 md:mt-4 text-center">
               <div className="text-xs text-gray-500">
                 💡 Tip: Weigh yourself at the same time each week for consistent tracking
               </div>

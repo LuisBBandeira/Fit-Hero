@@ -3,116 +3,96 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
+import LogoutButton from '@/components/LogoutButton';
+
+interface DashboardData {
+  player: {
+    name: string;
+    level: number;
+    currentXP: number;
+    xpToNextLevel: number;
+    xpPercentage: number;
+    character: {
+      id: string;
+      name: string;
+      imagePath: string;
+    };
+  };
+  workoutPlan: Array<{
+    id: string;
+    name: string;
+    exercises: Array<{
+      id: string;
+      name: string;
+      completed: boolean;
+      xp: number;
+    }>;
+    icon: string;
+  }>;
+  mealPlan: {
+    [key: string]: {
+      name: string;
+      calories: number;
+      protein: string;
+      carbs: string;
+      fat: string;
+      ingredients: string[];
+      icon: string;
+      completed: boolean;
+    };
+  };
+  stats: {
+    currentWeight?: number;
+    workoutStreak: number;
+    mealStreak: number;
+    totalWorkoutDays: number;
+    totalMealPlanDays: number;
+  };
+}
 
 export default function DashboardPage() {
   const router = useRouter();
+  const { data: session, status } = useSession();
   const [isVisible, setIsVisible] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString());
-  
-  // Player stats (in a real app, this would come from a database/API)
-  const [playerData] = useState({
-    name: 'FitWarrior_2024',
-    level: 12,
-    currentXP: 2847,
-    xpToNextLevel: 3500,
-    character: {
-      id: 'warrior',
-      name: 'FITNESS WARRIOR',
-      imagePath: '/orange_wariar%20/rotations/south.png'
-    }
-  });
+  const [dashboardData, setDashboardData] = useState<DashboardData | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  // Daily workout plan
-  const [workoutPlan, setWorkoutPlan] = useState([
-    {
-      id: 'warmup',
-      name: 'WARM-UP',
-      exercises: [
-        { id: 'jumping-jacks', name: '50 Jumping Jacks', completed: false, xp: 50 },
-        { id: 'arm-circles', name: '20 Arm Circles (each direction)', completed: true, xp: 30 },
-        { id: 'leg-swings', name: '15 Leg Swings (each leg)', completed: false, xp: 40 }
-      ],
-      icon: '🔥'
-    },
-    {
-      id: 'strength',
-      name: 'STRENGTH TRAINING',
-      exercises: [
-        { id: 'push-ups', name: '3 sets of 15 Push-ups', completed: false, xp: 100 },
-        { id: 'squats', name: '3 sets of 20 Squats', completed: false, xp: 120 },
-        { id: 'plank', name: '3 sets of 30s Plank', completed: true, xp: 80 },
-        { id: 'lunges', name: '3 sets of 12 Lunges (each leg)', completed: false, xp: 90 }
-      ],
-      icon: '💪'
-    },
-    {
-      id: 'cardio',
-      name: 'CARDIO BLAST',
-      exercises: [
-        { id: 'burpees', name: '3 sets of 10 Burpees', completed: false, xp: 150 },
-        { id: 'mountain-climbers', name: '3 sets of 20 Mountain Climbers', completed: false, xp: 110 },
-        { id: 'high-knees', name: '3 sets of 30s High Knees', completed: false, xp: 80 }
-      ],
-      icon: '❤️'
-    },
-    {
-      id: 'cooldown',
-      name: 'COOL DOWN',
-      exercises: [
-        { id: 'stretching', name: '10 minutes Full Body Stretching', completed: false, xp: 60 },
-        { id: 'breathing', name: '5 minutes Deep Breathing', completed: false, xp: 40 }
-      ],
-      icon: '🧘‍♂️'
+  // Fetch dashboard data from API
+  const fetchDashboardData = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch('/api/dashboard');
+      if (response.ok) {
+        const result = await response.json();
+        setDashboardData(result.data);
+      } else {
+        console.error('Failed to fetch dashboard data');
+      }
+    } catch (error) {
+      console.error('Error fetching dashboard data:', error);
+    } finally {
+      setLoading(false);
     }
-  ]);
-
-  // Daily meal plan
-  const [mealPlan, setMealPlan] = useState({
-    breakfast: {
-      name: 'PROTEIN POWER BOWL',
-      calories: 450,
-      protein: '35g',
-      carbs: '25g',
-      fat: '18g',
-      ingredients: ['Oatmeal', 'Greek Yogurt', 'Berries', 'Almonds', 'Honey'],
-      icon: '🥣',
-      completed: false
-    },
-    lunch: {
-      name: 'WARRIOR SALAD',
-      calories: 520,
-      protein: '42g',
-      carbs: '30g',
-      fat: '22g',
-      ingredients: ['Grilled Chicken', 'Mixed Greens', 'Quinoa', 'Avocado', 'Olive Oil'],
-      icon: '🥗',
-      completed: true
-    },
-    snack: {
-      name: 'ENERGY BOOST',
-      calories: 200,
-      protein: '15g',
-      carbs: '18g',
-      fat: '8g',
-      ingredients: ['Apple', 'Almond Butter', 'Protein Powder'],
-      icon: '🍎',
-      completed: false
-    },
-    dinner: {
-      name: 'HERO FEAST',
-      calories: 680,
-      protein: '48g',
-      carbs: '55g',
-      fat: '25g',
-      ingredients: ['Salmon', 'Sweet Potato', 'Broccoli', 'Brown Rice', 'Herbs'],
-      icon: '🍽️',
-      completed: false
-    }
-  });
+  };
 
   useEffect(() => {
-    setIsVisible(true);
+    // Check authentication status
+    if (status === 'loading') return; // Still loading
+    
+    if (status === 'unauthenticated') {
+      console.log('🚫 Dashboard: User not authenticated, redirecting to login');
+      router.replace('/login');
+      return;
+    }
+
+    if (status === 'authenticated') {
+      console.log('✅ Dashboard: User authenticated, loading dashboard');
+      setIsVisible(true);
+      fetchDashboardData();
+    }
     
     // Update time every second
     const timeInterval = setInterval(() => {
@@ -120,67 +100,177 @@ export default function DashboardPage() {
     }, 1000);
     
     return () => clearInterval(timeInterval);
-  }, []);
+  }, [status, router]);
 
-  const handleExerciseToggle = (sectionId: string, exerciseId: string) => {
-    setWorkoutPlan(prevPlan => 
-      prevPlan.map(section => 
-        section.id === sectionId 
-          ? {
-              ...section,
-              exercises: section.exercises.map(exercise =>
-                exercise.id === exerciseId 
-                  ? { ...exercise, completed: !exercise.completed }
-                  : exercise
-              )
-            }
-          : section
-      )
+  const handleExerciseToggle = async (sectionId: string, exerciseId: string) => {
+    if (!dashboardData) return;
+
+    // Find the exercise being toggled to get its XP value
+    const section = dashboardData.workoutPlan.find(s => s.id === sectionId);
+    const exercise = section?.exercises.find(e => e.id === exerciseId);
+    if (!exercise) return;
+
+    const wasCompleted = exercise.completed;
+    const exerciseXP = exercise.xp;
+
+    // Update local state immediately for better UX
+    const updatedWorkoutPlan = dashboardData.workoutPlan.map(section => 
+      section.id === sectionId 
+        ? {
+            ...section,
+            exercises: section.exercises.map(exercise =>
+              exercise.id === exerciseId 
+                ? { ...exercise, completed: !exercise.completed }
+                : exercise
+            )
+          }
+        : section
     );
+
+    // Calculate XP change based on checking/unchecking
+    let xpChange = 0;
+    if (!wasCompleted) {
+      // Checking the exercise - add XP
+      xpChange = exerciseXP;
+    } else {
+      // Unchecking the exercise - subtract XP
+      xpChange = -exerciseXP;
+    }
+
+    // Update XP and level
+    const newTotalXP = Math.max(0, dashboardData.player.currentXP + xpChange);
+    const newLevel = Math.floor(newTotalXP / 100) + 1;
+
+    setDashboardData({
+      ...dashboardData,
+      workoutPlan: updatedWorkoutPlan,
+      player: {
+        ...dashboardData.player,
+        currentXP: newTotalXP,
+        level: newLevel,
+        xpPercentage: (newTotalXP % 100)
+      }
+    });
+
+    // Make API call to persist the individual exercise completion and XP change
+    try {
+      await fetch('/api/dashboard', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          type: 'toggle_exercise',
+          data: {
+            exerciseId,
+            completed: !wasCompleted,
+            xpChange
+          }
+        }),
+      });
+    } catch (error) {
+      console.error('Error toggling exercise:', error);
+    }
   };
 
-  const handleMealToggle = (mealType: string) => {
-    setMealPlan(prevMeal => ({
-      ...prevMeal,
-      [mealType]: {
-        ...prevMeal[mealType as keyof typeof prevMeal],
-        completed: !prevMeal[mealType as keyof typeof prevMeal].completed
+  const handleMealToggle = async (mealType: string) => {
+    if (!dashboardData) return;
+
+    const wasCompleted = dashboardData.mealPlan[mealType].completed;
+    const mealXP = 25; // XP for each meal
+
+    // Calculate XP change based on checking/unchecking
+    let xpChange = 0;
+    if (!wasCompleted) {
+      // Checking the meal - add XP
+      xpChange = mealXP;
+    } else {
+      // Unchecking the meal - subtract XP
+      xpChange = -mealXP;
+    }
+
+    // Update XP and level
+    const newTotalXP = Math.max(0, dashboardData.player.currentXP + xpChange);
+    const newLevel = Math.floor(newTotalXP / 100) + 1;
+
+    // Update local state immediately for better UX
+    setDashboardData({
+      ...dashboardData,
+      mealPlan: {
+        ...dashboardData.mealPlan,
+        [mealType]: {
+          ...dashboardData.mealPlan[mealType],
+          completed: !wasCompleted
+        }
+      },
+      player: {
+        ...dashboardData.player,
+        currentXP: newTotalXP,
+        level: newLevel,
+        xpPercentage: (newTotalXP % 100)
       }
-    }));
+    });
+
+    // Make API call to persist the meal completion and XP change
+    try {
+      await fetch('/api/dashboard', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          type: 'toggle_meal',
+          data: {
+            mealType,
+            mealCompleted: !wasCompleted,
+            mealXpChange: xpChange,
+            calories: dashboardData.mealPlan[mealType].calories
+          }
+        }),
+      });
+    } catch (error) {
+      console.error('Error toggling meal:', error);
+    }
   };
 
   const getWorkoutProgress = () => {
-    const totalExercises = workoutPlan.reduce((total, section) => total + section.exercises.length, 0);
-    const completedExercises = workoutPlan.reduce((total, section) => 
+    if (!dashboardData) return 0;
+    const totalExercises = dashboardData.workoutPlan.reduce((total, section) => total + section.exercises.length, 0);
+    const completedExercises = dashboardData.workoutPlan.reduce((total, section) => 
       total + section.exercises.filter(exercise => exercise.completed).length, 0
     );
     return totalExercises > 0 ? (completedExercises / totalExercises) * 100 : 0;
   };
 
   const getTotalXPEarned = () => {
-    return workoutPlan.reduce((total, section) => 
+    if (!dashboardData) return 0;
+    return dashboardData.workoutPlan.reduce((total, section) => 
       total + section.exercises.filter(exercise => exercise.completed)
         .reduce((sectionTotal, exercise) => sectionTotal + exercise.xp, 0), 0
     );
   };
 
   const getTotalPossibleXP = () => {
-    return workoutPlan.reduce((total, section) => 
+    if (!dashboardData) return 0;
+    return dashboardData.workoutPlan.reduce((total, section) => 
       total + section.exercises.reduce((sectionTotal, exercise) => sectionTotal + exercise.xp, 0), 0
     );
   };
 
   const getXPPercentage = () => {
-    return (playerData.currentXP / playerData.xpToNextLevel) * 100;
+    if (!dashboardData) return 0;
+    return dashboardData.player.xpPercentage;
   };
 
   const getTotalDailyCalories = () => {
-    return Object.values(mealPlan).reduce((total, meal) => total + meal.calories, 0);
+    if (!dashboardData) return 0;
+    return Object.values(dashboardData.mealPlan).reduce((total, meal) => total + meal.calories, 0);
   };
 
   const getMealProgress = () => {
-    const totalMeals = Object.keys(mealPlan).length;
-    const completedMeals = Object.values(mealPlan).filter(meal => meal.completed).length;
+    if (!dashboardData) return 0;
+    const totalMeals = Object.keys(dashboardData.mealPlan).length;
+    const completedMeals = Object.values(dashboardData.mealPlan).filter(meal => meal.completed).length;
     return Math.round((completedMeals / totalMeals) * 100);
   };
 
@@ -192,6 +282,42 @@ export default function DashboardPage() {
     if (progress >= 25) return "BEHIND";
     return "START NOW";
   };
+
+  // Show loading state while checking authentication
+  if (status === 'loading' || loading) {
+    return (
+      <div className="min-h-screen bg-black text-green-400 font-mono flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-6xl mb-4 animate-pulse">⚡</div>
+          <div className="text-xl">Loading Dashboard...</div>
+          <div className="text-sm text-gray-400 mt-2">
+            {status === 'loading' ? 'Authenticating user...' : 'Fetching player data...'}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Show loading state if dashboard data is not available
+  if (!dashboardData) {
+    return (
+      <div className="min-h-screen bg-black text-green-400 font-mono flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-6xl mb-4 animate-pulse">🏃‍♂️</div>
+          <div className="text-xl">No player data found</div>
+          <div className="text-sm text-gray-400 mt-2">
+            Please complete your character creation first
+          </div>
+          <button 
+            onClick={() => router.push('/character-creation')}
+            className="mt-4 px-4 py-2 border border-green-600 rounded hover:bg-green-900/20 transition-colors"
+          >
+            Create Character
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-black text-green-400 font-mono relative overflow-hidden">
@@ -218,9 +344,11 @@ export default function DashboardPage() {
       <div className={`bg-gray-800 p-3 border-b border-green-800 transition-all duration-1000 delay-300 ${isVisible ? 'animate-slide-in-left' : 'opacity-0'}`}>
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center space-x-6">
-            <Link href="/login" className="text-gray-400 hover:text-green-400 transition-colors duration-300">
-              LOGOUT
-            </Link>
+            <LogoutButton 
+              redirectTo="/"
+              variant="default"
+              className="font-mono"
+            />
           </div>
           <div className="text-cyan-400 text-sm font-mono">
             ONLINE: {currentTime}
@@ -228,50 +356,121 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto p-4 sm:p-6">
+      <div className="max-w-7xl mx-auto p-4 sm:p-6 pb-24 md:pb-6">
         {/* Player Stats Header */}
-        <div className={`transition-all duration-1000 delay-500 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'} mb-8`}>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Player Info */}
-            <div className="border border-green-800 rounded-lg bg-gray-900 p-6">
-              <div className="flex items-center space-x-4">
-                <Image 
-                  src={playerData.character.imagePath}
-                  alt={playerData.character.name}
-                  width={64}
-                  height={64}
-                  className="pixel-character-image filter-orange"
-                />
+        <div className={`transition-all duration-1000 delay-500 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'} mb-6`}>
+          {/* Responsive: stack on mobile, grid on lg+ */}
+          <div className="flex flex-col gap-3 lg:grid lg:grid-cols-5 lg:gap-6">
+            {/* Combined Player Info, Level, and XP Progress for mobile */}
+            <div className="border border-green-800 rounded-lg bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 p-4 md:p-6 flex flex-col gap-4 lg:col-span-2 shadow-lg shadow-green-900/20 hover:shadow-green-900/40 transition-all duration-300">
+              {/* Player Info Section */}
+              <div className="flex items-center space-x-4 pb-3 lg:pb-0 border-b border-green-800/50 lg:border-b-0">
+                <div className="relative">
+                  <Image 
+                    src={dashboardData.player.character.imagePath}
+                    alt={dashboardData.player.character.name}
+                    width={64}
+                    height={64}
+                    className="pixel-character-image filter-orange rounded-lg ring-2 ring-green-500/30 lg:w-20 lg:h-20"
+                  />
+                  <div className="absolute -top-1 -right-1 w-3 h-3 lg:w-4 lg:h-4 bg-green-500 rounded-full animate-pulse shadow-lg shadow-green-500/50"></div>
+                </div>
+                <div className="flex-1">
+                  <div className="text-cyan-400 text-lg lg:text-2xl xl:text-3xl font-bold tracking-wide">{dashboardData.player.name}</div>
+                  <div className="text-green-400 text-sm lg:text-base xl:text-lg font-medium">{dashboardData.player.character.name}</div>
+                  <div className="text-gray-400 text-xs lg:text-sm xl:text-base uppercase tracking-wider font-bold bg-gray-800/60 px-2 lg:px-3 py-1 rounded-md inline-block mt-1">
+                    ⚡ FITNESS WARRIOR
+                  </div>
+                </div>
+              </div>
+              
+              {/* Show Level & XP and Progress Bar stacked on mobile, hidden on lg+ */}
+              <div className="block lg:hidden">
+                {/* Combined Level & XP Progress Section */}
+                <div className="bg-black/30 rounded-lg p-3 border border-green-500/20">
+                  {/* Level Header */}
+                  <div className="text-center mb-3">
+                    <div className="text-green-400 text-xs mb-1 font-bold tracking-wider">LEVEL</div>
+                    <div className="text-cyan-400 text-2xl font-bold mb-2 drop-shadow-lg">{dashboardData.player.level}</div>
+                  </div>
+                  
+                  {/* XP Progress Section */}
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <div className="text-green-400 text-xs font-bold tracking-wider">XP PROGRESS</div>
+                      <div className="text-cyan-400 text-xs font-bold bg-cyan-900/30 px-2 py-0.5 rounded-full">
+                        {Math.round(getXPPercentage())}%
+                      </div>
+                    </div>
+                    
+                    <div className="w-full bg-gray-700/80 rounded-full h-3 border border-gray-600/50 overflow-hidden">
+                      <div 
+                        className="bg-gradient-to-r from-green-500 via-green-400 to-cyan-400 h-3 rounded-full transition-all duration-1000 animate-glow relative"
+                        style={{ width: `${getXPPercentage()}%` }}
+                      >
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-pulse"></div>
+                      </div>
+                    </div>
+                    
+                    <div className="flex justify-between items-center text-xs">
+                      <div className="text-gray-300">
+                        <span className="text-yellow-400 font-bold">{dashboardData.player.currentXP}</span> / 
+                        <span className="text-green-400 font-bold"> {dashboardData.player.xpToNextLevel}</span> XP
+                      </div>
+                      <div className="text-cyan-400 font-bold">
+                        Level {dashboardData.player.level + 1}
+                      </div>
+                    </div>
+                    
+                    <div className="text-center">
+                      <div className="text-gray-400 text-xs">
+                        {dashboardData.player.xpToNextLevel - dashboardData.player.currentXP} XP remaining
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/* Combined Level & XP Progress (hidden on mobile, visible on lg+) */}
+            <div className="hidden lg:block border border-green-800 rounded-lg bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 p-6 shadow-lg shadow-green-900/20 hover:shadow-green-900/40 transition-all duration-300 lg:col-span-3">
+              <div className="flex items-center justify-between mb-4">
                 <div>
-                  <div className="text-cyan-400 text-xl font-bold">{playerData.name}</div>
-                  <div className="text-green-400 text-sm">{playerData.character.name}</div>
-                  <div className="text-gray-400 text-xs">FITNESS WARRIOR</div>
+                  <div className="text-green-400 text-sm font-bold tracking-wider mb-2">LEVEL</div>
+                  <div className="text-cyan-400 text-3xl font-bold drop-shadow-lg">{dashboardData.player.level}</div>
+                </div>
+                <div className="text-right">
+                  <div className="text-green-400 text-sm font-bold tracking-wider mb-2">XP PROGRESS</div>
+                  <div className="text-cyan-400 text-lg font-bold bg-cyan-900/30 px-4 py-2 rounded-full">
+                    {Math.round(getXPPercentage())}%
+                  </div>
                 </div>
               </div>
-            </div>
-
-            {/* Level & XP */}
-            <div className="border border-green-800 rounded-lg bg-gray-900 p-6">
-              <div className="text-center">
-                <div className="text-green-400 text-sm mb-2">LEVEL</div>
-                <div className="text-cyan-400 text-3xl font-bold mb-2">{playerData.level}</div>
-                <div className="text-gray-400 text-xs">
-                  {playerData.currentXP} / {playerData.xpToNextLevel} XP
+              
+              <div className="space-y-3">
+                <div className="w-full bg-gray-700/80 rounded-full h-4 border border-gray-600/50 overflow-hidden">
+                  <div 
+                    className="bg-gradient-to-r from-green-500 via-green-400 to-cyan-400 h-4 rounded-full transition-all duration-1000 animate-glow relative"
+                    style={{ width: `${getXPPercentage()}%` }}
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-pulse"></div>
+                  </div>
                 </div>
-              </div>
-            </div>
-
-            {/* XP Progress Bar */}
-            <div className="border border-green-800 rounded-lg bg-gray-900 p-6">
-              <div className="text-green-400 text-sm mb-2">XP PROGRESS</div>
-              <div className="w-full bg-gray-700 rounded-full h-4 mb-2">
-                <div 
-                  className="bg-gradient-to-r from-green-500 to-cyan-400 h-4 rounded-full transition-all duration-1000 animate-glow"
-                  style={{ width: `${getXPPercentage()}%` }}
-                ></div>
-              </div>
-              <div className="text-cyan-400 text-xs text-center">
-                {Math.round(getXPPercentage())}% to Level {playerData.level + 1}
+                
+                <div className="flex justify-between items-center text-sm">
+                  <div className="text-gray-300 bg-black/30 px-3 py-2 rounded-lg border border-cyan-500/20">
+                    <span className="text-yellow-400 font-bold">{dashboardData.player.currentXP}</span> / 
+                    <span className="text-green-400 font-bold"> {dashboardData.player.xpToNextLevel}</span> XP
+                  </div>
+                  <div className="text-cyan-400 font-bold text-lg">
+                    Next: Level {dashboardData.player.level + 1}
+                  </div>
+                </div>
+                
+                <div className="text-center">
+                  <div className="text-gray-400 text-sm">
+                    {dashboardData.player.xpToNextLevel - dashboardData.player.currentXP} XP remaining to next level
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -290,7 +489,7 @@ export default function DashboardPage() {
               </div>
 
               <div className="space-y-6">
-                {workoutPlan.map((section) => (
+                {dashboardData.workoutPlan.map((section) => (
                   <div 
                     key={section.id}
                     className="border border-green-700 rounded-lg p-4 bg-gray-800"
@@ -347,9 +546,9 @@ export default function DashboardPage() {
                 <div className="flex items-center justify-between mb-2">
                   <div className="text-cyan-400 text-sm font-bold">WORKOUT PROGRESS</div>
                   <div className="text-yellow-400 text-sm font-bold">
-                    {workoutPlan.reduce((total, section) => 
+                    {dashboardData.workoutPlan.reduce((total, section) => 
                       total + section.exercises.filter(ex => ex.completed).length, 0
-                    )} / {workoutPlan.reduce((total, section) => total + section.exercises.length, 0)} EXERCISES
+                    )} / {dashboardData.workoutPlan.reduce((total, section) => total + section.exercises.length, 0)} EXERCISES
                   </div>
                 </div>
                 <div className="w-full bg-gray-700 rounded-full h-3 mb-3">
@@ -381,7 +580,7 @@ export default function DashboardPage() {
               </div>
 
               <div className="space-y-4">
-                {Object.entries(mealPlan).map(([mealType, meal]) => (
+                {Object.entries(dashboardData.mealPlan).map(([mealType, meal]) => (
                   <div 
                     key={mealType}
                     className={`border rounded-lg p-4 bg-gray-800 hover:border-green-500 transition-all duration-300 ${
@@ -477,7 +676,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Quick Actions */}
-        <div className={`transition-all duration-1000 delay-1100 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'} mt-8`}>
+        <div className={`transition-all duration-1000 delay-1100 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'} mt-8 hidden md:block`}>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <button 
               onClick={() => router.push('/view-progress')}
@@ -507,6 +706,41 @@ export default function DashboardPage() {
                 <span className="text-3xl mb-3 block animate-rotate-slow">⚙️</span>
                 <div className="text-cyan-400 font-bold text-lg mb-2">SETTINGS</div>
                 <div className="text-gray-400 text-xs font-mono">$ configure --profile --prefs</div>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Sticky Bottom Navigation */}
+      <div className={`fixed bottom-4 left-4 right-4 bg-gray-900/95 backdrop-blur-sm border border-green-500 rounded-lg p-3 md:hidden transition-all duration-1000 delay-1100 shadow-lg shadow-green-900/30 ${isVisible ? 'animate-slide-in-bottom' : 'opacity-0'}`}>
+        <div className="flex justify-center">
+          <div className="flex space-x-2 max-w-sm w-full">
+            <button 
+              onClick={() => router.push('/view-progress')}
+              className="flex-1 border border-green-800 bg-gray-800/90 hover:bg-gray-700 hover:border-green-500 transition-all duration-300 p-3 rounded-lg active:scale-95"
+            >
+              <div className="text-center">
+                <span className="text-lg block mb-1">📊</span>
+                <div className="text-green-400 font-bold text-xs">PROGRESS</div>
+              </div>
+            </button>
+            <button 
+              onClick={() => router.push('/achievements')}
+              className="flex-1 border border-purple-800 bg-gray-800/90 hover:bg-gray-700 hover:border-purple-500 transition-all duration-300 p-3 rounded-lg active:scale-95"
+            >
+              <div className="text-center">
+                <span className="text-lg block mb-1">🏆</span>
+                <div className="text-purple-400 font-bold text-xs">ACHIEVEMENTS</div>
+              </div>
+            </button>
+            <button 
+              onClick={() => router.push('/settings')}
+              className="flex-1 border border-cyan-800 bg-gray-800/90 hover:bg-gray-700 hover:border-cyan-500 transition-all duration-300 p-3 rounded-lg active:scale-95"
+            >
+              <div className="text-center">
+                <span className="text-lg block mb-1">⚙️</span>
+                <div className="text-cyan-400 font-bold text-xs">SETTINGS</div>
               </div>
             </button>
           </div>
