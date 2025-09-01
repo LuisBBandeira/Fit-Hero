@@ -360,25 +360,25 @@ export default function DashboardPage() {
         {/* Player Stats Header */}
         <div className={`transition-all duration-1000 delay-500 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'} mb-6`}>
           {/* Responsive: stack on mobile, grid on lg+ */}
-          <div className="flex flex-col gap-3 lg:grid lg:grid-cols-3 lg:gap-4">
+          <div className="flex flex-col gap-3 lg:grid lg:grid-cols-5 lg:gap-6">
             {/* Combined Player Info, Level, and XP Progress for mobile */}
-            <div className="border border-green-800 rounded-lg bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 p-4 flex flex-col gap-4 lg:col-span-1 shadow-lg shadow-green-900/20 hover:shadow-green-900/40 transition-all duration-300">
+            <div className="border border-green-800 rounded-lg bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 p-4 md:p-6 flex flex-col gap-4 lg:col-span-2 shadow-lg shadow-green-900/20 hover:shadow-green-900/40 transition-all duration-300">
               {/* Player Info Section */}
-              <div className="flex items-center space-x-3 pb-3 lg:pb-0 border-b border-green-800/50 lg:border-b-0">
+              <div className="flex items-center space-x-4 pb-3 lg:pb-0 border-b border-green-800/50 lg:border-b-0">
                 <div className="relative">
                   <Image 
                     src={dashboardData.player.character.imagePath}
                     alt={dashboardData.player.character.name}
-                    width={48}
-                    height={48}
-                    className="pixel-character-image filter-orange rounded-lg ring-2 ring-green-500/30"
+                    width={64}
+                    height={64}
+                    className="pixel-character-image filter-orange rounded-lg ring-2 ring-green-500/30 lg:w-20 lg:h-20"
                   />
-                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full animate-pulse shadow-lg shadow-green-500/50"></div>
+                  <div className="absolute -top-1 -right-1 w-3 h-3 lg:w-4 lg:h-4 bg-green-500 rounded-full animate-pulse shadow-lg shadow-green-500/50"></div>
                 </div>
                 <div className="flex-1">
-                  <div className="text-cyan-400 text-lg font-bold tracking-wide">{dashboardData.player.name}</div>
-                  <div className="text-green-400 text-xs font-medium">{dashboardData.player.character.name}</div>
-                  <div className="text-gray-400 text-xs uppercase tracking-wider font-bold bg-gray-800/60 px-2 py-0.5 rounded-md inline-block mt-0.5">
+                  <div className="text-cyan-400 text-lg lg:text-2xl xl:text-3xl font-bold tracking-wide">{dashboardData.player.name}</div>
+                  <div className="text-green-400 text-sm lg:text-base xl:text-lg font-medium">{dashboardData.player.character.name}</div>
+                  <div className="text-gray-400 text-xs lg:text-sm xl:text-base uppercase tracking-wider font-bold bg-gray-800/60 px-2 lg:px-3 py-1 rounded-md inline-block mt-1">
                     ⚡ FITNESS WARRIOR
                   </div>
                 </div>
@@ -432,42 +432,42 @@ export default function DashboardPage() {
               </div>
             </div>
             {/* Combined Level & XP Progress (hidden on mobile, visible on lg+) */}
-            <div className="hidden lg:block border border-green-800 rounded-lg bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 p-4 shadow-lg shadow-green-900/20 hover:shadow-green-900/40 transition-all duration-300 lg:col-span-2">
-              <div className="flex items-center justify-between mb-3">
+            <div className="hidden lg:block border border-green-800 rounded-lg bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 p-6 shadow-lg shadow-green-900/20 hover:shadow-green-900/40 transition-all duration-300 lg:col-span-3">
+              <div className="flex items-center justify-between mb-4">
                 <div>
-                  <div className="text-green-400 text-xs font-bold tracking-wider mb-1">LEVEL</div>
-                  <div className="text-cyan-400 text-2xl font-bold drop-shadow-lg">{dashboardData.player.level}</div>
+                  <div className="text-green-400 text-sm font-bold tracking-wider mb-2">LEVEL</div>
+                  <div className="text-cyan-400 text-3xl font-bold drop-shadow-lg">{dashboardData.player.level}</div>
                 </div>
                 <div className="text-right">
-                  <div className="text-green-400 text-xs font-bold tracking-wider mb-1">XP PROGRESS</div>
-                  <div className="text-cyan-400 text-xs font-bold bg-cyan-900/30 px-2 py-0.5 rounded-full">
+                  <div className="text-green-400 text-sm font-bold tracking-wider mb-2">XP PROGRESS</div>
+                  <div className="text-cyan-400 text-lg font-bold bg-cyan-900/30 px-4 py-2 rounded-full">
                     {Math.round(getXPPercentage())}%
                   </div>
                 </div>
               </div>
               
-              <div className="space-y-2">
-                <div className="w-full bg-gray-700/80 rounded-full h-3 border border-gray-600/50 overflow-hidden">
+              <div className="space-y-3">
+                <div className="w-full bg-gray-700/80 rounded-full h-4 border border-gray-600/50 overflow-hidden">
                   <div 
-                    className="bg-gradient-to-r from-green-500 via-green-400 to-cyan-400 h-3 rounded-full transition-all duration-1000 animate-glow relative"
+                    className="bg-gradient-to-r from-green-500 via-green-400 to-cyan-400 h-4 rounded-full transition-all duration-1000 animate-glow relative"
                     style={{ width: `${getXPPercentage()}%` }}
                   >
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-pulse"></div>
                   </div>
                 </div>
                 
-                <div className="flex justify-between items-center text-xs">
-                  <div className="text-gray-300 bg-black/30 px-2 py-1 rounded-lg border border-cyan-500/20">
+                <div className="flex justify-between items-center text-sm">
+                  <div className="text-gray-300 bg-black/30 px-3 py-2 rounded-lg border border-cyan-500/20">
                     <span className="text-yellow-400 font-bold">{dashboardData.player.currentXP}</span> / 
                     <span className="text-green-400 font-bold"> {dashboardData.player.xpToNextLevel}</span> XP
                   </div>
-                  <div className="text-cyan-400 font-bold">
-                    Level {dashboardData.player.level + 1}
+                  <div className="text-cyan-400 font-bold text-lg">
+                    Next: Level {dashboardData.player.level + 1}
                   </div>
                 </div>
                 
                 <div className="text-center">
-                  <div className="text-gray-400 text-xs">
+                  <div className="text-gray-400 text-sm">
                     {dashboardData.player.xpToNextLevel - dashboardData.player.currentXP} XP remaining to next level
                   </div>
                 </div>
