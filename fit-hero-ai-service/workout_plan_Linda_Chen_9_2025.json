@@ -1,0 +1,739 @@
+{
+  "monthly_overview": {
+    "month": 9,
+    "year": 2025,
+    "total_days": 30,
+    "workout_days": 13,
+    "rest_days": 17,
+    "training_phases": [
+      "Foundation",
+      "Build",
+      "Peak",
+      "Recovery"
+    ]
+  },
+  "weekly_structure": {
+    "week_1": {
+      "focus": "Foundation/Adaptation",
+      "intensity": "Low-Moderate",
+      "volume": "Moderate"
+    },
+    "week_2": {
+      "focus": "Progressive Overload",
+      "intensity": "Moderate",
+      "volume": "Moderate-High"
+    },
+    "week_3": {
+      "focus": "Peak Training",
+      "intensity": "Moderate-High",
+      "volume": "High"
+    },
+    "week_4": {
+      "focus": "Recovery/Deload",
+      "intensity": "Low-Moderate",
+      "volume": "Low-Moderate"
+    }
+  },
+  "daily_workouts": {
+    "1": {
+      "day_of_week": "Monday",
+      "workout_type": "Cardio & Mobility",
+      "duration": 30,
+      "intensity": "Low",
+      "exercises": [
+        {
+          "name": "Walking",
+          "type": "cardio",
+          "sets": 1,
+          "reps": "30 mins",
+          "rest_time": "N/A",
+          "notes": "Maintain a brisk pace",
+          "progression": "Increase pace or distance"
+        },
+        {
+          "name": "Ankle circles",
+          "type": "mobility",
+          "sets": 2,
+          "reps": "10",
+          "rest_time": "0",
+          "notes": "Rotate ankles slowly",
+          "progression": "Increase number of reps"
+        },
+        {
+          "name": "Knee bends",
+          "type": "mobility",
+          "sets": 2,
+          "reps": "10",
+          "rest_time": "0",
+          "notes": "Bend knees slightly",
+          "progression": "Increase depth"
+        }
+      ],
+      "warm_up": [
+        "Arm circles",
+        "Leg swings"
+      ],
+      "cool_down": [
+        "Hamstring stretch",
+        "Calf stretch"
+      ]
+    },
+    "2": {
+      "day_of_week": "Tuesday",
+      "workout_type": "Rest",
+      "duration": 0,
+      "intensity": "None",
+      "exercises": [],
+      "warm_up": [],
+      "cool_down": []
+    },
+    "3": {
+      "day_of_week": "Wednesday",
+      "workout_type": "Strength Training",
+      "duration": 30,
+      "intensity": "Low",
+      "exercises": [
+        {
+          "name": "Seated Row (Resistance Band)",
+          "type": "strength",
+          "sets": 3,
+          "reps": "10-12",
+          "rest_time": "60",
+          "notes": "Maintain good posture",
+          "progression": "Increase band resistance"
+        },
+        {
+          "name": "Bicep Curls (Light Dumbbells)",
+          "type": "strength",
+          "sets": 3,
+          "reps": "10-12",
+          "rest_time": "60",
+          "notes": "Keep elbows close to body",
+          "progression": "Increase weight"
+        },
+        {
+          "name": "Overhead Press (Light Dumbbells)",
+          "type": "strength",
+          "sets": 3,
+          "reps": "10-12",
+          "rest_time": "60",
+          "notes": "Control the movement",
+          "progression": "Increase weight"
+        }
+      ],
+      "warm_up": [
+        "Arm circles",
+        "Shoulder rotations"
+      ],
+      "cool_down": [
+        "Tricep stretch",
+        "Shoulder stretch"
+      ]
+    },
+    "4": {
+      "day_of_week": "Thursday",
+      "workout_type": "Rest",
+      "duration": 0,
+      "intensity": "None",
+      "exercises": [],
+      "warm_up": [],
+      "cool_down": []
+    },
+    "5": {
+      "day_of_week": "Friday",
+      "workout_type": "Cardio & Balance",
+      "duration": 30,
+      "intensity": "Low",
+      "exercises": [
+        {
+          "name": "Walking",
+          "type": "cardio",
+          "sets": 1,
+          "reps": "20 mins",
+          "rest_time": "N/A",
+          "notes": "Maintain a comfortable pace",
+          "progression": "Increase pace or distance"
+        },
+        {
+          "name": "Single Leg Stand",
+          "type": "balance",
+          "sets": 3,
+          "reps": "30 seconds per leg",
+          "rest_time": "30",
+          "notes": "Use a wall for support if needed",
+          "progression": "Increase hold time"
+        },
+        {
+          "name": "Heel-to-Toe Walk",
+          "type": "balance",
+          "sets": 3,
+          "reps": "10 steps",
+          "rest_time": "30",
+          "notes": "Focus on balance",
+          "progression": "Increase speed"
+        }
+      ],
+      "warm_up": [
+        "Walking in place",
+        "Ankle circles"
+      ],
+      "cool_down": [
+        "Calf stretch",
+        "Quad stretch"
+      ]
+    },
+    "6": {
+      "day_of_week": "Saturday",
+      "workout_type": "Rest",
+      "duration": 0,
+      "intensity": "None",
+      "exercises": [],
+      "warm_up": [],
+      "cool_down": []
+    },
+    "7": {
+      "day_of_week": "Sunday",
+      "workout_type": "Rest",
+      "duration": 0,
+      "intensity": "None",
+      "exercises": [],
+      "warm_up": [],
+      "cool_down": []
+    },
+    "8": {
+      "day_of_week": "Monday",
+      "workout_type": "Cardio & Mobility",
+      "duration": 30,
+      "intensity": "Moderate",
+      "exercises": [
+        {
+          "name": "Walking",
+          "type": "cardio",
+          "sets": 1,
+          "reps": "30 mins",
+          "rest_time": "N/A",
+          "notes": "Maintain a brisk pace",
+          "progression": "Increase pace or distance"
+        },
+        {
+          "name": "Arm circles",
+          "type": "mobility",
+          "sets": 2,
+          "reps": "10",
+          "rest_time": "0",
+          "notes": "Rotate arms slowly",
+          "progression": "Increase number of reps"
+        },
+        {
+          "name": "Leg swings",
+          "type": "mobility",
+          "sets": 2,
+          "reps": "10",
+          "rest_time": "0",
+          "notes": "Swing legs gently",
+          "progression": "Increase range of motion"
+        }
+      ],
+      "warm_up": [
+        "Arm circles",
+        "Leg swings"
+      ],
+      "cool_down": [
+        "Hamstring stretch",
+        "Calf stretch"
+      ]
+    },
+    "9": {
+      "day_of_week": "Tuesday",
+      "workout_type": "Rest",
+      "duration": 0,
+      "intensity": "None",
+      "exercises": [],
+      "warm_up": [],
+      "cool_down": []
+    },
+    "10": {
+      "day_of_week": "Wednesday",
+      "workout_type": "Strength Training",
+      "duration": 30,
+      "intensity": "Moderate",
+      "exercises": [
+        {
+          "name": "Seated Row (Resistance Band)",
+          "type": "strength",
+          "sets": 3,
+          "reps": "12-15",
+          "rest_time": "60",
+          "notes": "Maintain good posture",
+          "progression": "Increase band resistance"
+        },
+        {
+          "name": "Bicep Curls (Light Dumbbells)",
+          "type": "strength",
+          "sets": 3,
+          "reps": "12-15",
+          "rest_time": "60",
+          "notes": "Keep elbows close to body",
+          "progression": "Increase weight"
+        },
+        {
+          "name": "Overhead Press (Light Dumbbells)",
+          "type": "strength",
+          "sets": 3,
+          "reps": "12-15",
+          "rest_time": "60",
+          "notes": "Control the movement",
+          "progression": "Increase weight"
+        }
+      ],
+      "warm_up": [
+        "Arm circles",
+        "Shoulder rotations"
+      ],
+      "cool_down": [
+        "Tricep stretch",
+        "Shoulder stretch"
+      ]
+    },
+    "11": {
+      "day_of_week": "Thursday",
+      "workout_type": "Rest",
+      "duration": 0,
+      "intensity": "None",
+      "exercises": [],
+      "warm_up": [],
+      "cool_down": []
+    },
+    "12": {
+      "day_of_week": "Friday",
+      "workout_type": "Cardio & Balance",
+      "duration": 30,
+      "intensity": "Moderate",
+      "exercises": [
+        {
+          "name": "Walking",
+          "type": "cardio",
+          "sets": 1,
+          "reps": "25 mins",
+          "rest_time": "N/A",
+          "notes": "Maintain a comfortable pace",
+          "progression": "Increase pace or distance"
+        },
+        {
+          "name": "Single Leg Stand",
+          "type": "balance",
+          "sets": 3,
+          "reps": "35 seconds per leg",
+          "rest_time": "30",
+          "notes": "Use a wall for support if needed",
+          "progression": "Increase hold time"
+        },
+        {
+          "name": "Heel-to-Toe Walk",
+          "type": "balance",
+          "sets": 3,
+          "reps": "12 steps",
+          "rest_time": "30",
+          "notes": "Focus on balance",
+          "progression": "Increase speed"
+        }
+      ],
+      "warm_up": [
+        "Walking in place",
+        "Ankle circles"
+      ],
+      "cool_down": [
+        "Calf stretch",
+        "Quad stretch"
+      ]
+    },
+    "13": {
+      "day_of_week": "Saturday",
+      "workout_type": "Rest",
+      "duration": 0,
+      "intensity": "None",
+      "exercises": [],
+      "warm_up": [],
+      "cool_down": []
+    },
+    "14": {
+      "day_of_week": "Sunday",
+      "workout_type": "Rest",
+      "duration": 0,
+      "intensity": "None",
+      "exercises": [],
+      "warm_up": [],
+      "cool_down": []
+    },
+    "15": {
+      "day_of_week": "Monday",
+      "workout_type": "Cardio & Mobility",
+      "duration": 30,
+      "intensity": "Moderate",
+      "exercises": [
+        {
+          "name": "Brisk Walking",
+          "type": "cardio",
+          "sets": 1,
+          "reps": "30 mins",
+          "rest_time": "N/A",
+          "notes": "Maintain a brisk pace",
+          "progression": "Increase pace or distance"
+        },
+        {
+          "name": "Shoulder Stretch",
+          "type": "mobility",
+          "sets": 2,
+          "reps": "10",
+          "rest_time": "0",
+          "notes": "Stretch shoulders gently",
+          "progression": "Increase number of reps"
+        },
+        {
+          "name": "Hip Circles",
+          "type": "mobility",
+          "sets": 2,
+          "reps": "10",
+          "rest_time": "0",
+          "notes": "Circle hips smoothly",
+          "progression": "Increase range of motion"
+        }
+      ],
+      "warm_up": [
+        "Arm circles",
+        "Leg swings"
+      ],
+      "cool_down": [
+        "Hamstring stretch",
+        "Calf stretch"
+      ]
+    },
+    "16": {
+      "day_of_week": "Tuesday",
+      "workout_type": "Rest",
+      "duration": 0,
+      "intensity": "None",
+      "exercises": [],
+      "warm_up": [],
+      "cool_down": []
+    },
+    "17": {
+      "day_of_week": "Wednesday",
+      "workout_type": "Strength Training",
+      "duration": 30,
+      "intensity": "Moderate",
+      "exercises": [
+        {
+          "name": "Seated Row (Resistance Band)",
+          "type": "strength",
+          "sets": 3,
+          "reps": "12-15",
+          "rest_time": "60",
+          "notes": "Maintain good posture",
+          "progression": "Increase band resistance"
+        },
+        {
+          "name": "Bicep Curls (Light Dumbbells)",
+          "type": "strength",
+          "sets": 3,
+          "reps": "12-15",
+          "rest_time": "60",
+          "notes": "Keep elbows close to body",
+          "progression": "Increase weight"
+        },
+        {
+          "name": "Overhead Press (Light Dumbbells)",
+          "type": "strength",
+          "sets": 3,
+          "reps": "12-15",
+          "rest_time": "60",
+          "notes": "Control the movement",
+          "progression": "Increase weight"
+        },
+        {
+          "name": "Tricep Extensions",
+          "type": "strength",
+          "sets": 3,
+          "reps": "10-12",
+          "rest_time": "60",
+          "notes": "Extend triceps slowly",
+          "progression": "Increase weight"
+        }
+      ],
+      "warm_up": [
+        "Arm circles",
+        "Shoulder rotations"
+      ],
+      "cool_down": [
+        "Tricep stretch",
+        "Shoulder stretch"
+      ]
+    },
+    "18": {
+      "day_of_week": "Thursday",
+      "workout_type": "Rest",
+      "duration": 0,
+      "intensity": "None",
+      "exercises": [],
+      "warm_up": [],
+      "cool_down": []
+    },
+    "19": {
+      "day_of_week": "Friday",
+      "workout_type": "Cardio & Balance",
+      "duration": 30,
+      "intensity": "Moderate",
+      "exercises": [
+        {
+          "name": "Brisk Walking",
+          "type": "cardio",
+          "sets": 1,
+          "reps": "25 mins",
+          "rest_time": "N/A",
+          "notes": "Maintain a brisk pace",
+          "progression": "Increase pace or distance"
+        },
+        {
+          "name": "Single Leg Stand",
+          "type": "balance",
+          "sets": 3,
+          "reps": "35 seconds per leg",
+          "rest_time": "30",
+          "notes": "Use a wall for support if needed",
+          "progression": "Increase hold time"
+        },
+        {
+          "name": "Heel-to-Toe Walk",
+          "type": "balance",
+          "sets": 3,
+          "reps": "12 steps",
+          "rest_time": "30",
+          "notes": "Focus on balance",
+          "progression": "Increase speed"
+        },
+        {
+          "name": "Side Steps",
+          "type": "balance",
+          "sets": 3,
+          "reps": "10 steps each side",
+          "rest_time": "30",
+          "notes": "Step sideways slowly",
+          "progression": "Increase speed"
+        }
+      ],
+      "warm_up": [
+        "Walking in place",
+        "Ankle circles"
+      ],
+      "cool_down": [
+        "Calf stretch",
+        "Quad stretch"
+      ]
+    },
+    "20": {
+      "day_of_week": "Saturday",
+      "workout_type": "Rest",
+      "duration": 0,
+      "intensity": "None",
+      "exercises": [],
+      "warm_up": [],
+      "cool_down": []
+    },
+    "21": {
+      "day_of_week": "Sunday",
+      "workout_type": "Rest",
+      "duration": 0,
+      "intensity": "None",
+      "exercises": [],
+      "warm_up": [],
+      "cool_down": []
+    },
+    "22": {
+      "day_of_week": "Monday",
+      "workout_type": "Cardio & Mobility",
+      "duration": 30,
+      "intensity": "Low",
+      "exercises": [
+        {
+          "name": "Walking",
+          "type": "cardio",
+          "sets": 1,
+          "reps": "20 mins",
+          "rest_time": "N/A",
+          "notes": "Maintain a light pace",
+          "progression": "Maintain"
+        },
+        {
+          "name": "Gentle Stretching",
+          "type": "mobility",
+          "sets": 1,
+          "reps": "5 mins",
+          "rest_time": "N/A",
+          "notes": "Hold each stretch for 30 seconds",
+          "progression": "Maintain"
+        }
+      ],
+      "warm_up": [
+        "Arm circles",
+        "Leg swings"
+      ],
+      "cool_down": [
+        "Hamstring stretch",
+        "Calf stretch"
+      ]
+    },
+    "23": {
+      "day_of_week": "Tuesday",
+      "workout_type": "Rest",
+      "duration": 0,
+      "intensity": "None",
+      "exercises": [],
+      "warm_up": [],
+      "cool_down": []
+    },
+    "24": {
+      "day_of_week": "Wednesday",
+      "workout_type": "Strength Training",
+      "duration": 30,
+      "intensity": "Low",
+      "exercises": [
+        {
+          "name": "Seated Row (Resistance Band)",
+          "type": "strength",
+          "sets": 2,
+          "reps": "10-12",
+          "rest_time": "60",
+          "notes": "Maintain good posture",
+          "progression": "Maintain"
+        },
+        {
+          "name": "Bicep Curls (Light Dumbbells)",
+          "type": "strength",
+          "sets": 2,
+          "reps": "10-12",
+          "rest_time": "60",
+          "notes": "Keep elbows close to body",
+          "progression": "Maintain"
+        },
+        {
+          "name": "Overhead Press (Light Dumbbells)",
+          "type": "strength",
+          "sets": 2,
+          "reps": "10-12",
+          "rest_time": "60",
+          "notes": "Control the movement",
+          "progression": "Maintain"
+        }
+      ],
+      "warm_up": [
+        "Arm circles",
+        "Shoulder rotations"
+      ],
+      "cool_down": [
+        "Tricep stretch",
+        "Shoulder stretch"
+      ]
+    },
+    "25": {
+      "day_of_week": "Thursday",
+      "workout_type": "Rest",
+      "duration": 0,
+      "intensity": "None",
+      "exercises": [],
+      "warm_up": [],
+      "cool_down": []
+    },
+    "26": {
+      "day_of_week": "Friday",
+      "workout_type": "Cardio & Balance",
+      "duration": 30,
+      "intensity": "Low",
+      "exercises": [
+        {
+          "name": "Walking",
+          "type": "cardio",
+          "sets": 1,
+          "reps": "15 mins",
+          "rest_time": "N/A",
+          "notes": "Maintain a comfortable pace",
+          "progression": "Maintain"
+        },
+        {
+          "name": "Single Leg Stand",
+          "type": "balance",
+          "sets": 2,
+          "reps": "30 seconds per leg",
+          "rest_time": "30",
+          "notes": "Use a wall for support if needed",
+          "progression": "Maintain"
+        },
+        {
+          "name": "Heel-to-Toe Walk",
+          "type": "balance",
+          "sets": 2,
+          "reps": "10 steps",
+          "rest_time": "30",
+          "notes": "Focus on balance",
+          "progression": "Maintain"
+        }
+      ],
+      "warm_up": [
+        "Walking in place",
+        "Ankle circles"
+      ],
+      "cool_down": [
+        "Calf stretch",
+        "Quad stretch"
+      ]
+    },
+    "27": {
+      "day_of_week": "Saturday",
+      "workout_type": "Rest",
+      "duration": 0,
+      "intensity": "None",
+      "exercises": [],
+      "warm_up": [],
+      "cool_down": []
+    },
+    "28": {
+      "day_of_week": "Sunday",
+      "workout_type": "Rest",
+      "duration": 0,
+      "intensity": "None",
+      "exercises": [],
+      "warm_up": [],
+      "cool_down": []
+    },
+    "29": {
+      "day_of_week": "Monday",
+      "workout_type": "Rest",
+      "duration": 0,
+      "intensity": "None",
+      "exercises": [],
+      "warm_up": [],
+      "cool_down": []
+    },
+    "30": {
+      "day_of_week": "Tuesday",
+      "workout_type": "Rest",
+      "duration": 0,
+      "intensity": "None",
+      "exercises": [],
+      "warm_up": [],
+      "cool_down": []
+    }
+  },
+  "progression_plan": {
+    "week_1_adjustments": "Focus on form and adaptation",
+    "week_2_adjustments": "Increase intensity by 10%",
+    "week_3_adjustments": "Peak training with highest volume",
+    "week_4_adjustments": "Reduce volume for recovery"
+  },
+  "safety_guidelines": [
+    "Always warm up before exercising",
+    "Stop if you feel pain",
+    "Stay hydrated throughout workouts",
+    "Consult your doctor before starting any new exercise program, especially with your medical history.",
+    "Listen to your body and adjust the intensity or duration of workouts as needed."
+  ]
+}

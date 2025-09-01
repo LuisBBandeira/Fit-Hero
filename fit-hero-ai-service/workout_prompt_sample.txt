@@ -1,0 +1,184 @@
+WORKOUT PLAN PROMPT
+==================================================
+
+
+You are an expert fitness coach creating a comprehensive monthly workout plan.
+
+COMPREHENSIVE USER PROFILE:
+
+PERSONAL INFORMATION:
+- Name: Sarah Johnson
+- Age: 28 years
+- Height: 165.0 cm
+- Current Weight: 78.0 kg
+- Goal Weight: 65.0 kg
+- Activity Level: sedentary
+
+FITNESS PROFILE:
+- Character Type: FITNESS_WARRIOR
+- Primary Objective: LOSE_WEIGHT
+- Current Level: 1
+- Experience Points: 150
+- Fitness Goals: weight_loss, improved_endurance, better_sleep
+- Training Environment: GYM_TRAINING
+
+PREFERENCES:
+- Session Duration: 45 minutes
+- Intensity Preference: moderate
+- Preferred Workout Times: morning
+- Available Days: monday, wednesday, friday, saturday
+- Equipment Access: dumbbells, treadmill, resistance_bands, yoga_mat
+
+HEALTH CONSIDERATIONS:
+- Medical Conditions: 
+- Previous Injuries: lower_back_strain
+- Injuries/Limitations: lower_back_strain
+
+LIFESTYLE FACTORS:
+- Work Schedule: office_9_to_5
+- Family Size: 2
+- Stress Level: moderate
+
+MONTH DETAILS:
+- Month: September 2025
+- Total Days: 30
+
+CRITICAL REQUIREMENTS:
+1. Create workout plans for ALL 30 days of September
+2. Consider user's fitness level, goals, and limitations
+3. Ensure progressive overload throughout the month
+4. Account for recovery and rest days
+5. Return ONLY valid JSON - no markdown, no explanations
+
+EXACT JSON FORMAT REQUIRED:
+{
+    "monthly_overview": {
+        "month": 9,
+        "year": 2025,
+        "total_days": 30,
+        "workout_days": 20,
+        "rest_days": 11,
+        "training_phases": ["Foundation Week", "Build Week", "Peak Week", "Recovery Week"]
+    },
+    "weekly_structure": {
+        "week_1": {
+            "focus": "Foundation/Adaptation",
+            "intensity": "Low-Moderate",
+            "volume": "Moderate"
+        },
+        "week_2": {
+            "focus": "Progressive Overload", 
+            "intensity": "Moderate",
+            "volume": "Moderate-High"
+        },
+        "week_3": {
+            "focus": "Peak Training",
+            "intensity": "Moderate-High",
+            "volume": "High"
+        },
+        "week_4": {
+            "focus": "Recovery/Deload",
+            "intensity": "Low-Moderate",
+            "volume": "Low-Moderate"
+        }
+    },
+    "daily_workouts": {
+        "1": {
+            "day_of_week": "Monday",
+            "workout_type": "Upper Body Strength",
+            "duration": 45,
+            "intensity": "Moderate",
+            "exercises": [
+                {
+                    "name": "Push-ups",
+                    "type": "strength",
+                    "sets": 3,
+                    "reps": "8-12",
+                    "rest_time": "60",
+                    "notes": "Keep core tight, full range of motion",
+                    "progression": "Increase reps or add resistance"
+                }
+            ],
+            "warm_up": ["5 min dynamic warm-up", "Arm circles", "Shoulder rolls"],
+            "cool_down": ["5 min stretching", "Upper body stretches"]
+        },
+        ... (continue for all 30 days)
+    },
+    "progression_plan": {
+        "week_1_adjustments": "Focus on form and establishing routine",
+        "week_2_adjustments": "Increase weight/reps by 5-10%",
+        "week_3_adjustments": "Peak intensity, maintain good form",
+        "week_4_adjustments": "Reduce volume, focus on recovery"
+    },
+    "safety_guidelines": [
+        "Always warm up before exercising",
+        "Stop if you feel pain",
+        "Stay hydrated throughout workouts"
+    ]
+}
+
+Generate the complete plan for all 30 days. Return ONLY the JSON.
+
+
+REQUEST DATA STRUCTURE
+==============================
+{
+  "user_id": "test_player_1",
+  "month": 9,
+  "year": 2025,
+  "player_profile": {
+    "personal_info": {
+      "name": "Sarah Johnson",
+      "age": 28,
+      "height_cm": 165.0,
+      "weight_kg": 78.0,
+      "goal_weight_kg": 65.0,
+      "activity_level": "sedentary"
+    },
+    "fitness_profile": {
+      "character_type": "FITNESS_WARRIOR",
+      "primary_objective": "LOSE_WEIGHT",
+      "current_level": 1,
+      "experience_points": 150,
+      "fitness_goals": [
+        "weight_loss",
+        "improved_endurance",
+        "better_sleep"
+      ],
+      "training_environment": "GYM_TRAINING"
+    },
+    "preferences": {
+      "session_duration_minutes": 45,
+      "intensity_preference": "moderate",
+      "preferred_workout_times": [
+        "morning"
+      ],
+      "available_days": [
+        "monday",
+        "wednesday",
+        "friday",
+        "saturday"
+      ],
+      "equipment_access": [
+        "dumbbells",
+        "treadmill",
+        "resistance_bands",
+        "yoga_mat"
+      ]
+    },
+    "health_considerations": {
+      "medical_conditions": [],
+      "previous_injuries": [
+        "lower_back_strain"
+      ],
+      "injuries_limitations": [
+        "lower_back_strain"
+      ]
+    },
+    "lifestyle": {
+      "work_schedule": "office_9_to_5",
+      "family_size": 2,
+      "stress_level": "moderate"
+    }
+  }
+}

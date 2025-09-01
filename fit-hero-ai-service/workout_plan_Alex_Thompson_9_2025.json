@@ -1,0 +1,844 @@
+{
+  "monthly_overview": {
+    "month": 9,
+    "year": 2025,
+    "total_days": 30,
+    "workout_days": 20,
+    "rest_days": 10,
+    "training_phases": [
+      "Foundation",
+      "Build",
+      "Peak",
+      "Recovery"
+    ]
+  },
+  "weekly_structure": {
+    "week_1": {
+      "focus": "Foundation/Adaptation",
+      "intensity": "Low-Moderate",
+      "volume": "Moderate"
+    },
+    "week_2": {
+      "focus": "Progressive Overload",
+      "intensity": "Moderate",
+      "volume": "Moderate-High"
+    },
+    "week_3": {
+      "focus": "Peak Training",
+      "intensity": "Moderate-High",
+      "volume": "High"
+    },
+    "week_4": {
+      "focus": "Recovery/Deload",
+      "intensity": "Low-Moderate",
+      "volume": "Low-Moderate"
+    }
+  },
+  "daily_workouts": {
+    "1": {
+      "day_of_week": "Monday",
+      "workout_type": "Running",
+      "duration": 45,
+      "intensity": "Moderate",
+      "exercises": [
+        {
+          "name": "Easy Run",
+          "type": "cardio",
+          "sets": 1,
+          "reps": "45 minutes",
+          "rest_time": "0",
+          "notes": "Maintain a conversational pace",
+          "progression": "Increase duration by 5 minutes next week"
+        }
+      ],
+      "warm_up": [
+        "Dynamic stretches",
+        "Light jogging"
+      ],
+      "cool_down": [
+        "Static stretches",
+        "Calf stretches"
+      ]
+    },
+    "2": {
+      "day_of_week": "Tuesday",
+      "workout_type": "Full Body Strength",
+      "duration": 60,
+      "intensity": "Moderate",
+      "exercises": [
+        {
+          "name": "Squats",
+          "type": "strength",
+          "sets": 3,
+          "reps": "10-15",
+          "rest_time": "60",
+          "notes": "Maintain good form",
+          "progression": "Add resistance band next week"
+        },
+        {
+          "name": "Push-ups",
+          "type": "strength",
+          "sets": 3,
+          "reps": "As many as possible",
+          "rest_time": "60",
+          "notes": "Modify on knees if needed",
+          "progression": "Increase reps next week"
+        },
+        {
+          "name": "Rows (resistance band)",
+          "type": "strength",
+          "sets": 3,
+          "reps": "10-15",
+          "rest_time": "60",
+          "notes": "Focus on pulling with back muscles",
+          "progression": "Increase resistance next week"
+        },
+        {
+          "name": "Plank",
+          "type": "core",
+          "sets": 3,
+          "reps": "30-60 seconds",
+          "rest_time": "60",
+          "notes": "Maintain a straight line from head to heels",
+          "progression": "Increase hold time next week"
+        }
+      ],
+      "warm_up": [
+        "Arm circles",
+        "Leg swings"
+      ],
+      "cool_down": [
+        "Static stretches"
+      ]
+    },
+    "3": {
+      "day_of_week": "Wednesday",
+      "workout_type": "Rest",
+      "duration": 0,
+      "intensity": "None",
+      "exercises": [],
+      "warm_up": [],
+      "cool_down": []
+    },
+    "4": {
+      "day_of_week": "Thursday",
+      "workout_type": "Running & Bodyweight Circuit",
+      "duration": 60,
+      "intensity": "Moderate",
+      "exercises": [
+        {
+          "name": "Run",
+          "type": "cardio",
+          "sets": 1,
+          "reps": "20 minutes",
+          "rest_time": "0",
+          "notes": "Moderate pace",
+          "progression": "Increase speed slightly next week"
+        },
+        {
+          "name": "Burpees",
+          "type": "conditioning",
+          "sets": 3,
+          "reps": "10",
+          "rest_time": "60",
+          "notes": "Modify by stepping back instead of jumping",
+          "progression": "Increase reps next week"
+        },
+        {
+          "name": "Mountain Climbers",
+          "type": "conditioning",
+          "sets": 3,
+          "reps": "20",
+          "rest_time": "60",
+          "notes": "Keep core engaged",
+          "progression": "Increase speed next week"
+        }
+      ],
+      "warm_up": [
+        "Dynamic stretches"
+      ],
+      "cool_down": [
+        "Static stretches"
+      ]
+    },
+    "5": {
+      "day_of_week": "Friday",
+      "workout_type": "Rest",
+      "duration": 0,
+      "intensity": "None",
+      "exercises": [],
+      "warm_up": [],
+      "cool_down": []
+    },
+    "6": {
+      "day_of_week": "Saturday",
+      "workout_type": "Long Run",
+      "duration": 75,
+      "intensity": "Low-Moderate",
+      "exercises": [
+        {
+          "name": "Long Run",
+          "type": "cardio",
+          "sets": 1,
+          "reps": "75 minutes",
+          "rest_time": "0",
+          "notes": "Conversational pace. Focus on endurance.",
+          "progression": "Increase duration by 10 minutes next week"
+        }
+      ],
+      "warm_up": [
+        "Easy jogging",
+        "Dynamic stretches"
+      ],
+      "cool_down": [
+        "Static stretches",
+        "Foam rolling"
+      ]
+    },
+    "7": {
+      "day_of_week": "Sunday",
+      "workout_type": "Active Recovery",
+      "duration": 30,
+      "intensity": "Low",
+      "exercises": [
+        {
+          "name": "Yoga/Stretching",
+          "type": "recovery",
+          "sets": 1,
+          "reps": "30 minutes",
+          "rest_time": "0",
+          "notes": "Focus on mobility and relaxation",
+          "progression": "Try a different yoga routine next week"
+        }
+      ],
+      "warm_up": [],
+      "cool_down": []
+    },
+    "8": {
+      "day_of_week": "Monday",
+      "workout_type": "Running",
+      "duration": 50,
+      "intensity": "Moderate",
+      "exercises": [
+        {
+          "name": "Easy Run",
+          "type": "cardio",
+          "sets": 1,
+          "reps": "50 minutes",
+          "rest_time": "0",
+          "notes": "Maintain a conversational pace",
+          "progression": "Incorporate intervals next week"
+        }
+      ],
+      "warm_up": [
+        "Dynamic stretches",
+        "Light jogging"
+      ],
+      "cool_down": [
+        "Static stretches",
+        "Calf stretches"
+      ]
+    },
+    "9": {
+      "day_of_week": "Tuesday",
+      "workout_type": "Full Body Strength",
+      "duration": 60,
+      "intensity": "Moderate",
+      "exercises": [
+        {
+          "name": "Squats (resistance band)",
+          "type": "strength",
+          "sets": 3,
+          "reps": "10-15",
+          "rest_time": "60",
+          "notes": "Maintain good form",
+          "progression": "Increase resistance next week"
+        },
+        {
+          "name": "Push-ups",
+          "type": "strength",
+          "sets": 3,
+          "reps": "As many as possible +1",
+          "rest_time": "60",
+          "notes": "Modify on knees if needed",
+          "progression": "Increase reps next week"
+        },
+        {
+          "name": "Rows (resistance band)",
+          "type": "strength",
+          "sets": 3,
+          "reps": "12-15",
+          "rest_time": "60",
+          "notes": "Focus on pulling with back muscles",
+          "progression": "Increase resistance next week"
+        },
+        {
+          "name": "Plank",
+          "type": "core",
+          "sets": 3,
+          "reps": "45-60 seconds",
+          "rest_time": "60",
+          "notes": "Maintain a straight line from head to heels",
+          "progression": "Increase hold time next week"
+        }
+      ],
+      "warm_up": [
+        "Arm circles",
+        "Leg swings"
+      ],
+      "cool_down": [
+        "Static stretches"
+      ]
+    },
+    "10": {
+      "day_of_week": "Wednesday",
+      "workout_type": "Rest",
+      "duration": 0,
+      "intensity": "None",
+      "exercises": [],
+      "warm_up": [],
+      "cool_down": []
+    },
+    "11": {
+      "day_of_week": "Thursday",
+      "workout_type": "Running & Bodyweight Circuit",
+      "duration": 60,
+      "intensity": "Moderate",
+      "exercises": [
+        {
+          "name": "Run",
+          "type": "cardio",
+          "sets": 1,
+          "reps": "20 minutes",
+          "rest_time": "0",
+          "notes": "Moderate pace",
+          "progression": "Increase speed slightly next week"
+        },
+        {
+          "name": "Burpees",
+          "type": "conditioning",
+          "sets": 3,
+          "reps": "12",
+          "rest_time": "60",
+          "notes": "Modify by stepping back instead of jumping",
+          "progression": "Increase reps next week"
+        },
+        {
+          "name": "Mountain Climbers",
+          "type": "conditioning",
+          "sets": 3,
+          "reps": "25",
+          "rest_time": "60",
+          "notes": "Keep core engaged",
+          "progression": "Increase speed next week"
+        }
+      ],
+      "warm_up": [
+        "Dynamic stretches"
+      ],
+      "cool_down": [
+        "Static stretches"
+      ]
+    },
+    "12": {
+      "day_of_week": "Friday",
+      "workout_type": "Rest",
+      "duration": 0,
+      "intensity": "None",
+      "exercises": [],
+      "warm_up": [],
+      "cool_down": []
+    },
+    "13": {
+      "day_of_week": "Saturday",
+      "workout_type": "Long Run",
+      "duration": 85,
+      "intensity": "Low-Moderate",
+      "exercises": [
+        {
+          "name": "Long Run",
+          "type": "cardio",
+          "sets": 1,
+          "reps": "85 minutes",
+          "rest_time": "0",
+          "notes": "Conversational pace. Focus on endurance.",
+          "progression": "Consider adding a short walk break halfway"
+        }
+      ],
+      "warm_up": [
+        "Easy jogging",
+        "Dynamic stretches"
+      ],
+      "cool_down": [
+        "Static stretches",
+        "Foam rolling"
+      ]
+    },
+    "14": {
+      "day_of_week": "Sunday",
+      "workout_type": "Active Recovery",
+      "duration": 30,
+      "intensity": "Low",
+      "exercises": [
+        {
+          "name": "Yoga/Stretching",
+          "type": "recovery",
+          "sets": 1,
+          "reps": "30 minutes",
+          "rest_time": "0",
+          "notes": "Focus on mobility and relaxation",
+          "progression": "Try a different yoga routine next week"
+        }
+      ],
+      "warm_up": [],
+      "cool_down": []
+    },
+    "15": {
+      "day_of_week": "Monday",
+      "workout_type": "Running - Intervals",
+      "duration": 60,
+      "intensity": "High",
+      "exercises": [
+        {
+          "name": "Interval Run",
+          "type": "cardio",
+          "sets": 8,
+          "reps": "400m fast, 400m slow",
+          "rest_time": "400m slow",
+          "notes": "Push the pace during fast intervals",
+          "progression": "Increase number of intervals next week"
+        }
+      ],
+      "warm_up": [
+        "Dynamic stretches",
+        "Light jogging"
+      ],
+      "cool_down": [
+        "Static stretches",
+        "Calf stretches"
+      ]
+    },
+    "16": {
+      "day_of_week": "Tuesday",
+      "workout_type": "Full Body Strength",
+      "duration": 60,
+      "intensity": "Moderate",
+      "exercises": [
+        {
+          "name": "Squats (resistance band)",
+          "type": "strength",
+          "sets": 3,
+          "reps": "12-15",
+          "rest_time": "60",
+          "notes": "Maintain good form",
+          "progression": "Increase resistance or reps next week"
+        },
+        {
+          "name": "Push-ups",
+          "type": "strength",
+          "sets": 3,
+          "reps": "As many as possible +2",
+          "rest_time": "60",
+          "notes": "Modify on knees if needed",
+          "progression": "Increase reps next week"
+        },
+        {
+          "name": "Rows (resistance band)",
+          "type": "strength",
+          "sets": 3,
+          "reps": "15-20",
+          "rest_time": "60",
+          "notes": "Focus on pulling with back muscles",
+          "progression": "Increase resistance next week"
+        },
+        {
+          "name": "Plank",
+          "type": "core",
+          "sets": 3,
+          "reps": "60-75 seconds",
+          "rest_time": "60",
+          "notes": "Maintain a straight line from head to heels",
+          "progression": "Increase hold time next week"
+        }
+      ],
+      "warm_up": [
+        "Arm circles",
+        "Leg swings"
+      ],
+      "cool_down": [
+        "Static stretches"
+      ]
+    },
+    "17": {
+      "day_of_week": "Wednesday",
+      "workout_type": "Rest",
+      "duration": 0,
+      "intensity": "None",
+      "exercises": [],
+      "warm_up": [],
+      "cool_down": []
+    },
+    "18": {
+      "day_of_week": "Thursday",
+      "workout_type": "Running & Bodyweight Circuit",
+      "duration": 60,
+      "intensity": "High",
+      "exercises": [
+        {
+          "name": "Run",
+          "type": "cardio",
+          "sets": 1,
+          "reps": "25 minutes",
+          "rest_time": "0",
+          "notes": "Moderate to Fast pace",
+          "progression": "Maintain speed next week"
+        },
+        {
+          "name": "Burpees",
+          "type": "conditioning",
+          "sets": 3,
+          "reps": "15",
+          "rest_time": "60",
+          "notes": "Modify by stepping back instead of jumping",
+          "progression": "Increase reps next week"
+        },
+        {
+          "name": "Mountain Climbers",
+          "type": "conditioning",
+          "sets": 3,
+          "reps": "30",
+          "rest_time": "60",
+          "notes": "Keep core engaged",
+          "progression": "Increase speed next week"
+        }
+      ],
+      "warm_up": [
+        "Dynamic stretches"
+      ],
+      "cool_down": [
+        "Static stretches"
+      ]
+    },
+    "19": {
+      "day_of_week": "Friday",
+      "workout_type": "Rest",
+      "duration": 0,
+      "intensity": "None",
+      "exercises": [],
+      "warm_up": [],
+      "cool_down": []
+    },
+    "20": {
+      "day_of_week": "Saturday",
+      "workout_type": "Long Run",
+      "duration": 90,
+      "intensity": "Low-Moderate",
+      "exercises": [
+        {
+          "name": "Long Run",
+          "type": "cardio",
+          "sets": 1,
+          "reps": "90 minutes",
+          "rest_time": "0",
+          "notes": "Conversational pace. Focus on endurance.",
+          "progression": "Practice race pace sections next week"
+        }
+      ],
+      "warm_up": [
+        "Easy jogging",
+        "Dynamic stretches"
+      ],
+      "cool_down": [
+        "Static stretches",
+        "Foam rolling"
+      ]
+    },
+    "21": {
+      "day_of_week": "Sunday",
+      "workout_type": "Active Recovery",
+      "duration": 30,
+      "intensity": "Low",
+      "exercises": [
+        {
+          "name": "Yoga/Stretching",
+          "type": "recovery",
+          "sets": 1,
+          "reps": "30 minutes",
+          "rest_time": "0",
+          "notes": "Focus on mobility and relaxation",
+          "progression": "Try a different yoga routine next week"
+        }
+      ],
+      "warm_up": [],
+      "cool_down": []
+    },
+    "22": {
+      "day_of_week": "Monday",
+      "workout_type": "Running - Tempo Run",
+      "duration": 45,
+      "intensity": "High",
+      "exercises": [
+        {
+          "name": "Tempo Run",
+          "type": "cardio",
+          "sets": 1,
+          "reps": "30 minutes at comfortably hard pace",
+          "rest_time": "0",
+          "notes": "Maintain a consistent, challenging pace.",
+          "progression": "Increase tempo duration next week"
+        }
+      ],
+      "warm_up": [
+        "Dynamic stretches",
+        "Light jogging"
+      ],
+      "cool_down": [
+        "Static stretches",
+        "Calf stretches"
+      ]
+    },
+    "23": {
+      "day_of_week": "Tuesday",
+      "workout_type": "Full Body Strength",
+      "duration": 60,
+      "intensity": "Moderate",
+      "exercises": [
+        {
+          "name": "Squats (resistance band)",
+          "type": "strength",
+          "sets": 3,
+          "reps": "12-15",
+          "rest_time": "60",
+          "notes": "Maintain good form",
+          "progression": "Maintain resistance, focus on explosive movement"
+        },
+        {
+          "name": "Push-ups",
+          "type": "strength",
+          "sets": 3,
+          "reps": "As many as possible",
+          "rest_time": "60",
+          "notes": "Modify on knees if needed",
+          "progression": "Try incline pushups"
+        },
+        {
+          "name": "Rows (resistance band)",
+          "type": "strength",
+          "sets": 3,
+          "reps": "12-15",
+          "rest_time": "60",
+          "notes": "Focus on pulling with back muscles",
+          "progression": "Reduce reps, increase resistance"
+        },
+        {
+          "name": "Plank",
+          "type": "core",
+          "sets": 3,
+          "reps": "45-60 seconds",
+          "rest_time": "60",
+          "notes": "Maintain a straight line from head to heels",
+          "progression": "Side plank"
+        }
+      ],
+      "warm_up": [
+        "Arm circles",
+        "Leg swings"
+      ],
+      "cool_down": [
+        "Static stretches"
+      ]
+    },
+    "24": {
+      "day_of_week": "Wednesday",
+      "workout_type": "Rest",
+      "duration": 0,
+      "intensity": "None",
+      "exercises": [],
+      "warm_up": [],
+      "cool_down": []
+    },
+    "25": {
+      "day_of_week": "Thursday",
+      "workout_type": "Running & Bodyweight Circuit",
+      "duration": 45,
+      "intensity": "Moderate",
+      "exercises": [
+        {
+          "name": "Run",
+          "type": "cardio",
+          "sets": 1,
+          "reps": "15 minutes",
+          "rest_time": "0",
+          "notes": "Moderate to Fast pace",
+          "progression": "Short and sharp intervals next week"
+        },
+        {
+          "name": "Burpees",
+          "type": "conditioning",
+          "sets": 3,
+          "reps": "10",
+          "rest_time": "60",
+          "notes": "Modify by stepping back instead of jumping",
+          "progression": "Focus on form"
+        },
+        {
+          "name": "Mountain Climbers",
+          "type": "conditioning",
+          "sets": 3,
+          "reps": "20",
+          "rest_time": "60",
+          "notes": "Keep core engaged",
+          "progression": "Focus on form"
+        }
+      ],
+      "warm_up": [
+        "Dynamic stretches"
+      ],
+      "cool_down": [
+        "Static stretches"
+      ]
+    },
+    "26": {
+      "day_of_week": "Friday",
+      "workout_type": "Rest",
+      "duration": 0,
+      "intensity": "None",
+      "exercises": [],
+      "warm_up": [],
+      "cool_down": []
+    },
+    "27": {
+      "day_of_week": "Saturday",
+      "workout_type": "Long Run",
+      "duration": 60,
+      "intensity": "Low-Moderate",
+      "exercises": [
+        {
+          "name": "Long Run",
+          "type": "cardio",
+          "sets": 1,
+          "reps": "60 minutes",
+          "rest_time": "0",
+          "notes": "Conversational pace. Focus on endurance.",
+          "progression": "Easy and enjoyable"
+        }
+      ],
+      "warm_up": [
+        "Easy jogging",
+        "Dynamic stretches"
+      ],
+      "cool_down": [
+        "Static stretches",
+        "Foam rolling"
+      ]
+    },
+    "28": {
+      "day_of_week": "Sunday",
+      "workout_type": "Active Recovery",
+      "duration": 30,
+      "intensity": "Low",
+      "exercises": [
+        {
+          "name": "Yoga/Stretching",
+          "type": "recovery",
+          "sets": 1,
+          "reps": "30 minutes",
+          "rest_time": "0",
+          "notes": "Focus on mobility and relaxation",
+          "progression": "Easy and enjoyable"
+        }
+      ],
+      "warm_up": [],
+      "cool_down": []
+    },
+    "29": {
+      "day_of_week": "Monday",
+      "workout_type": "Running",
+      "duration": 30,
+      "intensity": "Low",
+      "exercises": [
+        {
+          "name": "Easy Run",
+          "type": "cardio",
+          "sets": 1,
+          "reps": "30 minutes",
+          "rest_time": "0",
+          "notes": "Maintain a conversational pace",
+          "progression": "Focus on recovery"
+        }
+      ],
+      "warm_up": [
+        "Dynamic stretches",
+        "Light jogging"
+      ],
+      "cool_down": [
+        "Static stretches",
+        "Calf stretches"
+      ]
+    },
+    "30": {
+      "day_of_week": "Tuesday",
+      "workout_type": "Full Body Strength",
+      "duration": 45,
+      "intensity": "Low",
+      "exercises": [
+        {
+          "name": "Squats (no resistance)",
+          "type": "strength",
+          "sets": 2,
+          "reps": "10-15",
+          "rest_time": "60",
+          "notes": "Maintain good form",
+          "progression": "Focus on form and control"
+        },
+        {
+          "name": "Push-ups (on knees if needed)",
+          "type": "strength",
+          "sets": 2,
+          "reps": "As many as possible",
+          "rest_time": "60",
+          "notes": "Modify on knees if needed",
+          "progression": "Focus on form and control"
+        },
+        {
+          "name": "Rows (resistance band - light)",
+          "type": "strength",
+          "sets": 2,
+          "reps": "10-15",
+          "rest_time": "60",
+          "notes": "Focus on pulling with back muscles",
+          "progression": "Focus on form and control"
+        },
+        {
+          "name": "Plank",
+          "type": "core",
+          "sets": 2,
+          "reps": "30 seconds",
+          "rest_time": "60",
+          "notes": "Maintain a straight line from head to heels",
+          "progression": "Focus on form and control"
+        }
+      ],
+      "warm_up": [
+        "Arm circles",
+        "Leg swings"
+      ],
+      "cool_down": [
+        "Static stretches"
+      ]
+    }
+  },
+  "progression_plan": {
+    "week_1_adjustments": "Focus on form and adaptation. Listen to your body and adjust as needed, especially considering the ankle sprain.",
+    "week_2_adjustments": "Increase intensity by 10% by adding reps, resistance, or slightly increasing running speed. Continue to monitor the ankle.",
+    "week_3_adjustments": "Peak training with highest volume. Be mindful of fatigue and prioritize rest and recovery.",
+    "week_4_adjustments": "Reduce volume and intensity for recovery. Focus on active recovery and stretching."
+  },
+  "safety_guidelines": [
+    "Always warm up before exercising.",
+    "Stop if you feel pain, especially in the ankle. Modify exercises as needed to avoid putting stress on the injured area.",
+    "Stay hydrated throughout workouts.",
+    "Listen to your body and take rest days when needed.",
+    "Pay attention to proper form to prevent injuries."
+  ]
+}

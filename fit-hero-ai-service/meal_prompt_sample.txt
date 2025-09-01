@@ -1,0 +1,195 @@
+MEAL PLAN PROMPT
+==================================================
+
+
+You are a certified nutritionist creating a comprehensive monthly meal plan.
+
+COMPREHENSIVE USER PROFILE:
+
+PERSONAL INFORMATION:
+- Name: Sarah Johnson
+- Age: 28 years
+- Height: 165.0 cm
+- Current Weight: 78.0 kg
+- Goal Weight: 65.0 kg
+- Activity Level: sedentary
+
+NUTRITION PROFILE:
+- Primary Objective: LOSE_WEIGHT
+- Dietary Restrictions: VEGETARIAN
+- Forbidden Foods: shellfish, nuts
+- Daily Calorie Target: 1619 calories
+- Macro Preferences: {'carbs_percent': 30, 'protein_percent': 40, 'fat_percent': 30}
+
+LIFESTYLE FACTORS:
+- Meal Prep Time: 30 minutes/day
+- Cooking Skill: intermediate
+- Budget Range: medium
+- Family Size: 2
+- Work Schedule: office_9_to_5
+
+HEALTH CONSIDERATIONS:
+- Medical Conditions: 
+- Supplements: 
+
+MONTH DETAILS:
+- Month: September 2025
+- Total Days: 30
+
+CRITICAL REQUIREMENTS:
+1. Create meal plans for ALL 30 days of September
+2. Meet daily calorie target of 1619 calories
+3. Respect dietary restrictions and forbidden foods
+4. Ensure nutritional variety throughout the month
+5. Return ONLY valid JSON - no markdown, no explanations
+
+EXACT JSON FORMAT REQUIRED:
+{
+    "monthly_overview": {
+        "month": 9,
+        "year": 2025,
+        "total_days": 30,
+        "average_daily_calories": 1619,
+        "meal_prep_strategy": "Weekly prep with fresh daily items",
+        "seasonal_focus": "Seasonal ingredients for September"
+    },
+    "weekly_themes": {
+        "week_1": {
+            "theme": "Mediterranean Week",
+            "focus": "Fresh vegetables and lean proteins",
+            "prep_strategy": "Sunday prep for proteins and grains"
+        },
+        "week_2": {
+            "theme": "Asian Fusion Week",
+            "focus": "Stir-fries and balanced bowls", 
+            "prep_strategy": "Mid-week prep for sauces and marinades"
+        },
+        "week_3": {
+            "theme": "Comfort Classics Week",
+            "focus": "Healthy versions of comfort foods",
+            "prep_strategy": "Batch cooking on weekends"
+        },
+        "week_4": {
+            "theme": "Fresh & Light Week",
+            "focus": "Salads and light meals",
+            "prep_strategy": "Daily fresh preparation"
+        }
+    },
+    "daily_meals": {
+        "1": {
+            "day_of_week": "Monday",
+            "breakfast": {
+                "name": "Mediterranean Scramble",
+                "calories": 350,
+                "protein": "25g",
+                "carbs": "15g",
+                "fat": "20g",
+                "prep_time": "10",
+                "ingredients": ["Eggs", "Spinach", "Tomatoes", "Feta"],
+                "instructions": ["Scramble eggs with vegetables", "Add feta at the end"],
+                "meal_prep_notes": "Can prep vegetables the night before"
+            },
+            "lunch": {
+                "name": "Quinoa Power Bowl",
+                "calories": 450,
+                "protein": "30g",
+                "carbs": "45g",
+                "fat": "15g",
+                "prep_time": "15",
+                "ingredients": ["Quinoa", "Chicken", "Vegetables", "Tahini"],
+                "instructions": ["Combine cooked quinoa with protein and vegetables"],
+                "meal_prep_notes": "Perfect for meal prep containers"
+            },
+            "dinner": {
+                "name": "Herb Crusted Salmon",
+                "calories": 400,
+                "protein": "35g",
+                "carbs": "20g",
+                "fat": "20g",
+                "prep_time": "25",
+                "ingredients": ["Salmon", "Herbs", "Sweet potato", "Asparagus"],
+                "instructions": ["Bake salmon and vegetables together"],
+                "meal_prep_notes": "Best prepared fresh"
+            },
+            "snacks": [
+                {
+                    "name": "Greek Yogurt with Berries",
+                    "calories": 150,
+                    "ingredients": ["Greek yogurt", "Mixed berries", "Honey"]
+                }
+            ],
+            "daily_totals": {
+                "calories": 1619,
+                "protein": 90,
+                "carbs": 80,
+                "fat": 55,
+                "fiber": 30
+            }
+        },
+        ... (continue for all 30 days)
+    },
+    "weekly_shopping_lists": {
+        "week_1": {
+            "proteins": ["Chicken breast", "Salmon", "Eggs", "Greek yogurt"],
+            "vegetables": ["Spinach", "Tomatoes", "Asparagus", "Sweet potatoes"],
+            "fruits": ["Berries", "Apples", "Bananas"],
+            "grains": ["Quinoa", "Oats", "Brown rice"],
+            "pantry": ["Olive oil", "Herbs", "Spices"],
+            "estimated_cost": "$75-90"
+        }
+    },
+    "nutritional_balance": {
+        "monthly_protein_avg": 85,
+        "monthly_carb_avg": 100,
+        "monthly_fat_avg": 60,
+        "micronutrient_focus": ["Vitamin D", "Omega-3", "Fiber"]
+    }
+}
+
+Generate the complete plan for all 30 days. Return ONLY the JSON.
+
+
+REQUEST DATA STRUCTURE
+==============================
+{
+  "user_id": "test_player_1",
+  "month": 9,
+  "year": 2025,
+  "player_profile": {
+    "personal_info": {
+      "name": "Sarah Johnson",
+      "age": 28,
+      "height_cm": 165.0,
+      "weight_kg": 78.0,
+      "goal_weight_kg": 65.0,
+      "activity_level": "sedentary"
+    },
+    "nutrition_profile": {
+      "primary_objective": "LOSE_WEIGHT",
+      "dietary_restrictions": [
+        "VEGETARIAN"
+      ],
+      "forbidden_foods": [
+        "shellfish",
+        "nuts"
+      ],
+      "calorie_target": 1619,
+      "macro_preferences": {
+        "carbs_percent": 30,
+        "protein_percent": 40,
+        "fat_percent": 30
+      }
+    },
+    "lifestyle": {
+      "meal_prep_time_minutes": 30,
+      "cooking_skill": "intermediate",
+      "budget_range": "medium",
+      "family_size": 2,
+      "work_schedule": "office_9_to_5"
+    },
+    "health_considerations": {
+      "medical_conditions": [],
+      "supplements": []
+    }
+  }
+}

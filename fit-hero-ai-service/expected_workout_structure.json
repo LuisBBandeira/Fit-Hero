@@ -1,0 +1,800 @@
+{
+  "monthly_overview": {
+    "month": 9,
+    "year": 2025,
+    "total_days": 30,
+    "workout_days": 20,
+    "rest_days": 10,
+    "training_phases": [
+      "Foundation",
+      "Build",
+      "Peak",
+      "Recovery"
+    ]
+  },
+  "weekly_structure": {
+    "week_1": {
+      "focus": "Foundation/Adaptation",
+      "intensity": "Low-Moderate",
+      "volume": "Moderate"
+    },
+    "week_2": {
+      "focus": "Progressive Overload",
+      "intensity": "Moderate",
+      "volume": "Moderate-High"
+    },
+    "week_3": {
+      "focus": "Peak Training",
+      "intensity": "Moderate-High",
+      "volume": "High"
+    },
+    "week_4": {
+      "focus": "Recovery/Deload",
+      "intensity": "Low-Moderate",
+      "volume": "Low-Moderate"
+    }
+  },
+  "daily_workouts": {
+    "1": {
+      "day_of_week": "Monday",
+      "workout_type": "Lower Body",
+      "duration": 45,
+      "intensity": "Moderate",
+      "exercises": [
+        {
+          "name": "Exercise 1",
+          "type": "strength",
+          "sets": 3,
+          "reps": "8-12",
+          "rest_time": "60",
+          "notes": "Maintain proper form",
+          "progression": "Increase weight gradually"
+        }
+      ],
+      "warm_up": [
+        "Dynamic stretching",
+        "Light cardio"
+      ],
+      "cool_down": [
+        "Static stretching",
+        "Foam rolling"
+      ]
+    },
+    "2": {
+      "day_of_week": "Monday",
+      "workout_type": "Upper Body",
+      "duration": 45,
+      "intensity": "Moderate",
+      "exercises": [
+        {
+          "name": "Exercise 2",
+          "type": "strength",
+          "sets": 3,
+          "reps": "8-12",
+          "rest_time": "60",
+          "notes": "Maintain proper form",
+          "progression": "Increase weight gradually"
+        }
+      ],
+      "warm_up": [
+        "Dynamic stretching",
+        "Light cardio"
+      ],
+      "cool_down": [
+        "Static stretching",
+        "Foam rolling"
+      ]
+    },
+    "3": {
+      "day_of_week": "Monday",
+      "workout_type": "Lower Body",
+      "duration": 45,
+      "intensity": "Moderate",
+      "exercises": [
+        {
+          "name": "Exercise 3",
+          "type": "strength",
+          "sets": 3,
+          "reps": "8-12",
+          "rest_time": "60",
+          "notes": "Maintain proper form",
+          "progression": "Increase weight gradually"
+        }
+      ],
+      "warm_up": [
+        "Dynamic stretching",
+        "Light cardio"
+      ],
+      "cool_down": [
+        "Static stretching",
+        "Foam rolling"
+      ]
+    },
+    "4": {
+      "day_of_week": "Monday",
+      "workout_type": "Upper Body",
+      "duration": 45,
+      "intensity": "Moderate",
+      "exercises": [
+        {
+          "name": "Exercise 4",
+          "type": "strength",
+          "sets": 3,
+          "reps": "8-12",
+          "rest_time": "60",
+          "notes": "Maintain proper form",
+          "progression": "Increase weight gradually"
+        }
+      ],
+      "warm_up": [
+        "Dynamic stretching",
+        "Light cardio"
+      ],
+      "cool_down": [
+        "Static stretching",
+        "Foam rolling"
+      ]
+    },
+    "5": {
+      "day_of_week": "Monday",
+      "workout_type": "Lower Body",
+      "duration": 45,
+      "intensity": "Moderate",
+      "exercises": [
+        {
+          "name": "Exercise 5",
+          "type": "strength",
+          "sets": 3,
+          "reps": "8-12",
+          "rest_time": "60",
+          "notes": "Maintain proper form",
+          "progression": "Increase weight gradually"
+        }
+      ],
+      "warm_up": [
+        "Dynamic stretching",
+        "Light cardio"
+      ],
+      "cool_down": [
+        "Static stretching",
+        "Foam rolling"
+      ]
+    },
+    "6": {
+      "day_of_week": "Monday",
+      "workout_type": "Upper Body",
+      "duration": 45,
+      "intensity": "Moderate",
+      "exercises": [
+        {
+          "name": "Exercise 6",
+          "type": "strength",
+          "sets": 3,
+          "reps": "8-12",
+          "rest_time": "60",
+          "notes": "Maintain proper form",
+          "progression": "Increase weight gradually"
+        }
+      ],
+      "warm_up": [
+        "Dynamic stretching",
+        "Light cardio"
+      ],
+      "cool_down": [
+        "Static stretching",
+        "Foam rolling"
+      ]
+    },
+    "7": {
+      "day_of_week": "Monday",
+      "workout_type": "Lower Body",
+      "duration": 45,
+      "intensity": "Moderate",
+      "exercises": [
+        {
+          "name": "Exercise 7",
+          "type": "strength",
+          "sets": 3,
+          "reps": "8-12",
+          "rest_time": "60",
+          "notes": "Maintain proper form",
+          "progression": "Increase weight gradually"
+        }
+      ],
+      "warm_up": [
+        "Dynamic stretching",
+        "Light cardio"
+      ],
+      "cool_down": [
+        "Static stretching",
+        "Foam rolling"
+      ]
+    },
+    "8": {
+      "day_of_week": "Monday",
+      "workout_type": "Upper Body",
+      "duration": 45,
+      "intensity": "Moderate",
+      "exercises": [
+        {
+          "name": "Exercise 8",
+          "type": "strength",
+          "sets": 3,
+          "reps": "8-12",
+          "rest_time": "60",
+          "notes": "Maintain proper form",
+          "progression": "Increase weight gradually"
+        }
+      ],
+      "warm_up": [
+        "Dynamic stretching",
+        "Light cardio"
+      ],
+      "cool_down": [
+        "Static stretching",
+        "Foam rolling"
+      ]
+    },
+    "9": {
+      "day_of_week": "Monday",
+      "workout_type": "Lower Body",
+      "duration": 45,
+      "intensity": "Moderate",
+      "exercises": [
+        {
+          "name": "Exercise 9",
+          "type": "strength",
+          "sets": 3,
+          "reps": "8-12",
+          "rest_time": "60",
+          "notes": "Maintain proper form",
+          "progression": "Increase weight gradually"
+        }
+      ],
+      "warm_up": [
+        "Dynamic stretching",
+        "Light cardio"
+      ],
+      "cool_down": [
+        "Static stretching",
+        "Foam rolling"
+      ]
+    },
+    "10": {
+      "day_of_week": "Monday",
+      "workout_type": "Upper Body",
+      "duration": 45,
+      "intensity": "Moderate",
+      "exercises": [
+        {
+          "name": "Exercise 10",
+          "type": "strength",
+          "sets": 3,
+          "reps": "8-12",
+          "rest_time": "60",
+          "notes": "Maintain proper form",
+          "progression": "Increase weight gradually"
+        }
+      ],
+      "warm_up": [
+        "Dynamic stretching",
+        "Light cardio"
+      ],
+      "cool_down": [
+        "Static stretching",
+        "Foam rolling"
+      ]
+    },
+    "11": {
+      "day_of_week": "Monday",
+      "workout_type": "Lower Body",
+      "duration": 45,
+      "intensity": "Moderate",
+      "exercises": [
+        {
+          "name": "Exercise 11",
+          "type": "strength",
+          "sets": 3,
+          "reps": "8-12",
+          "rest_time": "60",
+          "notes": "Maintain proper form",
+          "progression": "Increase weight gradually"
+        }
+      ],
+      "warm_up": [
+        "Dynamic stretching",
+        "Light cardio"
+      ],
+      "cool_down": [
+        "Static stretching",
+        "Foam rolling"
+      ]
+    },
+    "12": {
+      "day_of_week": "Monday",
+      "workout_type": "Upper Body",
+      "duration": 45,
+      "intensity": "Moderate",
+      "exercises": [
+        {
+          "name": "Exercise 12",
+          "type": "strength",
+          "sets": 3,
+          "reps": "8-12",
+          "rest_time": "60",
+          "notes": "Maintain proper form",
+          "progression": "Increase weight gradually"
+        }
+      ],
+      "warm_up": [
+        "Dynamic stretching",
+        "Light cardio"
+      ],
+      "cool_down": [
+        "Static stretching",
+        "Foam rolling"
+      ]
+    },
+    "13": {
+      "day_of_week": "Monday",
+      "workout_type": "Lower Body",
+      "duration": 45,
+      "intensity": "Moderate",
+      "exercises": [
+        {
+          "name": "Exercise 13",
+          "type": "strength",
+          "sets": 3,
+          "reps": "8-12",
+          "rest_time": "60",
+          "notes": "Maintain proper form",
+          "progression": "Increase weight gradually"
+        }
+      ],
+      "warm_up": [
+        "Dynamic stretching",
+        "Light cardio"
+      ],
+      "cool_down": [
+        "Static stretching",
+        "Foam rolling"
+      ]
+    },
+    "14": {
+      "day_of_week": "Monday",
+      "workout_type": "Upper Body",
+      "duration": 45,
+      "intensity": "Moderate",
+      "exercises": [
+        {
+          "name": "Exercise 14",
+          "type": "strength",
+          "sets": 3,
+          "reps": "8-12",
+          "rest_time": "60",
+          "notes": "Maintain proper form",
+          "progression": "Increase weight gradually"
+        }
+      ],
+      "warm_up": [
+        "Dynamic stretching",
+        "Light cardio"
+      ],
+      "cool_down": [
+        "Static stretching",
+        "Foam rolling"
+      ]
+    },
+    "15": {
+      "day_of_week": "Monday",
+      "workout_type": "Lower Body",
+      "duration": 45,
+      "intensity": "Moderate",
+      "exercises": [
+        {
+          "name": "Exercise 15",
+          "type": "strength",
+          "sets": 3,
+          "reps": "8-12",
+          "rest_time": "60",
+          "notes": "Maintain proper form",
+          "progression": "Increase weight gradually"
+        }
+      ],
+      "warm_up": [
+        "Dynamic stretching",
+        "Light cardio"
+      ],
+      "cool_down": [
+        "Static stretching",
+        "Foam rolling"
+      ]
+    },
+    "16": {
+      "day_of_week": "Monday",
+      "workout_type": "Upper Body",
+      "duration": 45,
+      "intensity": "Moderate",
+      "exercises": [
+        {
+          "name": "Exercise 16",
+          "type": "strength",
+          "sets": 3,
+          "reps": "8-12",
+          "rest_time": "60",
+          "notes": "Maintain proper form",
+          "progression": "Increase weight gradually"
+        }
+      ],
+      "warm_up": [
+        "Dynamic stretching",
+        "Light cardio"
+      ],
+      "cool_down": [
+        "Static stretching",
+        "Foam rolling"
+      ]
+    },
+    "17": {
+      "day_of_week": "Monday",
+      "workout_type": "Lower Body",
+      "duration": 45,
+      "intensity": "Moderate",
+      "exercises": [
+        {
+          "name": "Exercise 17",
+          "type": "strength",
+          "sets": 3,
+          "reps": "8-12",
+          "rest_time": "60",
+          "notes": "Maintain proper form",
+          "progression": "Increase weight gradually"
+        }
+      ],
+      "warm_up": [
+        "Dynamic stretching",
+        "Light cardio"
+      ],
+      "cool_down": [
+        "Static stretching",
+        "Foam rolling"
+      ]
+    },
+    "18": {
+      "day_of_week": "Monday",
+      "workout_type": "Upper Body",
+      "duration": 45,
+      "intensity": "Moderate",
+      "exercises": [
+        {
+          "name": "Exercise 18",
+          "type": "strength",
+          "sets": 3,
+          "reps": "8-12",
+          "rest_time": "60",
+          "notes": "Maintain proper form",
+          "progression": "Increase weight gradually"
+        }
+      ],
+      "warm_up": [
+        "Dynamic stretching",
+        "Light cardio"
+      ],
+      "cool_down": [
+        "Static stretching",
+        "Foam rolling"
+      ]
+    },
+    "19": {
+      "day_of_week": "Monday",
+      "workout_type": "Lower Body",
+      "duration": 45,
+      "intensity": "Moderate",
+      "exercises": [
+        {
+          "name": "Exercise 19",
+          "type": "strength",
+          "sets": 3,
+          "reps": "8-12",
+          "rest_time": "60",
+          "notes": "Maintain proper form",
+          "progression": "Increase weight gradually"
+        }
+      ],
+      "warm_up": [
+        "Dynamic stretching",
+        "Light cardio"
+      ],
+      "cool_down": [
+        "Static stretching",
+        "Foam rolling"
+      ]
+    },
+    "20": {
+      "day_of_week": "Monday",
+      "workout_type": "Upper Body",
+      "duration": 45,
+      "intensity": "Moderate",
+      "exercises": [
+        {
+          "name": "Exercise 20",
+          "type": "strength",
+          "sets": 3,
+          "reps": "8-12",
+          "rest_time": "60",
+          "notes": "Maintain proper form",
+          "progression": "Increase weight gradually"
+        }
+      ],
+      "warm_up": [
+        "Dynamic stretching",
+        "Light cardio"
+      ],
+      "cool_down": [
+        "Static stretching",
+        "Foam rolling"
+      ]
+    },
+    "21": {
+      "day_of_week": "Monday",
+      "workout_type": "Lower Body",
+      "duration": 45,
+      "intensity": "Moderate",
+      "exercises": [
+        {
+          "name": "Exercise 21",
+          "type": "strength",
+          "sets": 3,
+          "reps": "8-12",
+          "rest_time": "60",
+          "notes": "Maintain proper form",
+          "progression": "Increase weight gradually"
+        }
+      ],
+      "warm_up": [
+        "Dynamic stretching",
+        "Light cardio"
+      ],
+      "cool_down": [
+        "Static stretching",
+        "Foam rolling"
+      ]
+    },
+    "22": {
+      "day_of_week": "Monday",
+      "workout_type": "Upper Body",
+      "duration": 45,
+      "intensity": "Moderate",
+      "exercises": [
+        {
+          "name": "Exercise 22",
+          "type": "strength",
+          "sets": 3,
+          "reps": "8-12",
+          "rest_time": "60",
+          "notes": "Maintain proper form",
+          "progression": "Increase weight gradually"
+        }
+      ],
+      "warm_up": [
+        "Dynamic stretching",
+        "Light cardio"
+      ],
+      "cool_down": [
+        "Static stretching",
+        "Foam rolling"
+      ]
+    },
+    "23": {
+      "day_of_week": "Monday",
+      "workout_type": "Lower Body",
+      "duration": 45,
+      "intensity": "Moderate",
+      "exercises": [
+        {
+          "name": "Exercise 23",
+          "type": "strength",
+          "sets": 3,
+          "reps": "8-12",
+          "rest_time": "60",
+          "notes": "Maintain proper form",
+          "progression": "Increase weight gradually"
+        }
+      ],
+      "warm_up": [
+        "Dynamic stretching",
+        "Light cardio"
+      ],
+      "cool_down": [
+        "Static stretching",
+        "Foam rolling"
+      ]
+    },
+    "24": {
+      "day_of_week": "Monday",
+      "workout_type": "Upper Body",
+      "duration": 45,
+      "intensity": "Moderate",
+      "exercises": [
+        {
+          "name": "Exercise 24",
+          "type": "strength",
+          "sets": 3,
+          "reps": "8-12",
+          "rest_time": "60",
+          "notes": "Maintain proper form",
+          "progression": "Increase weight gradually"
+        }
+      ],
+      "warm_up": [
+        "Dynamic stretching",
+        "Light cardio"
+      ],
+      "cool_down": [
+        "Static stretching",
+        "Foam rolling"
+      ]
+    },
+    "25": {
+      "day_of_week": "Monday",
+      "workout_type": "Lower Body",
+      "duration": 45,
+      "intensity": "Moderate",
+      "exercises": [
+        {
+          "name": "Exercise 25",
+          "type": "strength",
+          "sets": 3,
+          "reps": "8-12",
+          "rest_time": "60",
+          "notes": "Maintain proper form",
+          "progression": "Increase weight gradually"
+        }
+      ],
+      "warm_up": [
+        "Dynamic stretching",
+        "Light cardio"
+      ],
+      "cool_down": [
+        "Static stretching",
+        "Foam rolling"
+      ]
+    },
+    "26": {
+      "day_of_week": "Monday",
+      "workout_type": "Upper Body",
+      "duration": 45,
+      "intensity": "Moderate",
+      "exercises": [
+        {
+          "name": "Exercise 26",
+          "type": "strength",
+          "sets": 3,
+          "reps": "8-12",
+          "rest_time": "60",
+          "notes": "Maintain proper form",
+          "progression": "Increase weight gradually"
+        }
+      ],
+      "warm_up": [
+        "Dynamic stretching",
+        "Light cardio"
+      ],
+      "cool_down": [
+        "Static stretching",
+        "Foam rolling"
+      ]
+    },
+    "27": {
+      "day_of_week": "Monday",
+      "workout_type": "Lower Body",
+      "duration": 45,
+      "intensity": "Moderate",
+      "exercises": [
+        {
+          "name": "Exercise 27",
+          "type": "strength",
+          "sets": 3,
+          "reps": "8-12",
+          "rest_time": "60",
+          "notes": "Maintain proper form",
+          "progression": "Increase weight gradually"
+        }
+      ],
+      "warm_up": [
+        "Dynamic stretching",
+        "Light cardio"
+      ],
+      "cool_down": [
+        "Static stretching",
+        "Foam rolling"
+      ]
+    },
+    "28": {
+      "day_of_week": "Monday",
+      "workout_type": "Upper Body",
+      "duration": 45,
+      "intensity": "Moderate",
+      "exercises": [
+        {
+          "name": "Exercise 28",
+          "type": "strength",
+          "sets": 3,
+          "reps": "8-12",
+          "rest_time": "60",
+          "notes": "Maintain proper form",
+          "progression": "Increase weight gradually"
+        }
+      ],
+      "warm_up": [
+        "Dynamic stretching",
+        "Light cardio"
+      ],
+      "cool_down": [
+        "Static stretching",
+        "Foam rolling"
+      ]
+    },
+    "29": {
+      "day_of_week": "Monday",
+      "workout_type": "Lower Body",
+      "duration": 45,
+      "intensity": "Moderate",
+      "exercises": [
+        {
+          "name": "Exercise 29",
+          "type": "strength",
+          "sets": 3,
+          "reps": "8-12",
+          "rest_time": "60",
+          "notes": "Maintain proper form",
+          "progression": "Increase weight gradually"
+        }
+      ],
+      "warm_up": [
+        "Dynamic stretching",
+        "Light cardio"
+      ],
+      "cool_down": [
+        "Static stretching",
+        "Foam rolling"
+      ]
+    },
+    "30": {
+      "day_of_week": "Monday",
+      "workout_type": "Upper Body",
+      "duration": 45,
+      "intensity": "Moderate",
+      "exercises": [
+        {
+          "name": "Exercise 30",
+          "type": "strength",
+          "sets": 3,
+          "reps": "8-12",
+          "rest_time": "60",
+          "notes": "Maintain proper form",
+          "progression": "Increase weight gradually"
+        }
+      ],
+      "warm_up": [
+        "Dynamic stretching",
+        "Light cardio"
+      ],
+      "cool_down": [
+        "Static stretching",
+        "Foam rolling"
+      ]
+    }
+  },
+  "progression_plan": {
+    "week_1_adjustments": "Focus on form",
+    "week_2_adjustments": "Increase intensity",
+    "week_3_adjustments": "Peak performance",
+    "week_4_adjustments": "Recovery focus"
+  },
+  "safety_guidelines": [
+    "Always warm up",
+    "Maintain proper form",
+    "Listen to your body"
+  ]
+}

@@ -1,0 +1,281 @@
+{
+  "monthly_overview": {
+    "month": 9,
+    "year": 2025,
+    "total_days": 30,
+    "workout_days": 20,
+    "rest_days": 10
+  },
+  "daily_workouts": {
+    "1": {
+      "day_of_week": "Monday",
+      "workout_type": "Full Body",
+      "duration": 75,
+      "intensity": "Low",
+      "exercises": [],
+      "warm_up": [],
+      "cool_down": []
+    },
+    "2": {
+      "day_of_week": "Tuesday",
+      "workout_type": "Full Body",
+      "duration": 75,
+      "intensity": "Low",
+      "exercises": [],
+      "warm_up": [],
+      "cool_down": []
+    },
+    "3": {
+      "day_of_week": "Wednesday",
+      "workout_type": "Full Body",
+      "duration": 75,
+      "intensity": "Low",
+      "exercises": [],
+      "warm_up": [],
+      "cool_down": []
+    },
+    "4": {
+      "day_of_week": "Thursday",
+      "workout_type": "Full Body",
+      "duration": 75,
+      "intensity": "Low",
+      "exercises": [],
+      "warm_up": [],
+      "cool_down": []
+    },
+    "5": {
+      "day_of_week": "Friday",
+      "workout_type": "Full Body",
+      "duration": 75,
+      "intensity": "Low",
+      "exercises": [],
+      "warm_up": [],
+      "cool_down": []
+    },
+    "6": {
+      "day_of_week": "Saturday",
+      "workout_type": "Full Body",
+      "duration": 75,
+      "intensity": "Low",
+      "exercises": [],
+      "warm_up": [],
+      "cool_down": []
+    },
+    "7": {
+      "day_of_week": "Sunday",
+      "workout_type": "Rest",
+      "duration": 0,
+      "intensity": "Low",
+      "exercises": [],
+      "warm_up": [],
+      "cool_down": []
+    },
+    "8": {
+      "day_of_week": "Monday",
+      "workout_type": "Full Body",
+      "duration": 75,
+      "intensity": "Low",
+      "exercises": [],
+      "warm_up": [],
+      "cool_down": []
+    },
+    "9": {
+      "day_of_week": "Tuesday",
+      "workout_type": "Full Body",
+      "duration": 75,
+      "intensity": "Low",
+      "exercises": [],
+      "warm_up": [],
+      "cool_down": []
+    },
+    "10": {
+      "day_of_week": "Wednesday",
+      "workout_type": "Full Body",
+      "duration": 75,
+      "intensity": "Low",
+      "exercises": [],
+      "warm_up": [],
+      "cool_down": []
+    },
+    "11": {
+      "day_of_week": "Thursday",
+      "workout_type": "Full Body",
+      "duration": 75,
+      "intensity": "Low",
+      "exercises": [],
+      "warm_up": [],
+      "cool_down": []
+    },
+    "12": {
+      "day_of_week": "Friday",
+      "workout_type": "Full Body",
+      "duration": 75,
+      "intensity": "Low",
+      "exercises": [],
+      "warm_up": [],
+      "cool_down": []
+    },
+    "13": {
+      "day_of_week": "Saturday",
+      "workout_type": "Full Body",
+      "duration": 75,
+      "intensity": "Low",
+      "exercises": [],
+      "warm_up": [],
+      "cool_down": []
+    },
+    "14": {
+      "day_of_week": "Sunday",
+      "workout_type": "Rest",
+      "duration": 0,
+      "intensity": "Low",
+      "exercises": [],
+      "warm_up": [],
+      "cool_down": []
+    },
+    "15": {
+      "day_of_week": "Monday",
+      "workout_type": "Full Body",
+      "duration": 75,
+      "intensity": "Low",
+      "exercises": [],
+      "warm_up": [],
+      "cool_down": []
+    },
+    "16": {
+      "day_of_week": "Tuesday",
+      "workout_type": "Full Body",
+      "duration": 75,
+      "intensity": "Low",
+      "exercises": [],
+      "warm_up": [],
+      "cool_down": []
+    },
+    "17": {
+      "day_of_week": "Wednesday",
+      "workout_type": "Full Body",
+      "duration": 75,
+      "intensity": "Low",
+      "exercises": [],
+      "warm_up": [],
+      "cool_down": []
+    },
+    "18": {
+      "day_of_week": "Thursday",
+      "workout_type": "Full Body",
+      "duration": 75,
+      "intensity": "Low",
+      "exercises": [],
+      "warm_up": [],
+      "cool_down": []
+    },
+    "19": {
+      "day_of_week": "Friday",
+      "workout_type": "Full Body",
+      "duration": 75,
+      "intensity": "Low",
+      "exercises": [],
+      "warm_up": [],
+      "cool_down": []
+    },
+    "20": {
+      "day_of_week": "Saturday",
+      "workout_type": "Full Body",
+      "duration": 75,
+      "intensity": "Low",
+      "exercises": [],
+      "warm_up": [],
+      "cool_down": []
+    },
+    "21": {
+      "day_of_week": "Sunday",
+      "workout_type": "Rest",
+      "duration": 0,
+      "intensity": "Low",
+      "exercises": [],
+      "warm_up": [],
+      "cool_down": []
+    },
+    "22": {
+      "day_of_week": "Monday",
+      "workout_type": "Full Body",
+      "duration": 75,
+      "intensity": "Low",
+      "exercises": [],
+      "warm_up": [],
+      "cool_down": []
+    },
+    "23": {
+      "day_of_week": "Tuesday",
+      "workout_type": "Full Body",
+      "duration": 75,
+      "intensity": "Low",
+      "exercises": [],
+      "warm_up": [],
+      "cool_down": []
+    },
+    "24": {
+      "day_of_week": "Wednesday",
+      "workout_type": "Full Body",
+      "duration": 75,
+      "intensity": "Low",
+      "exercises": [],
+      "warm_up": [],
+      "cool_down": []
+    },
+    "25": {
+      "day_of_week": "Thursday",
+      "workout_type": "Full Body",
+      "duration": 75,
+      "intensity": "Low",
+      "exercises": [],
+      "warm_up": [],
+      "cool_down": []
+    },
+    "26": {
+      "day_of_week": "Friday",
+      "workout_type": "Full Body",
+      "duration": 75,
+      "intensity": "Low",
+      "exercises": [],
+      "warm_up": [],
+      "cool_down": []
+    },
+    "27": {
+      "day_of_week": "Saturday",
+      "workout_type": "Full Body",
+      "duration": 75,
+      "intensity": "Low",
+      "exercises": [],
+      "warm_up": [],
+      "cool_down": []
+    },
+    "28": {
+      "day_of_week": "Sunday",
+      "workout_type": "Rest",
+      "duration": 0,
+      "intensity": "Low",
+      "exercises": [],
+      "warm_up": [],
+      "cool_down": []
+    },
+    "29": {
+      "day_of_week": "Monday",
+      "workout_type": "Full Body",
+      "duration": 75,
+      "intensity": "Low",
+      "exercises": [],
+      "warm_up": [],
+      "cool_down": []
+    },
+    "30": {
+      "day_of_week": "Tuesday",
+      "workout_type": "Full Body",
+      "duration": 75,
+      "intensity": "Low",
+      "exercises": [],
+      "warm_up": [],
+      "cool_down": []
+    }
+  }
+}

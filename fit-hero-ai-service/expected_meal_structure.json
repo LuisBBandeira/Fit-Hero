@@ -1,0 +1,2294 @@
+{
+  "monthly_overview": {
+    "month": 9,
+    "year": 2025,
+    "total_days": 30,
+    "average_daily_calories": 1600,
+    "meal_prep_strategy": "Weekly preparation with fresh elements",
+    "seasonal_focus": "Seasonal ingredients and themes"
+  },
+  "weekly_themes": {
+    "week_1": {
+      "theme": "Mediterranean Week",
+      "focus": "Fresh vegetables and lean proteins",
+      "prep_strategy": "Sunday prep for proteins"
+    },
+    "week_2": {
+      "theme": "Asian Fusion Week",
+      "focus": "Balanced bowls and stir-fries",
+      "prep_strategy": "Mid-week sauce preparation"
+    },
+    "week_3": {
+      "theme": "Comfort Classics Week",
+      "focus": "Healthy comfort foods",
+      "prep_strategy": "Batch cooking weekends"
+    },
+    "week_4": {
+      "theme": "Fresh & Light Week",
+      "focus": "Light meals and salads",
+      "prep_strategy": "Daily fresh preparation"
+    }
+  },
+  "daily_meals": {
+    "1": {
+      "day_of_week": "Monday",
+      "breakfast": {
+        "name": "Breakfast Day 1",
+        "calories": 400,
+        "protein": "20g",
+        "carbs": "30g",
+        "fat": "15g",
+        "prep_time": "10",
+        "ingredients": [
+          "Oats",
+          "Berries",
+          "Yogurt"
+        ],
+        "instructions": [
+          "Combine ingredients",
+          "Mix well"
+        ],
+        "meal_prep_notes": "Can prep overnight"
+      },
+      "lunch": {
+        "name": "Lunch Day 1",
+        "calories": 533,
+        "protein": "30g",
+        "carbs": "40g",
+        "fat": "20g",
+        "prep_time": "15",
+        "ingredients": [
+          "Chicken",
+          "Rice",
+          "Vegetables"
+        ],
+        "instructions": [
+          "Cook protein",
+          "Steam vegetables"
+        ],
+        "meal_prep_notes": "Great for meal prep"
+      },
+      "dinner": {
+        "name": "Dinner Day 1",
+        "calories": 533,
+        "protein": "35g",
+        "carbs": "30g",
+        "fat": "25g",
+        "prep_time": "25",
+        "ingredients": [
+          "Fish",
+          "Quinoa",
+          "Asparagus"
+        ],
+        "instructions": [
+          "Bake fish",
+          "Cook quinoa"
+        ],
+        "meal_prep_notes": "Best prepared fresh"
+      },
+      "snacks": [
+        {
+          "name": "Healthy Snack",
+          "calories": 160,
+          "ingredients": [
+            "Nuts",
+            "Fruit"
+          ]
+        }
+      ],
+      "daily_totals": {
+        "calories": 1600,
+        "protein": 85,
+        "carbs": 100,
+        "fat": 60,
+        "fiber": 30
+      }
+    },
+    "2": {
+      "day_of_week": "Monday",
+      "breakfast": {
+        "name": "Breakfast Day 2",
+        "calories": 400,
+        "protein": "20g",
+        "carbs": "30g",
+        "fat": "15g",
+        "prep_time": "10",
+        "ingredients": [
+          "Oats",
+          "Berries",
+          "Yogurt"
+        ],
+        "instructions": [
+          "Combine ingredients",
+          "Mix well"
+        ],
+        "meal_prep_notes": "Can prep overnight"
+      },
+      "lunch": {
+        "name": "Lunch Day 2",
+        "calories": 533,
+        "protein": "30g",
+        "carbs": "40g",
+        "fat": "20g",
+        "prep_time": "15",
+        "ingredients": [
+          "Chicken",
+          "Rice",
+          "Vegetables"
+        ],
+        "instructions": [
+          "Cook protein",
+          "Steam vegetables"
+        ],
+        "meal_prep_notes": "Great for meal prep"
+      },
+      "dinner": {
+        "name": "Dinner Day 2",
+        "calories": 533,
+        "protein": "35g",
+        "carbs": "30g",
+        "fat": "25g",
+        "prep_time": "25",
+        "ingredients": [
+          "Fish",
+          "Quinoa",
+          "Asparagus"
+        ],
+        "instructions": [
+          "Bake fish",
+          "Cook quinoa"
+        ],
+        "meal_prep_notes": "Best prepared fresh"
+      },
+      "snacks": [
+        {
+          "name": "Healthy Snack",
+          "calories": 160,
+          "ingredients": [
+            "Nuts",
+            "Fruit"
+          ]
+        }
+      ],
+      "daily_totals": {
+        "calories": 1600,
+        "protein": 85,
+        "carbs": 100,
+        "fat": 60,
+        "fiber": 30
+      }
+    },
+    "3": {
+      "day_of_week": "Monday",
+      "breakfast": {
+        "name": "Breakfast Day 3",
+        "calories": 400,
+        "protein": "20g",
+        "carbs": "30g",
+        "fat": "15g",
+        "prep_time": "10",
+        "ingredients": [
+          "Oats",
+          "Berries",
+          "Yogurt"
+        ],
+        "instructions": [
+          "Combine ingredients",
+          "Mix well"
+        ],
+        "meal_prep_notes": "Can prep overnight"
+      },
+      "lunch": {
+        "name": "Lunch Day 3",
+        "calories": 533,
+        "protein": "30g",
+        "carbs": "40g",
+        "fat": "20g",
+        "prep_time": "15",
+        "ingredients": [
+          "Chicken",
+          "Rice",
+          "Vegetables"
+        ],
+        "instructions": [
+          "Cook protein",
+          "Steam vegetables"
+        ],
+        "meal_prep_notes": "Great for meal prep"
+      },
+      "dinner": {
+        "name": "Dinner Day 3",
+        "calories": 533,
+        "protein": "35g",
+        "carbs": "30g",
+        "fat": "25g",
+        "prep_time": "25",
+        "ingredients": [
+          "Fish",
+          "Quinoa",
+          "Asparagus"
+        ],
+        "instructions": [
+          "Bake fish",
+          "Cook quinoa"
+        ],
+        "meal_prep_notes": "Best prepared fresh"
+      },
+      "snacks": [
+        {
+          "name": "Healthy Snack",
+          "calories": 160,
+          "ingredients": [
+            "Nuts",
+            "Fruit"
+          ]
+        }
+      ],
+      "daily_totals": {
+        "calories": 1600,
+        "protein": 85,
+        "carbs": 100,
+        "fat": 60,
+        "fiber": 30
+      }
+    },
+    "4": {
+      "day_of_week": "Monday",
+      "breakfast": {
+        "name": "Breakfast Day 4",
+        "calories": 400,
+        "protein": "20g",
+        "carbs": "30g",
+        "fat": "15g",
+        "prep_time": "10",
+        "ingredients": [
+          "Oats",
+          "Berries",
+          "Yogurt"
+        ],
+        "instructions": [
+          "Combine ingredients",
+          "Mix well"
+        ],
+        "meal_prep_notes": "Can prep overnight"
+      },
+      "lunch": {
+        "name": "Lunch Day 4",
+        "calories": 533,
+        "protein": "30g",
+        "carbs": "40g",
+        "fat": "20g",
+        "prep_time": "15",
+        "ingredients": [
+          "Chicken",
+          "Rice",
+          "Vegetables"
+        ],
+        "instructions": [
+          "Cook protein",
+          "Steam vegetables"
+        ],
+        "meal_prep_notes": "Great for meal prep"
+      },
+      "dinner": {
+        "name": "Dinner Day 4",
+        "calories": 533,
+        "protein": "35g",
+        "carbs": "30g",
+        "fat": "25g",
+        "prep_time": "25",
+        "ingredients": [
+          "Fish",
+          "Quinoa",
+          "Asparagus"
+        ],
+        "instructions": [
+          "Bake fish",
+          "Cook quinoa"
+        ],
+        "meal_prep_notes": "Best prepared fresh"
+      },
+      "snacks": [
+        {
+          "name": "Healthy Snack",
+          "calories": 160,
+          "ingredients": [
+            "Nuts",
+            "Fruit"
+          ]
+        }
+      ],
+      "daily_totals": {
+        "calories": 1600,
+        "protein": 85,
+        "carbs": 100,
+        "fat": 60,
+        "fiber": 30
+      }
+    },
+    "5": {
+      "day_of_week": "Monday",
+      "breakfast": {
+        "name": "Breakfast Day 5",
+        "calories": 400,
+        "protein": "20g",
+        "carbs": "30g",
+        "fat": "15g",
+        "prep_time": "10",
+        "ingredients": [
+          "Oats",
+          "Berries",
+          "Yogurt"
+        ],
+        "instructions": [
+          "Combine ingredients",
+          "Mix well"
+        ],
+        "meal_prep_notes": "Can prep overnight"
+      },
+      "lunch": {
+        "name": "Lunch Day 5",
+        "calories": 533,
+        "protein": "30g",
+        "carbs": "40g",
+        "fat": "20g",
+        "prep_time": "15",
+        "ingredients": [
+          "Chicken",
+          "Rice",
+          "Vegetables"
+        ],
+        "instructions": [
+          "Cook protein",
+          "Steam vegetables"
+        ],
+        "meal_prep_notes": "Great for meal prep"
+      },
+      "dinner": {
+        "name": "Dinner Day 5",
+        "calories": 533,
+        "protein": "35g",
+        "carbs": "30g",
+        "fat": "25g",
+        "prep_time": "25",
+        "ingredients": [
+          "Fish",
+          "Quinoa",
+          "Asparagus"
+        ],
+        "instructions": [
+          "Bake fish",
+          "Cook quinoa"
+        ],
+        "meal_prep_notes": "Best prepared fresh"
+      },
+      "snacks": [
+        {
+          "name": "Healthy Snack",
+          "calories": 160,
+          "ingredients": [
+            "Nuts",
+            "Fruit"
+          ]
+        }
+      ],
+      "daily_totals": {
+        "calories": 1600,
+        "protein": 85,
+        "carbs": 100,
+        "fat": 60,
+        "fiber": 30
+      }
+    },
+    "6": {
+      "day_of_week": "Monday",
+      "breakfast": {
+        "name": "Breakfast Day 6",
+        "calories": 400,
+        "protein": "20g",
+        "carbs": "30g",
+        "fat": "15g",
+        "prep_time": "10",
+        "ingredients": [
+          "Oats",
+          "Berries",
+          "Yogurt"
+        ],
+        "instructions": [
+          "Combine ingredients",
+          "Mix well"
+        ],
+        "meal_prep_notes": "Can prep overnight"
+      },
+      "lunch": {
+        "name": "Lunch Day 6",
+        "calories": 533,
+        "protein": "30g",
+        "carbs": "40g",
+        "fat": "20g",
+        "prep_time": "15",
+        "ingredients": [
+          "Chicken",
+          "Rice",
+          "Vegetables"
+        ],
+        "instructions": [
+          "Cook protein",
+          "Steam vegetables"
+        ],
+        "meal_prep_notes": "Great for meal prep"
+      },
+      "dinner": {
+        "name": "Dinner Day 6",
+        "calories": 533,
+        "protein": "35g",
+        "carbs": "30g",
+        "fat": "25g",
+        "prep_time": "25",
+        "ingredients": [
+          "Fish",
+          "Quinoa",
+          "Asparagus"
+        ],
+        "instructions": [
+          "Bake fish",
+          "Cook quinoa"
+        ],
+        "meal_prep_notes": "Best prepared fresh"
+      },
+      "snacks": [
+        {
+          "name": "Healthy Snack",
+          "calories": 160,
+          "ingredients": [
+            "Nuts",
+            "Fruit"
+          ]
+        }
+      ],
+      "daily_totals": {
+        "calories": 1600,
+        "protein": 85,
+        "carbs": 100,
+        "fat": 60,
+        "fiber": 30
+      }
+    },
+    "7": {
+      "day_of_week": "Monday",
+      "breakfast": {
+        "name": "Breakfast Day 7",
+        "calories": 400,
+        "protein": "20g",
+        "carbs": "30g",
+        "fat": "15g",
+        "prep_time": "10",
+        "ingredients": [
+          "Oats",
+          "Berries",
+          "Yogurt"
+        ],
+        "instructions": [
+          "Combine ingredients",
+          "Mix well"
+        ],
+        "meal_prep_notes": "Can prep overnight"
+      },
+      "lunch": {
+        "name": "Lunch Day 7",
+        "calories": 533,
+        "protein": "30g",
+        "carbs": "40g",
+        "fat": "20g",
+        "prep_time": "15",
+        "ingredients": [
+          "Chicken",
+          "Rice",
+          "Vegetables"
+        ],
+        "instructions": [
+          "Cook protein",
+          "Steam vegetables"
+        ],
+        "meal_prep_notes": "Great for meal prep"
+      },
+      "dinner": {
+        "name": "Dinner Day 7",
+        "calories": 533,
+        "protein": "35g",
+        "carbs": "30g",
+        "fat": "25g",
+        "prep_time": "25",
+        "ingredients": [
+          "Fish",
+          "Quinoa",
+          "Asparagus"
+        ],
+        "instructions": [
+          "Bake fish",
+          "Cook quinoa"
+        ],
+        "meal_prep_notes": "Best prepared fresh"
+      },
+      "snacks": [
+        {
+          "name": "Healthy Snack",
+          "calories": 160,
+          "ingredients": [
+            "Nuts",
+            "Fruit"
+          ]
+        }
+      ],
+      "daily_totals": {
+        "calories": 1600,
+        "protein": 85,
+        "carbs": 100,
+        "fat": 60,
+        "fiber": 30
+      }
+    },
+    "8": {
+      "day_of_week": "Monday",
+      "breakfast": {
+        "name": "Breakfast Day 8",
+        "calories": 400,
+        "protein": "20g",
+        "carbs": "30g",
+        "fat": "15g",
+        "prep_time": "10",
+        "ingredients": [
+          "Oats",
+          "Berries",
+          "Yogurt"
+        ],
+        "instructions": [
+          "Combine ingredients",
+          "Mix well"
+        ],
+        "meal_prep_notes": "Can prep overnight"
+      },
+      "lunch": {
+        "name": "Lunch Day 8",
+        "calories": 533,
+        "protein": "30g",
+        "carbs": "40g",
+        "fat": "20g",
+        "prep_time": "15",
+        "ingredients": [
+          "Chicken",
+          "Rice",
+          "Vegetables"
+        ],
+        "instructions": [
+          "Cook protein",
+          "Steam vegetables"
+        ],
+        "meal_prep_notes": "Great for meal prep"
+      },
+      "dinner": {
+        "name": "Dinner Day 8",
+        "calories": 533,
+        "protein": "35g",
+        "carbs": "30g",
+        "fat": "25g",
+        "prep_time": "25",
+        "ingredients": [
+          "Fish",
+          "Quinoa",
+          "Asparagus"
+        ],
+        "instructions": [
+          "Bake fish",
+          "Cook quinoa"
+        ],
+        "meal_prep_notes": "Best prepared fresh"
+      },
+      "snacks": [
+        {
+          "name": "Healthy Snack",
+          "calories": 160,
+          "ingredients": [
+            "Nuts",
+            "Fruit"
+          ]
+        }
+      ],
+      "daily_totals": {
+        "calories": 1600,
+        "protein": 85,
+        "carbs": 100,
+        "fat": 60,
+        "fiber": 30
+      }
+    },
+    "9": {
+      "day_of_week": "Monday",
+      "breakfast": {
+        "name": "Breakfast Day 9",
+        "calories": 400,
+        "protein": "20g",
+        "carbs": "30g",
+        "fat": "15g",
+        "prep_time": "10",
+        "ingredients": [
+          "Oats",
+          "Berries",
+          "Yogurt"
+        ],
+        "instructions": [
+          "Combine ingredients",
+          "Mix well"
+        ],
+        "meal_prep_notes": "Can prep overnight"
+      },
+      "lunch": {
+        "name": "Lunch Day 9",
+        "calories": 533,
+        "protein": "30g",
+        "carbs": "40g",
+        "fat": "20g",
+        "prep_time": "15",
+        "ingredients": [
+          "Chicken",
+          "Rice",
+          "Vegetables"
+        ],
+        "instructions": [
+          "Cook protein",
+          "Steam vegetables"
+        ],
+        "meal_prep_notes": "Great for meal prep"
+      },
+      "dinner": {
+        "name": "Dinner Day 9",
+        "calories": 533,
+        "protein": "35g",
+        "carbs": "30g",
+        "fat": "25g",
+        "prep_time": "25",
+        "ingredients": [
+          "Fish",
+          "Quinoa",
+          "Asparagus"
+        ],
+        "instructions": [
+          "Bake fish",
+          "Cook quinoa"
+        ],
+        "meal_prep_notes": "Best prepared fresh"
+      },
+      "snacks": [
+        {
+          "name": "Healthy Snack",
+          "calories": 160,
+          "ingredients": [
+            "Nuts",
+            "Fruit"
+          ]
+        }
+      ],
+      "daily_totals": {
+        "calories": 1600,
+        "protein": 85,
+        "carbs": 100,
+        "fat": 60,
+        "fiber": 30
+      }
+    },
+    "10": {
+      "day_of_week": "Monday",
+      "breakfast": {
+        "name": "Breakfast Day 10",
+        "calories": 400,
+        "protein": "20g",
+        "carbs": "30g",
+        "fat": "15g",
+        "prep_time": "10",
+        "ingredients": [
+          "Oats",
+          "Berries",
+          "Yogurt"
+        ],
+        "instructions": [
+          "Combine ingredients",
+          "Mix well"
+        ],
+        "meal_prep_notes": "Can prep overnight"
+      },
+      "lunch": {
+        "name": "Lunch Day 10",
+        "calories": 533,
+        "protein": "30g",
+        "carbs": "40g",
+        "fat": "20g",
+        "prep_time": "15",
+        "ingredients": [
+          "Chicken",
+          "Rice",
+          "Vegetables"
+        ],
+        "instructions": [
+          "Cook protein",
+          "Steam vegetables"
+        ],
+        "meal_prep_notes": "Great for meal prep"
+      },
+      "dinner": {
+        "name": "Dinner Day 10",
+        "calories": 533,
+        "protein": "35g",
+        "carbs": "30g",
+        "fat": "25g",
+        "prep_time": "25",
+        "ingredients": [
+          "Fish",
+          "Quinoa",
+          "Asparagus"
+        ],
+        "instructions": [
+          "Bake fish",
+          "Cook quinoa"
+        ],
+        "meal_prep_notes": "Best prepared fresh"
+      },
+      "snacks": [
+        {
+          "name": "Healthy Snack",
+          "calories": 160,
+          "ingredients": [
+            "Nuts",
+            "Fruit"
+          ]
+        }
+      ],
+      "daily_totals": {
+        "calories": 1600,
+        "protein": 85,
+        "carbs": 100,
+        "fat": 60,
+        "fiber": 30
+      }
+    },
+    "11": {
+      "day_of_week": "Monday",
+      "breakfast": {
+        "name": "Breakfast Day 11",
+        "calories": 400,
+        "protein": "20g",
+        "carbs": "30g",
+        "fat": "15g",
+        "prep_time": "10",
+        "ingredients": [
+          "Oats",
+          "Berries",
+          "Yogurt"
+        ],
+        "instructions": [
+          "Combine ingredients",
+          "Mix well"
+        ],
+        "meal_prep_notes": "Can prep overnight"
+      },
+      "lunch": {
+        "name": "Lunch Day 11",
+        "calories": 533,
+        "protein": "30g",
+        "carbs": "40g",
+        "fat": "20g",
+        "prep_time": "15",
+        "ingredients": [
+          "Chicken",
+          "Rice",
+          "Vegetables"
+        ],
+        "instructions": [
+          "Cook protein",
+          "Steam vegetables"
+        ],
+        "meal_prep_notes": "Great for meal prep"
+      },
+      "dinner": {
+        "name": "Dinner Day 11",
+        "calories": 533,
+        "protein": "35g",
+        "carbs": "30g",
+        "fat": "25g",
+        "prep_time": "25",
+        "ingredients": [
+          "Fish",
+          "Quinoa",
+          "Asparagus"
+        ],
+        "instructions": [
+          "Bake fish",
+          "Cook quinoa"
+        ],
+        "meal_prep_notes": "Best prepared fresh"
+      },
+      "snacks": [
+        {
+          "name": "Healthy Snack",
+          "calories": 160,
+          "ingredients": [
+            "Nuts",
+            "Fruit"
+          ]
+        }
+      ],
+      "daily_totals": {
+        "calories": 1600,
+        "protein": 85,
+        "carbs": 100,
+        "fat": 60,
+        "fiber": 30
+      }
+    },
+    "12": {
+      "day_of_week": "Monday",
+      "breakfast": {
+        "name": "Breakfast Day 12",
+        "calories": 400,
+        "protein": "20g",
+        "carbs": "30g",
+        "fat": "15g",
+        "prep_time": "10",
+        "ingredients": [
+          "Oats",
+          "Berries",
+          "Yogurt"
+        ],
+        "instructions": [
+          "Combine ingredients",
+          "Mix well"
+        ],
+        "meal_prep_notes": "Can prep overnight"
+      },
+      "lunch": {
+        "name": "Lunch Day 12",
+        "calories": 533,
+        "protein": "30g",
+        "carbs": "40g",
+        "fat": "20g",
+        "prep_time": "15",
+        "ingredients": [
+          "Chicken",
+          "Rice",
+          "Vegetables"
+        ],
+        "instructions": [
+          "Cook protein",
+          "Steam vegetables"
+        ],
+        "meal_prep_notes": "Great for meal prep"
+      },
+      "dinner": {
+        "name": "Dinner Day 12",
+        "calories": 533,
+        "protein": "35g",
+        "carbs": "30g",
+        "fat": "25g",
+        "prep_time": "25",
+        "ingredients": [
+          "Fish",
+          "Quinoa",
+          "Asparagus"
+        ],
+        "instructions": [
+          "Bake fish",
+          "Cook quinoa"
+        ],
+        "meal_prep_notes": "Best prepared fresh"
+      },
+      "snacks": [
+        {
+          "name": "Healthy Snack",
+          "calories": 160,
+          "ingredients": [
+            "Nuts",
+            "Fruit"
+          ]
+        }
+      ],
+      "daily_totals": {
+        "calories": 1600,
+        "protein": 85,
+        "carbs": 100,
+        "fat": 60,
+        "fiber": 30
+      }
+    },
+    "13": {
+      "day_of_week": "Monday",
+      "breakfast": {
+        "name": "Breakfast Day 13",
+        "calories": 400,
+        "protein": "20g",
+        "carbs": "30g",
+        "fat": "15g",
+        "prep_time": "10",
+        "ingredients": [
+          "Oats",
+          "Berries",
+          "Yogurt"
+        ],
+        "instructions": [
+          "Combine ingredients",
+          "Mix well"
+        ],
+        "meal_prep_notes": "Can prep overnight"
+      },
+      "lunch": {
+        "name": "Lunch Day 13",
+        "calories": 533,
+        "protein": "30g",
+        "carbs": "40g",
+        "fat": "20g",
+        "prep_time": "15",
+        "ingredients": [
+          "Chicken",
+          "Rice",
+          "Vegetables"
+        ],
+        "instructions": [
+          "Cook protein",
+          "Steam vegetables"
+        ],
+        "meal_prep_notes": "Great for meal prep"
+      },
+      "dinner": {
+        "name": "Dinner Day 13",
+        "calories": 533,
+        "protein": "35g",
+        "carbs": "30g",
+        "fat": "25g",
+        "prep_time": "25",
+        "ingredients": [
+          "Fish",
+          "Quinoa",
+          "Asparagus"
+        ],
+        "instructions": [
+          "Bake fish",
+          "Cook quinoa"
+        ],
+        "meal_prep_notes": "Best prepared fresh"
+      },
+      "snacks": [
+        {
+          "name": "Healthy Snack",
+          "calories": 160,
+          "ingredients": [
+            "Nuts",
+            "Fruit"
+          ]
+        }
+      ],
+      "daily_totals": {
+        "calories": 1600,
+        "protein": 85,
+        "carbs": 100,
+        "fat": 60,
+        "fiber": 30
+      }
+    },
+    "14": {
+      "day_of_week": "Monday",
+      "breakfast": {
+        "name": "Breakfast Day 14",
+        "calories": 400,
+        "protein": "20g",
+        "carbs": "30g",
+        "fat": "15g",
+        "prep_time": "10",
+        "ingredients": [
+          "Oats",
+          "Berries",
+          "Yogurt"
+        ],
+        "instructions": [
+          "Combine ingredients",
+          "Mix well"
+        ],
+        "meal_prep_notes": "Can prep overnight"
+      },
+      "lunch": {
+        "name": "Lunch Day 14",
+        "calories": 533,
+        "protein": "30g",
+        "carbs": "40g",
+        "fat": "20g",
+        "prep_time": "15",
+        "ingredients": [
+          "Chicken",
+          "Rice",
+          "Vegetables"
+        ],
+        "instructions": [
+          "Cook protein",
+          "Steam vegetables"
+        ],
+        "meal_prep_notes": "Great for meal prep"
+      },
+      "dinner": {
+        "name": "Dinner Day 14",
+        "calories": 533,
+        "protein": "35g",
+        "carbs": "30g",
+        "fat": "25g",
+        "prep_time": "25",
+        "ingredients": [
+          "Fish",
+          "Quinoa",
+          "Asparagus"
+        ],
+        "instructions": [
+          "Bake fish",
+          "Cook quinoa"
+        ],
+        "meal_prep_notes": "Best prepared fresh"
+      },
+      "snacks": [
+        {
+          "name": "Healthy Snack",
+          "calories": 160,
+          "ingredients": [
+            "Nuts",
+            "Fruit"
+          ]
+        }
+      ],
+      "daily_totals": {
+        "calories": 1600,
+        "protein": 85,
+        "carbs": 100,
+        "fat": 60,
+        "fiber": 30
+      }
+    },
+    "15": {
+      "day_of_week": "Monday",
+      "breakfast": {
+        "name": "Breakfast Day 15",
+        "calories": 400,
+        "protein": "20g",
+        "carbs": "30g",
+        "fat": "15g",
+        "prep_time": "10",
+        "ingredients": [
+          "Oats",
+          "Berries",
+          "Yogurt"
+        ],
+        "instructions": [
+          "Combine ingredients",
+          "Mix well"
+        ],
+        "meal_prep_notes": "Can prep overnight"
+      },
+      "lunch": {
+        "name": "Lunch Day 15",
+        "calories": 533,
+        "protein": "30g",
+        "carbs": "40g",
+        "fat": "20g",
+        "prep_time": "15",
+        "ingredients": [
+          "Chicken",
+          "Rice",
+          "Vegetables"
+        ],
+        "instructions": [
+          "Cook protein",
+          "Steam vegetables"
+        ],
+        "meal_prep_notes": "Great for meal prep"
+      },
+      "dinner": {
+        "name": "Dinner Day 15",
+        "calories": 533,
+        "protein": "35g",
+        "carbs": "30g",
+        "fat": "25g",
+        "prep_time": "25",
+        "ingredients": [
+          "Fish",
+          "Quinoa",
+          "Asparagus"
+        ],
+        "instructions": [
+          "Bake fish",
+          "Cook quinoa"
+        ],
+        "meal_prep_notes": "Best prepared fresh"
+      },
+      "snacks": [
+        {
+          "name": "Healthy Snack",
+          "calories": 160,
+          "ingredients": [
+            "Nuts",
+            "Fruit"
+          ]
+        }
+      ],
+      "daily_totals": {
+        "calories": 1600,
+        "protein": 85,
+        "carbs": 100,
+        "fat": 60,
+        "fiber": 30
+      }
+    },
+    "16": {
+      "day_of_week": "Monday",
+      "breakfast": {
+        "name": "Breakfast Day 16",
+        "calories": 400,
+        "protein": "20g",
+        "carbs": "30g",
+        "fat": "15g",
+        "prep_time": "10",
+        "ingredients": [
+          "Oats",
+          "Berries",
+          "Yogurt"
+        ],
+        "instructions": [
+          "Combine ingredients",
+          "Mix well"
+        ],
+        "meal_prep_notes": "Can prep overnight"
+      },
+      "lunch": {
+        "name": "Lunch Day 16",
+        "calories": 533,
+        "protein": "30g",
+        "carbs": "40g",
+        "fat": "20g",
+        "prep_time": "15",
+        "ingredients": [
+          "Chicken",
+          "Rice",
+          "Vegetables"
+        ],
+        "instructions": [
+          "Cook protein",
+          "Steam vegetables"
+        ],
+        "meal_prep_notes": "Great for meal prep"
+      },
+      "dinner": {
+        "name": "Dinner Day 16",
+        "calories": 533,
+        "protein": "35g",
+        "carbs": "30g",
+        "fat": "25g",
+        "prep_time": "25",
+        "ingredients": [
+          "Fish",
+          "Quinoa",
+          "Asparagus"
+        ],
+        "instructions": [
+          "Bake fish",
+          "Cook quinoa"
+        ],
+        "meal_prep_notes": "Best prepared fresh"
+      },
+      "snacks": [
+        {
+          "name": "Healthy Snack",
+          "calories": 160,
+          "ingredients": [
+            "Nuts",
+            "Fruit"
+          ]
+        }
+      ],
+      "daily_totals": {
+        "calories": 1600,
+        "protein": 85,
+        "carbs": 100,
+        "fat": 60,
+        "fiber": 30
+      }
+    },
+    "17": {
+      "day_of_week": "Monday",
+      "breakfast": {
+        "name": "Breakfast Day 17",
+        "calories": 400,
+        "protein": "20g",
+        "carbs": "30g",
+        "fat": "15g",
+        "prep_time": "10",
+        "ingredients": [
+          "Oats",
+          "Berries",
+          "Yogurt"
+        ],
+        "instructions": [
+          "Combine ingredients",
+          "Mix well"
+        ],
+        "meal_prep_notes": "Can prep overnight"
+      },
+      "lunch": {
+        "name": "Lunch Day 17",
+        "calories": 533,
+        "protein": "30g",
+        "carbs": "40g",
+        "fat": "20g",
+        "prep_time": "15",
+        "ingredients": [
+          "Chicken",
+          "Rice",
+          "Vegetables"
+        ],
+        "instructions": [
+          "Cook protein",
+          "Steam vegetables"
+        ],
+        "meal_prep_notes": "Great for meal prep"
+      },
+      "dinner": {
+        "name": "Dinner Day 17",
+        "calories": 533,
+        "protein": "35g",
+        "carbs": "30g",
+        "fat": "25g",
+        "prep_time": "25",
+        "ingredients": [
+          "Fish",
+          "Quinoa",
+          "Asparagus"
+        ],
+        "instructions": [
+          "Bake fish",
+          "Cook quinoa"
+        ],
+        "meal_prep_notes": "Best prepared fresh"
+      },
+      "snacks": [
+        {
+          "name": "Healthy Snack",
+          "calories": 160,
+          "ingredients": [
+            "Nuts",
+            "Fruit"
+          ]
+        }
+      ],
+      "daily_totals": {
+        "calories": 1600,
+        "protein": 85,
+        "carbs": 100,
+        "fat": 60,
+        "fiber": 30
+      }
+    },
+    "18": {
+      "day_of_week": "Monday",
+      "breakfast": {
+        "name": "Breakfast Day 18",
+        "calories": 400,
+        "protein": "20g",
+        "carbs": "30g",
+        "fat": "15g",
+        "prep_time": "10",
+        "ingredients": [
+          "Oats",
+          "Berries",
+          "Yogurt"
+        ],
+        "instructions": [
+          "Combine ingredients",
+          "Mix well"
+        ],
+        "meal_prep_notes": "Can prep overnight"
+      },
+      "lunch": {
+        "name": "Lunch Day 18",
+        "calories": 533,
+        "protein": "30g",
+        "carbs": "40g",
+        "fat": "20g",
+        "prep_time": "15",
+        "ingredients": [
+          "Chicken",
+          "Rice",
+          "Vegetables"
+        ],
+        "instructions": [
+          "Cook protein",
+          "Steam vegetables"
+        ],
+        "meal_prep_notes": "Great for meal prep"
+      },
+      "dinner": {
+        "name": "Dinner Day 18",
+        "calories": 533,
+        "protein": "35g",
+        "carbs": "30g",
+        "fat": "25g",
+        "prep_time": "25",
+        "ingredients": [
+          "Fish",
+          "Quinoa",
+          "Asparagus"
+        ],
+        "instructions": [
+          "Bake fish",
+          "Cook quinoa"
+        ],
+        "meal_prep_notes": "Best prepared fresh"
+      },
+      "snacks": [
+        {
+          "name": "Healthy Snack",
+          "calories": 160,
+          "ingredients": [
+            "Nuts",
+            "Fruit"
+          ]
+        }
+      ],
+      "daily_totals": {
+        "calories": 1600,
+        "protein": 85,
+        "carbs": 100,
+        "fat": 60,
+        "fiber": 30
+      }
+    },
+    "19": {
+      "day_of_week": "Monday",
+      "breakfast": {
+        "name": "Breakfast Day 19",
+        "calories": 400,
+        "protein": "20g",
+        "carbs": "30g",
+        "fat": "15g",
+        "prep_time": "10",
+        "ingredients": [
+          "Oats",
+          "Berries",
+          "Yogurt"
+        ],
+        "instructions": [
+          "Combine ingredients",
+          "Mix well"
+        ],
+        "meal_prep_notes": "Can prep overnight"
+      },
+      "lunch": {
+        "name": "Lunch Day 19",
+        "calories": 533,
+        "protein": "30g",
+        "carbs": "40g",
+        "fat": "20g",
+        "prep_time": "15",
+        "ingredients": [
+          "Chicken",
+          "Rice",
+          "Vegetables"
+        ],
+        "instructions": [
+          "Cook protein",
+          "Steam vegetables"
+        ],
+        "meal_prep_notes": "Great for meal prep"
+      },
+      "dinner": {
+        "name": "Dinner Day 19",
+        "calories": 533,
+        "protein": "35g",
+        "carbs": "30g",
+        "fat": "25g",
+        "prep_time": "25",
+        "ingredients": [
+          "Fish",
+          "Quinoa",
+          "Asparagus"
+        ],
+        "instructions": [
+          "Bake fish",
+          "Cook quinoa"
+        ],
+        "meal_prep_notes": "Best prepared fresh"
+      },
+      "snacks": [
+        {
+          "name": "Healthy Snack",
+          "calories": 160,
+          "ingredients": [
+            "Nuts",
+            "Fruit"
+          ]
+        }
+      ],
+      "daily_totals": {
+        "calories": 1600,
+        "protein": 85,
+        "carbs": 100,
+        "fat": 60,
+        "fiber": 30
+      }
+    },
+    "20": {
+      "day_of_week": "Monday",
+      "breakfast": {
+        "name": "Breakfast Day 20",
+        "calories": 400,
+        "protein": "20g",
+        "carbs": "30g",
+        "fat": "15g",
+        "prep_time": "10",
+        "ingredients": [
+          "Oats",
+          "Berries",
+          "Yogurt"
+        ],
+        "instructions": [
+          "Combine ingredients",
+          "Mix well"
+        ],
+        "meal_prep_notes": "Can prep overnight"
+      },
+      "lunch": {
+        "name": "Lunch Day 20",
+        "calories": 533,
+        "protein": "30g",
+        "carbs": "40g",
+        "fat": "20g",
+        "prep_time": "15",
+        "ingredients": [
+          "Chicken",
+          "Rice",
+          "Vegetables"
+        ],
+        "instructions": [
+          "Cook protein",
+          "Steam vegetables"
+        ],
+        "meal_prep_notes": "Great for meal prep"
+      },
+      "dinner": {
+        "name": "Dinner Day 20",
+        "calories": 533,
+        "protein": "35g",
+        "carbs": "30g",
+        "fat": "25g",
+        "prep_time": "25",
+        "ingredients": [
+          "Fish",
+          "Quinoa",
+          "Asparagus"
+        ],
+        "instructions": [
+          "Bake fish",
+          "Cook quinoa"
+        ],
+        "meal_prep_notes": "Best prepared fresh"
+      },
+      "snacks": [
+        {
+          "name": "Healthy Snack",
+          "calories": 160,
+          "ingredients": [
+            "Nuts",
+            "Fruit"
+          ]
+        }
+      ],
+      "daily_totals": {
+        "calories": 1600,
+        "protein": 85,
+        "carbs": 100,
+        "fat": 60,
+        "fiber": 30
+      }
+    },
+    "21": {
+      "day_of_week": "Monday",
+      "breakfast": {
+        "name": "Breakfast Day 21",
+        "calories": 400,
+        "protein": "20g",
+        "carbs": "30g",
+        "fat": "15g",
+        "prep_time": "10",
+        "ingredients": [
+          "Oats",
+          "Berries",
+          "Yogurt"
+        ],
+        "instructions": [
+          "Combine ingredients",
+          "Mix well"
+        ],
+        "meal_prep_notes": "Can prep overnight"
+      },
+      "lunch": {
+        "name": "Lunch Day 21",
+        "calories": 533,
+        "protein": "30g",
+        "carbs": "40g",
+        "fat": "20g",
+        "prep_time": "15",
+        "ingredients": [
+          "Chicken",
+          "Rice",
+          "Vegetables"
+        ],
+        "instructions": [
+          "Cook protein",
+          "Steam vegetables"
+        ],
+        "meal_prep_notes": "Great for meal prep"
+      },
+      "dinner": {
+        "name": "Dinner Day 21",
+        "calories": 533,
+        "protein": "35g",
+        "carbs": "30g",
+        "fat": "25g",
+        "prep_time": "25",
+        "ingredients": [
+          "Fish",
+          "Quinoa",
+          "Asparagus"
+        ],
+        "instructions": [
+          "Bake fish",
+          "Cook quinoa"
+        ],
+        "meal_prep_notes": "Best prepared fresh"
+      },
+      "snacks": [
+        {
+          "name": "Healthy Snack",
+          "calories": 160,
+          "ingredients": [
+            "Nuts",
+            "Fruit"
+          ]
+        }
+      ],
+      "daily_totals": {
+        "calories": 1600,
+        "protein": 85,
+        "carbs": 100,
+        "fat": 60,
+        "fiber": 30
+      }
+    },
+    "22": {
+      "day_of_week": "Monday",
+      "breakfast": {
+        "name": "Breakfast Day 22",
+        "calories": 400,
+        "protein": "20g",
+        "carbs": "30g",
+        "fat": "15g",
+        "prep_time": "10",
+        "ingredients": [
+          "Oats",
+          "Berries",
+          "Yogurt"
+        ],
+        "instructions": [
+          "Combine ingredients",
+          "Mix well"
+        ],
+        "meal_prep_notes": "Can prep overnight"
+      },
+      "lunch": {
+        "name": "Lunch Day 22",
+        "calories": 533,
+        "protein": "30g",
+        "carbs": "40g",
+        "fat": "20g",
+        "prep_time": "15",
+        "ingredients": [
+          "Chicken",
+          "Rice",
+          "Vegetables"
+        ],
+        "instructions": [
+          "Cook protein",
+          "Steam vegetables"
+        ],
+        "meal_prep_notes": "Great for meal prep"
+      },
+      "dinner": {
+        "name": "Dinner Day 22",
+        "calories": 533,
+        "protein": "35g",
+        "carbs": "30g",
+        "fat": "25g",
+        "prep_time": "25",
+        "ingredients": [
+          "Fish",
+          "Quinoa",
+          "Asparagus"
+        ],
+        "instructions": [
+          "Bake fish",
+          "Cook quinoa"
+        ],
+        "meal_prep_notes": "Best prepared fresh"
+      },
+      "snacks": [
+        {
+          "name": "Healthy Snack",
+          "calories": 160,
+          "ingredients": [
+            "Nuts",
+            "Fruit"
+          ]
+        }
+      ],
+      "daily_totals": {
+        "calories": 1600,
+        "protein": 85,
+        "carbs": 100,
+        "fat": 60,
+        "fiber": 30
+      }
+    },
+    "23": {
+      "day_of_week": "Monday",
+      "breakfast": {
+        "name": "Breakfast Day 23",
+        "calories": 400,
+        "protein": "20g",
+        "carbs": "30g",
+        "fat": "15g",
+        "prep_time": "10",
+        "ingredients": [
+          "Oats",
+          "Berries",
+          "Yogurt"
+        ],
+        "instructions": [
+          "Combine ingredients",
+          "Mix well"
+        ],
+        "meal_prep_notes": "Can prep overnight"
+      },
+      "lunch": {
+        "name": "Lunch Day 23",
+        "calories": 533,
+        "protein": "30g",
+        "carbs": "40g",
+        "fat": "20g",
+        "prep_time": "15",
+        "ingredients": [
+          "Chicken",
+          "Rice",
+          "Vegetables"
+        ],
+        "instructions": [
+          "Cook protein",
+          "Steam vegetables"
+        ],
+        "meal_prep_notes": "Great for meal prep"
+      },
+      "dinner": {
+        "name": "Dinner Day 23",
+        "calories": 533,
+        "protein": "35g",
+        "carbs": "30g",
+        "fat": "25g",
+        "prep_time": "25",
+        "ingredients": [
+          "Fish",
+          "Quinoa",
+          "Asparagus"
+        ],
+        "instructions": [
+          "Bake fish",
+          "Cook quinoa"
+        ],
+        "meal_prep_notes": "Best prepared fresh"
+      },
+      "snacks": [
+        {
+          "name": "Healthy Snack",
+          "calories": 160,
+          "ingredients": [
+            "Nuts",
+            "Fruit"
+          ]
+        }
+      ],
+      "daily_totals": {
+        "calories": 1600,
+        "protein": 85,
+        "carbs": 100,
+        "fat": 60,
+        "fiber": 30
+      }
+    },
+    "24": {
+      "day_of_week": "Monday",
+      "breakfast": {
+        "name": "Breakfast Day 24",
+        "calories": 400,
+        "protein": "20g",
+        "carbs": "30g",
+        "fat": "15g",
+        "prep_time": "10",
+        "ingredients": [
+          "Oats",
+          "Berries",
+          "Yogurt"
+        ],
+        "instructions": [
+          "Combine ingredients",
+          "Mix well"
+        ],
+        "meal_prep_notes": "Can prep overnight"
+      },
+      "lunch": {
+        "name": "Lunch Day 24",
+        "calories": 533,
+        "protein": "30g",
+        "carbs": "40g",
+        "fat": "20g",
+        "prep_time": "15",
+        "ingredients": [
+          "Chicken",
+          "Rice",
+          "Vegetables"
+        ],
+        "instructions": [
+          "Cook protein",
+          "Steam vegetables"
+        ],
+        "meal_prep_notes": "Great for meal prep"
+      },
+      "dinner": {
+        "name": "Dinner Day 24",
+        "calories": 533,
+        "protein": "35g",
+        "carbs": "30g",
+        "fat": "25g",
+        "prep_time": "25",
+        "ingredients": [
+          "Fish",
+          "Quinoa",
+          "Asparagus"
+        ],
+        "instructions": [
+          "Bake fish",
+          "Cook quinoa"
+        ],
+        "meal_prep_notes": "Best prepared fresh"
+      },
+      "snacks": [
+        {
+          "name": "Healthy Snack",
+          "calories": 160,
+          "ingredients": [
+            "Nuts",
+            "Fruit"
+          ]
+        }
+      ],
+      "daily_totals": {
+        "calories": 1600,
+        "protein": 85,
+        "carbs": 100,
+        "fat": 60,
+        "fiber": 30
+      }
+    },
+    "25": {
+      "day_of_week": "Monday",
+      "breakfast": {
+        "name": "Breakfast Day 25",
+        "calories": 400,
+        "protein": "20g",
+        "carbs": "30g",
+        "fat": "15g",
+        "prep_time": "10",
+        "ingredients": [
+          "Oats",
+          "Berries",
+          "Yogurt"
+        ],
+        "instructions": [
+          "Combine ingredients",
+          "Mix well"
+        ],
+        "meal_prep_notes": "Can prep overnight"
+      },
+      "lunch": {
+        "name": "Lunch Day 25",
+        "calories": 533,
+        "protein": "30g",
+        "carbs": "40g",
+        "fat": "20g",
+        "prep_time": "15",
+        "ingredients": [
+          "Chicken",
+          "Rice",
+          "Vegetables"
+        ],
+        "instructions": [
+          "Cook protein",
+          "Steam vegetables"
+        ],
+        "meal_prep_notes": "Great for meal prep"
+      },
+      "dinner": {
+        "name": "Dinner Day 25",
+        "calories": 533,
+        "protein": "35g",
+        "carbs": "30g",
+        "fat": "25g",
+        "prep_time": "25",
+        "ingredients": [
+          "Fish",
+          "Quinoa",
+          "Asparagus"
+        ],
+        "instructions": [
+          "Bake fish",
+          "Cook quinoa"
+        ],
+        "meal_prep_notes": "Best prepared fresh"
+      },
+      "snacks": [
+        {
+          "name": "Healthy Snack",
+          "calories": 160,
+          "ingredients": [
+            "Nuts",
+            "Fruit"
+          ]
+        }
+      ],
+      "daily_totals": {
+        "calories": 1600,
+        "protein": 85,
+        "carbs": 100,
+        "fat": 60,
+        "fiber": 30
+      }
+    },
+    "26": {
+      "day_of_week": "Monday",
+      "breakfast": {
+        "name": "Breakfast Day 26",
+        "calories": 400,
+        "protein": "20g",
+        "carbs": "30g",
+        "fat": "15g",
+        "prep_time": "10",
+        "ingredients": [
+          "Oats",
+          "Berries",
+          "Yogurt"
+        ],
+        "instructions": [
+          "Combine ingredients",
+          "Mix well"
+        ],
+        "meal_prep_notes": "Can prep overnight"
+      },
+      "lunch": {
+        "name": "Lunch Day 26",
+        "calories": 533,
+        "protein": "30g",
+        "carbs": "40g",
+        "fat": "20g",
+        "prep_time": "15",
+        "ingredients": [
+          "Chicken",
+          "Rice",
+          "Vegetables"
+        ],
+        "instructions": [
+          "Cook protein",
+          "Steam vegetables"
+        ],
+        "meal_prep_notes": "Great for meal prep"
+      },
+      "dinner": {
+        "name": "Dinner Day 26",
+        "calories": 533,
+        "protein": "35g",
+        "carbs": "30g",
+        "fat": "25g",
+        "prep_time": "25",
+        "ingredients": [
+          "Fish",
+          "Quinoa",
+          "Asparagus"
+        ],
+        "instructions": [
+          "Bake fish",
+          "Cook quinoa"
+        ],
+        "meal_prep_notes": "Best prepared fresh"
+      },
+      "snacks": [
+        {
+          "name": "Healthy Snack",
+          "calories": 160,
+          "ingredients": [
+            "Nuts",
+            "Fruit"
+          ]
+        }
+      ],
+      "daily_totals": {
+        "calories": 1600,
+        "protein": 85,
+        "carbs": 100,
+        "fat": 60,
+        "fiber": 30
+      }
+    },
+    "27": {
+      "day_of_week": "Monday",
+      "breakfast": {
+        "name": "Breakfast Day 27",
+        "calories": 400,
+        "protein": "20g",
+        "carbs": "30g",
+        "fat": "15g",
+        "prep_time": "10",
+        "ingredients": [
+          "Oats",
+          "Berries",
+          "Yogurt"
+        ],
+        "instructions": [
+          "Combine ingredients",
+          "Mix well"
+        ],
+        "meal_prep_notes": "Can prep overnight"
+      },
+      "lunch": {
+        "name": "Lunch Day 27",
+        "calories": 533,
+        "protein": "30g",
+        "carbs": "40g",
+        "fat": "20g",
+        "prep_time": "15",
+        "ingredients": [
+          "Chicken",
+          "Rice",
+          "Vegetables"
+        ],
+        "instructions": [
+          "Cook protein",
+          "Steam vegetables"
+        ],
+        "meal_prep_notes": "Great for meal prep"
+      },
+      "dinner": {
+        "name": "Dinner Day 27",
+        "calories": 533,
+        "protein": "35g",
+        "carbs": "30g",
+        "fat": "25g",
+        "prep_time": "25",
+        "ingredients": [
+          "Fish",
+          "Quinoa",
+          "Asparagus"
+        ],
+        "instructions": [
+          "Bake fish",
+          "Cook quinoa"
+        ],
+        "meal_prep_notes": "Best prepared fresh"
+      },
+      "snacks": [
+        {
+          "name": "Healthy Snack",
+          "calories": 160,
+          "ingredients": [
+            "Nuts",
+            "Fruit"
+          ]
+        }
+      ],
+      "daily_totals": {
+        "calories": 1600,
+        "protein": 85,
+        "carbs": 100,
+        "fat": 60,
+        "fiber": 30
+      }
+    },
+    "28": {
+      "day_of_week": "Monday",
+      "breakfast": {
+        "name": "Breakfast Day 28",
+        "calories": 400,
+        "protein": "20g",
+        "carbs": "30g",
+        "fat": "15g",
+        "prep_time": "10",
+        "ingredients": [
+          "Oats",
+          "Berries",
+          "Yogurt"
+        ],
+        "instructions": [
+          "Combine ingredients",
+          "Mix well"
+        ],
+        "meal_prep_notes": "Can prep overnight"
+      },
+      "lunch": {
+        "name": "Lunch Day 28",
+        "calories": 533,
+        "protein": "30g",
+        "carbs": "40g",
+        "fat": "20g",
+        "prep_time": "15",
+        "ingredients": [
+          "Chicken",
+          "Rice",
+          "Vegetables"
+        ],
+        "instructions": [
+          "Cook protein",
+          "Steam vegetables"
+        ],
+        "meal_prep_notes": "Great for meal prep"
+      },
+      "dinner": {
+        "name": "Dinner Day 28",
+        "calories": 533,
+        "protein": "35g",
+        "carbs": "30g",
+        "fat": "25g",
+        "prep_time": "25",
+        "ingredients": [
+          "Fish",
+          "Quinoa",
+          "Asparagus"
+        ],
+        "instructions": [
+          "Bake fish",
+          "Cook quinoa"
+        ],
+        "meal_prep_notes": "Best prepared fresh"
+      },
+      "snacks": [
+        {
+          "name": "Healthy Snack",
+          "calories": 160,
+          "ingredients": [
+            "Nuts",
+            "Fruit"
+          ]
+        }
+      ],
+      "daily_totals": {
+        "calories": 1600,
+        "protein": 85,
+        "carbs": 100,
+        "fat": 60,
+        "fiber": 30
+      }
+    },
+    "29": {
+      "day_of_week": "Monday",
+      "breakfast": {
+        "name": "Breakfast Day 29",
+        "calories": 400,
+        "protein": "20g",
+        "carbs": "30g",
+        "fat": "15g",
+        "prep_time": "10",
+        "ingredients": [
+          "Oats",
+          "Berries",
+          "Yogurt"
+        ],
+        "instructions": [
+          "Combine ingredients",
+          "Mix well"
+        ],
+        "meal_prep_notes": "Can prep overnight"
+      },
+      "lunch": {
+        "name": "Lunch Day 29",
+        "calories": 533,
+        "protein": "30g",
+        "carbs": "40g",
+        "fat": "20g",
+        "prep_time": "15",
+        "ingredients": [
+          "Chicken",
+          "Rice",
+          "Vegetables"
+        ],
+        "instructions": [
+          "Cook protein",
+          "Steam vegetables"
+        ],
+        "meal_prep_notes": "Great for meal prep"
+      },
+      "dinner": {
+        "name": "Dinner Day 29",
+        "calories": 533,
+        "protein": "35g",
+        "carbs": "30g",
+        "fat": "25g",
+        "prep_time": "25",
+        "ingredients": [
+          "Fish",
+          "Quinoa",
+          "Asparagus"
+        ],
+        "instructions": [
+          "Bake fish",
+          "Cook quinoa"
+        ],
+        "meal_prep_notes": "Best prepared fresh"
+      },
+      "snacks": [
+        {
+          "name": "Healthy Snack",
+          "calories": 160,
+          "ingredients": [
+            "Nuts",
+            "Fruit"
+          ]
+        }
+      ],
+      "daily_totals": {
+        "calories": 1600,
+        "protein": 85,
+        "carbs": 100,
+        "fat": 60,
+        "fiber": 30
+      }
+    },
+    "30": {
+      "day_of_week": "Monday",
+      "breakfast": {
+        "name": "Breakfast Day 30",
+        "calories": 400,
+        "protein": "20g",
+        "carbs": "30g",
+        "fat": "15g",
+        "prep_time": "10",
+        "ingredients": [
+          "Oats",
+          "Berries",
+          "Yogurt"
+        ],
+        "instructions": [
+          "Combine ingredients",
+          "Mix well"
+        ],
+        "meal_prep_notes": "Can prep overnight"
+      },
+      "lunch": {
+        "name": "Lunch Day 30",
+        "calories": 533,
+        "protein": "30g",
+        "carbs": "40g",
+        "fat": "20g",
+        "prep_time": "15",
+        "ingredients": [
+          "Chicken",
+          "Rice",
+          "Vegetables"
+        ],
+        "instructions": [
+          "Cook protein",
+          "Steam vegetables"
+        ],
+        "meal_prep_notes": "Great for meal prep"
+      },
+      "dinner": {
+        "name": "Dinner Day 30",
+        "calories": 533,
+        "protein": "35g",
+        "carbs": "30g",
+        "fat": "25g",
+        "prep_time": "25",
+        "ingredients": [
+          "Fish",
+          "Quinoa",
+          "Asparagus"
+        ],
+        "instructions": [
+          "Bake fish",
+          "Cook quinoa"
+        ],
+        "meal_prep_notes": "Best prepared fresh"
+      },
+      "snacks": [
+        {
+          "name": "Healthy Snack",
+          "calories": 160,
+          "ingredients": [
+            "Nuts",
+            "Fruit"
+          ]
+        }
+      ],
+      "daily_totals": {
+        "calories": 1600,
+        "protein": 85,
+        "carbs": 100,
+        "fat": 60,
+        "fiber": 30
+      }
+    }
+  },
+  "weekly_shopping_lists": {
+    "week_1": {
+      "proteins": [
+        "Chicken",
+        "Fish",
+        "Eggs"
+      ],
+      "vegetables": [
+        "Spinach",
+        "Broccoli",
+        "Peppers"
+      ],
+      "fruits": [
+        "Berries",
+        "Apples",
+        "Bananas"
+      ],
+      "grains": [
+        "Quinoa",
+        "Oats",
+        "Rice"
+      ],
+      "pantry": [
+        "Olive oil",
+        "Spices",
+        "Herbs"
+      ],
+      "estimated_cost": "$70-85"
+    }
+  },
+  "nutritional_balance": {
+    "monthly_protein_avg": 85,
+    "monthly_carb_avg": 100,
+    "monthly_fat_avg": 60,
+    "micronutrient_focus": [
+      "Vitamin D",
+      "Iron",
+      "Fiber"
+    ]
+  }
+}
