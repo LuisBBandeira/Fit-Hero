@@ -1,0 +1,250 @@
+{
+  "meal_template": {
+    "user_profiles": {
+      "age_groups": ["18-25", "26-35", "36-45", "46-60", "60+"],
+      "weight_ranges": ["50-70kg", "65-85kg", "80-100kg", "55-75kg", "any"],
+      "activity_levels": ["sedentary", "lightly_active", "moderately_active", "very_active"],
+      "objectives": ["weight_loss", "muscle_building", "maintenance", "health_optimization", "athletic_performance"]
+    },
+
+    "calorie_targets_by_profile": {
+      "weight_loss": {
+        "light_person": "1400-1600",
+        "medium_person": "1600-1800", 
+        "heavy_person": "1800-2000",
+        "very_active": "add 200-400 calories"
+      },
+      "maintenance": {
+        "light_person": "1800-2000",
+        "medium_person": "2000-2400",
+        "heavy_person": "2200-2600",
+        "very_active": "add 300-500 calories"
+      },
+      "muscle_building": {
+        "light_person": "2000-2300",
+        "medium_person": "2300-2700",
+        "heavy_person": "2500-2900",
+        "very_active": "add 400-600 calories"
+      }
+    },
+
+    "macro_distributions": {
+      "weight_loss": {"protein": 30, "carbs": 40, "fat": 30},
+      "muscle_building": {"protein": 35, "carbs": 40, "fat": 25},
+      "maintenance": {"protein": 25, "carbs": 45, "fat": 30},
+      "athletic_performance": {"protein": 30, "carbs": 45, "fat": 25},
+      "health_focus": {"protein": 25, "carbs": 45, "fat": 30}
+    },
+
+    "meal_options": {
+      "breakfast": [
+        {
+          "name": "Greek yogurt parfait",
+          "calories": "320-450",
+          "prep_time": "3 minutes",
+          "ingredients": ["Greek yogurt", "berries", "granola", "honey"],
+          "suitable_for": ["all_ages", "weight_loss", "muscle_building"]
+        },
+        {
+          "name": "Overnight oats",
+          "calories": "350-500", 
+          "prep_time": "5 min prep, overnight",
+          "ingredients": ["oats", "milk", "fruit", "nuts"],
+          "suitable_for": ["meal_prep", "budget_friendly"]
+        },
+        {
+          "name": "Protein smoothie",
+          "calories": "300-450",
+          "prep_time": "5 minutes",
+          "ingredients": ["protein_powder", "fruit", "spinach", "milk"],
+          "suitable_for": ["post_workout", "on_the_go"]
+        },
+        {
+          "name": "Veggie scramble with toast",
+          "calories": "400-550",
+          "prep_time": "10 minutes", 
+          "ingredients": ["eggs", "vegetables", "whole_grain_bread"],
+          "suitable_for": ["weekend_meals", "muscle_building"]
+        },
+        {
+          "name": "Protein pancakes",
+          "calories": "450-600",
+          "prep_time": "15 minutes",
+          "ingredients": ["protein_powder", "oats", "eggs", "banana"],
+          "suitable_for": ["post_workout", "weekend_treat"]
+        }
+      ],
+
+      "lunch": [
+        {
+          "name": "Turkey wrap",
+          "calories": "400-550",
+          "prep_time": "5 minutes",
+          "ingredients": ["turkey", "wrap", "vegetables", "hummus"],
+          "suitable_for": ["work_lunch", "quick_meals"]
+        },
+        {
+          "name": "Quinoa salad bowl", 
+          "calories": "450-600",
+          "prep_time": "10 minutes",
+          "ingredients": ["quinoa", "protein", "vegetables", "dressing"],
+          "suitable_for": ["meal_prep", "healthy_focus"]
+        },
+        {
+          "name": "Grilled chicken bowl",
+          "calories": "500-650", 
+          "prep_time": "20 minutes",
+          "ingredients": ["chicken_breast", "rice", "vegetables"],
+          "suitable_for": ["muscle_building", "post_workout"]
+        },
+        {
+          "name": "Soup and salad combo",
+          "calories": "350-500",
+          "prep_time": "5 minutes",
+          "ingredients": ["soup", "mixed_greens", "protein"],
+          "suitable_for": ["comfort_food", "light_meals"]
+        }
+      ],
+
+      "dinner": [
+        {
+          "name": "Sheet pan meal",
+          "calories": "500-700",
+          "prep_time": "30 minutes",
+          "ingredients": ["protein", "vegetables", "seasonings"],
+          "suitable_for": ["family_meals", "meal_prep"]
+        },
+        {
+          "name": "Stir-fry",
+          "calories": "450-650",
+          "prep_time": "15 minutes", 
+          "ingredients": ["protein", "vegetables", "rice", "sauce"],
+          "suitable_for": ["quick_meals", "vegetable_intake"]
+        },
+        {
+          "name": "Salmon with vegetables",
+          "calories": "550-700",
+          "prep_time": "25 minutes",
+          "ingredients": ["salmon", "sweet_potato", "green_vegetables"],
+          "suitable_for": ["health_focus", "omega_3s"]
+        },
+        {
+          "name": "Lean beef with roasted vegetables", 
+          "calories": "600-750",
+          "prep_time": "35 minutes",
+          "ingredients": ["lean_beef", "root_vegetables"],
+          "suitable_for": ["strength_training", "iron_needs"]
+        }
+      ],
+
+      "snacks": [
+        {"name": "Greek yogurt with nuts", "calories": "100-150"},
+        {"name": "Apple with nut butter", "calories": "150-200"},
+        {"name": "Protein bar", "calories": "150-250"},
+        {"name": "Vegetables with hummus", "calories": "80-120"},
+        {"name": "Trail mix", "calories": "150-250"},
+        {"name": "Cottage cheese with fruit", "calories": "120-180"}
+      ]
+    },
+
+    "hydration_guidelines": {
+      "daily_targets": {
+        "sedentary": "2-2.5L",
+        "active": "2.5-3.5L", 
+        "very_active": "3.5-4L"
+      },
+      "timing": {
+        "upon_waking": "500ml",
+        "before_meals": "200ml",
+        "during_exercise": "150-250ml every 15-20 min",
+        "post_exercise": "500ml within 30 min"
+      }
+    },
+
+    "meal_timing_by_objective": {
+      "weight_loss": {
+        "meal_frequency": "3 meals + 1-2 snacks",
+        "timing": "Consistent times, larger breakfast",
+        "notes": "Stop eating 3 hours before bed"
+      },
+      "muscle_building": {
+        "meal_frequency": "4-5 meals + 2-3 snacks", 
+        "timing": "Pre and post workout nutrition",
+        "notes": "Protein every 3-4 hours"
+      },
+      "general_health": {
+        "meal_frequency": "3 meals + 1-2 snacks",
+        "timing": "Regular intervals",
+        "notes": "Listen to hunger cues"
+      }
+    },
+
+    "special_considerations": {
+      "budget_friendly": {
+        "proteins": ["eggs", "canned_tuna", "chicken_thighs", "beans"],
+        "carbs": ["oats", "rice", "potatoes", "pasta"],
+        "vegetables": ["frozen_vegetables", "seasonal_produce"],
+        "tips": ["Buy in bulk", "Meal prep", "Cook at home"]
+      },
+      "time_constrained": {
+        "strategies": ["Meal prep", "Batch cooking", "Quick recipes"],
+        "tools": ["Slow cooker", "Sheet pan meals", "Pre-cut vegetables"]
+      },
+      "family_integration": {
+        "approaches": ["Cook base ingredients separately", "Hidden vegetables", "Healthy versions of favorites"],
+        "kid_friendly": "Separate sauces, involve kids in cooking"
+      }
+    },
+
+    "age_specific_guidance": {
+      "18-25": {
+        "focus": "Building habits, budget-conscious eating",
+        "challenges": "Irregular schedules, social eating",
+        "solutions": "Simple recipes, portable meals"
+      },
+      "26-35": {
+        "focus": "Performance optimization, work-life balance", 
+        "challenges": "Busy career, family starting",
+        "solutions": "Meal prep, efficient cooking"
+      },
+      "36-45": {
+        "focus": "Health maintenance, family nutrition",
+        "challenges": "Time constraints, stress eating", 
+        "solutions": "Family meal integration, stress management"
+      },
+      "46-60": {
+        "focus": "Disease prevention, hormone support",
+        "challenges": "Metabolism changes, medications",
+        "solutions": "Nutrient-dense foods, portion adjustments"
+      },
+      "60+": {
+        "focus": "Nutrient density, easy preparation",
+        "challenges": "Appetite changes, swallowing issues",
+        "solutions": "Soft textures, nutrient fortification"
+      }
+    },
+
+    "monthly_progression": {
+      "week_1": {
+        "focus": "Simple, familiar meals",
+        "complexity": "Basic preparation", 
+        "new_foods": "0-1 new items"
+      },
+      "week_2": {
+        "focus": "Adding variety",
+        "complexity": "Slightly more involved",
+        "new_foods": "1-2 new items"
+      },
+      "week_3": {
+        "focus": "Meal prep mastery", 
+        "complexity": "More elaborate meals",
+        "new_foods": "2-3 new items"
+      },
+      "week_4": {
+        "focus": "Sustainability and integration",
+        "complexity": "Efficient systems",
+        "new_foods": "Consolidation of favorites"
+      }
+    }
+  }
+}

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '../../../../lib/auth'
-import { aiService } from '../../../../lib/ai-service'
+import { MonthlyPlanService } from '../../../../lib/monthly-plan-service'
 import { prisma } from '../../../../lib/prisma'
 
 export async function POST(request: NextRequest) {
@@ -29,35 +29,43 @@ export async function POST(request: NextRequest) {
 
     const requestData = await request.json()
     
-    // Prepare the request for the AI service
-    const workoutPlanRequest = {
-      user_id: player.id,
-      fitness_level: requestData.fitness_level || 'beginner',
+    // Use current month/year if not provided
+    const currentDate = new Date()
+    const month = requestData.month || currentDate.getMonth() + 1
+    const year = requestData.year || currentDate.getFullYear()
+    
+    // Prepare the request for the Monthly Plan Service
+    const monthlyPlanRequest = {
+      month,
+      year,
+      fitnessLevel: requestData.fitness_level || 'beginner',
       goals: requestData.goals || [],
-      available_time: requestData.available_time || 30,
+      availableTime: requestData.available_time || 30,
       equipment: requestData.equipment || [],
-      injuries_limitations: requestData.injuries_limitations,
-      preferred_activities: requestData.preferred_activities
+      injuries: requestData.injuries_limitations,
+      preferences: requestData.preferred_activities
     }
 
-    // Call the AI service
-    const aiResponse = await aiService.generateWorkoutPlan(workoutPlanRequest)
+    // Call the Monthly Plan Service
+    const monthlyPlanService = new MonthlyPlanService()
+    const monthlyPlan = await monthlyPlanService.generateMonthlyWorkoutPlan(
+      player.id, 
+      monthlyPlanRequest
+    )
 
-    // Optionally save the workout plan to database
-    if (aiResponse.workout_plan) {
-      // You could save this to a workout_plans table
-      // await prisma.workoutPlan.create({
-      //   data: {
-      //     playerId: player.id,
-      //     plan: aiResponse.workout_plan,
-      //     createdAt: new Date()
-      //   }
-      // })
-    }
-
+    // Return the monthly plan data
     return NextResponse.json({
       success: true,
-      workout_plan: aiResponse.workout_plan
+      monthly_plan: {
+        id: monthlyPlan.id,
+        month: monthlyPlan.month,
+        year: monthlyPlan.year,
+        status: monthlyPlan.status,
+        filteredData: monthlyPlan.filteredData,
+        validatedData: monthlyPlan.validatedData
+      },
+      // For backward compatibility, extract a daily workout if available
+      workout_plan: monthlyPlan.filteredData || monthlyPlan.validatedData
     })
 
   } catch (error) {
