@@ -160,7 +160,12 @@ class MonthlyPlanService:
         2. Follow the workout structure guidelines from the template
         3. Apply age-specific considerations from the template
         4. Include objective-specific modifications from the template
-        5. Return ONLY valid JSON - no additional text or explanations
+        5. Return ONLY valid JSON - no additional text, explanations, markdown, or code blocks
+        6. Ensure all property names are enclosed in double quotes
+        7. Use double quotes for all string values, never single quotes
+        8. Do NOT include trailing commas before closing brackets or braces
+        9. Do NOT include comments in the JSON
+        10. The response must start with {{ and end with }}
         """
         
         try:
@@ -168,12 +173,21 @@ class MonthlyPlanService:
             response = self.model.generate_content(prompt)
             result_text = response.text
             
+            # Log raw AI response for debugging
+            import logging
+            logger = logging.getLogger(__name__)
+            logger.info(f"🏋️ AI Workout Response received. Length: {len(result_text)}")
+            logger.info(f"🏋️ Raw AI Response (first 1000 chars): {repr(result_text[:1000])}")
+            if len(result_text) > 1000:
+                logger.info(f"🏋️ Raw AI Response (last 500 chars): {repr(result_text[-500:])}")
+            
             # Clean up the response (remove markdown formatting if present)
             if result_text.startswith('```json'):
                 result_text = result_text.replace('```json', '').replace('```', '').strip()
+                logger.info("🧹 Cleaned markdown formatting from AI workout response")
             
-            # Parse JSON result
-            workout_plan_data = json.loads(result_text)
+            # Use robust JSON parsing with multiple fallback strategies
+            workout_plan_data = self._robust_json_parse(result_text)
             
             return {
                 "success": True,
@@ -182,9 +196,27 @@ class MonthlyPlanService:
                 "generation_timestamp": datetime.now().isoformat()
             }
         except json.JSONDecodeError as e:
+            # Enhanced error reporting for JSON parsing issues
+            error_line = e.lineno if hasattr(e, 'lineno') else "unknown"
+            error_col = e.colno if hasattr(e, 'colno') else "unknown"
+            error_pos = e.pos if hasattr(e, 'pos') else "unknown"
+            
+            # Try to show context around the error
+            context = ""
+            if hasattr(e, 'pos') and e.pos and 'result_text' in locals():
+                start = max(0, e.pos - 100)
+                end = min(len(result_text), e.pos + 100)
+                context = result_text[start:end]
+            
             return {
                 "success": False,
                 "error": f"JSON parsing error: {str(e)}",
+                "error_details": {
+                    "line": error_line,
+                    "column": error_col,
+                    "position": error_pos,
+                    "context": context
+                },
                 "raw_result": result_text if 'result_text' in locals() else "No result generated"
             }
         except Exception as e:
@@ -365,7 +397,12 @@ class MonthlyPlanService:
         2. Follow nutrition targets from the template
         3. Apply age-specific guidance from the template
         4. Include hydration guidelines from the template
-        5. Return ONLY valid JSON - no additional text or explanations
+        5. Return ONLY valid JSON - no additional text, explanations, markdown, or code blocks
+        6. Ensure all property names are enclosed in double quotes
+        7. Use double quotes for all string values, never single quotes
+        8. Do NOT include trailing commas before closing brackets or braces
+        9. Do NOT include comments in the JSON
+        10. The response must start with {{ and end with }}
         """
         
         try:
@@ -373,12 +410,21 @@ class MonthlyPlanService:
             response = self.model.generate_content(prompt)
             result_text = response.text
             
+            # Log raw AI response for debugging
+            import logging
+            logger = logging.getLogger(__name__)
+            logger.info(f"🤖 AI Response received. Length: {len(result_text)}")
+            logger.info(f"🤖 Raw AI Response (first 1000 chars): {repr(result_text[:1000])}")
+            if len(result_text) > 1000:
+                logger.info(f"🤖 Raw AI Response (last 500 chars): {repr(result_text[-500:])}")
+            
             # Clean up the response (remove markdown formatting if present)
             if result_text.startswith('```json'):
                 result_text = result_text.replace('```json', '').replace('```', '').strip()
+                logger.info("🧹 Cleaned markdown formatting from AI response")
             
-            # Parse JSON result
-            meal_plan_data = json.loads(result_text)
+            # Use robust JSON parsing with multiple fallback strategies
+            meal_plan_data = self._robust_json_parse(result_text)
             
             return {
                 "success": True,
@@ -387,9 +433,27 @@ class MonthlyPlanService:
                 "generation_timestamp": datetime.now().isoformat()
             }
         except json.JSONDecodeError as e:
+            # Enhanced error reporting for JSON parsing issues
+            error_line = e.lineno if hasattr(e, 'lineno') else "unknown"
+            error_col = e.colno if hasattr(e, 'colno') else "unknown"
+            error_pos = e.pos if hasattr(e, 'pos') else "unknown"
+            
+            # Try to show context around the error
+            context = ""
+            if hasattr(e, 'pos') and e.pos and 'result_text' in locals():
+                start = max(0, e.pos - 100)
+                end = min(len(result_text), e.pos + 100)
+                context = result_text[start:end]
+            
             return {
                 "success": False,
                 "error": f"JSON parsing error: {str(e)}",
+                "error_details": {
+                    "line": error_line,
+                    "column": error_col,
+                    "position": error_pos,
+                    "context": context
+                },
                 "raw_result": result_text if 'result_text' in locals() else "No result generated"
             }
         except Exception as e:
@@ -397,3 +461,196 @@ class MonthlyPlanService:
                 "success": False,
                 "error": f"Generation error: {str(e)}"
             }
+
+    def _clean_ai_json_response(self, json_text: str) -> str:
+        """
+        Clean up common AI-generated JSON issues that cause parsing errors.
+        """
+        import re
+        
+        # Remove any leading/trailing whitespace
+        json_text = json_text.strip()
+        
+        # Remove invalid control characters (except \n, \r, \t)
+        json_text = re.sub(r'[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]', '', json_text)
+        
+        # Remove any trailing commas before closing brackets/braces
+        json_text = re.sub(r',(\s*[}\]])', r'\1', json_text)
+        
+        # Fix unquoted property names (basic cases)
+        # Look for patterns like: word: (not preceded by quote)
+        json_text = re.sub(r'([{,]\s*)([a-zA-Z_][a-zA-Z0-9_]*)\s*:', r'\1"\2":', json_text)
+        
+        # Fix single quotes to double quotes for strings (more careful approach)
+        # Replace single quotes around values after colons
+        json_text = re.sub(r":\s*'([^']*)'", r': "\1"', json_text)
+        
+        # Remove any comments (// or /* */)
+        json_text = re.sub(r'//.*?$', '', json_text, flags=re.MULTILINE)
+        json_text = re.sub(r'/\*.*?\*/', '', json_text, flags=re.DOTALL)
+        
+        # Fix common issues with object properties that aren't quoted
+        # This pattern catches property names that should be quoted
+        json_text = re.sub(r'([{,]\s*)([a-zA-Z_][a-zA-Z0-9_\-]*)\s*:', r'\1"\2":', json_text)
+        
+        return json_text
+
+    def _fix_truncated_json(self, json_text: str):
+        """
+        Fix JSON that was truncated during AI generation
+        """
+        import re
+        import logging
+        
+        logger = logging.getLogger(__name__)
+        original_length = len(json_text)
+        
+        # Step 1: Remove trailing incomplete content
+        # Remove incomplete string at the end (common with truncation)
+        json_text = re.sub(r',\s*"[^"]*$', '', json_text)
+        json_text = re.sub(r':\s*"[^"]*$', '', json_text)
+        
+        # Remove trailing commas
+        json_text = re.sub(r',\s*$', '', json_text)
+        
+        # Remove incomplete key-value pairs
+        json_text = re.sub(r'"[^"]*":\s*$', '', json_text)
+        
+        # Remove incomplete keys (quotes without closing)
+        json_text = re.sub(r',\s*"[^"]*$', '', json_text)
+        json_text = re.sub(r'{\s*"[^"]*$', '{', json_text)
+        json_text = re.sub(r'\[\s*"[^"]*$', '[', json_text)
+        
+        # Step 2: Balance braces and brackets
+        # Count opening and closing
+        open_braces = json_text.count('{')
+        close_braces = json_text.count('}')
+        open_brackets = json_text.count('[')
+        close_brackets = json_text.count(']')
+        
+        # Add missing closing elements
+        missing_braces = open_braces - close_braces
+        missing_brackets = open_brackets - close_brackets
+        
+        if missing_braces > 0:
+            logger.info(f"🔧 Adding {missing_braces} missing closing braces")
+            json_text += '}' * missing_braces
+        elif missing_braces < 0:
+            # Remove extra closing braces from the end
+            logger.info(f"🔧 Removing {abs(missing_braces)} extra closing braces")
+            for _ in range(abs(missing_braces)):
+                json_text = json_text.rsplit('}', 1)[0]
+        
+        if missing_brackets > 0:
+            logger.info(f"🔧 Adding {missing_brackets} missing closing brackets")
+            json_text += ']' * missing_brackets
+        elif missing_brackets < 0:
+            # Remove extra closing brackets from the end
+            logger.info(f"🔧 Removing {abs(missing_brackets)} extra closing brackets")
+            for _ in range(abs(missing_brackets)):
+                json_text = json_text.rsplit(']', 1)[0]
+        
+        if len(json_text) != original_length:
+            logger.info(f"🔧 JSON truncation repair: {original_length} -> {len(json_text)} chars")
+        
+        return json_text
+
+    def _robust_json_parse(self, json_text: str):
+        """
+        Try multiple approaches to parse potentially malformed JSON.
+        """
+        import json
+        import logging
+        
+        logger = logging.getLogger(__name__)
+        
+        # Log the original content for debugging
+        logger.info(f"Attempting to parse JSON. Content length: {len(json_text)}")
+        logger.debug(f"Original JSON content (first 500 chars): {repr(json_text[:500])}")
+        if len(json_text) > 500:
+            logger.debug(f"Original JSON content (last 500 chars): {repr(json_text[-500:])}")
+        
+        # First try: direct parse
+        try:
+            result = json.loads(json_text)
+            logger.info("✅ SUCCESS: Direct JSON parse successful")
+            return result
+        except json.JSONDecodeError as e:
+            logger.warning(f"❌ Direct parse failed: {e}")
+        
+        # Second try: clean and parse
+        try:
+            cleaned = self._clean_ai_json_response(json_text)
+            logger.debug(f"Cleaned JSON (first 500 chars): {repr(cleaned[:500])}")
+            result = json.loads(cleaned)
+            logger.info("✅ SUCCESS: Cleaned JSON parse successful")
+            return result
+        except json.JSONDecodeError as e:
+            logger.warning(f"❌ Cleaned parse failed: {e}")
+        
+        # Third try: more aggressive cleaning
+        try:
+            # Remove any text before the first { or [
+            import re
+            original_text = json_text
+            match = re.search(r'[{\[]', json_text)
+            if match:
+                json_text = json_text[match.start():]
+                logger.debug(f"Removed {match.start()} characters from start")
+            
+            # Remove any text after the last } or ]
+            json_text = json_text[::-1]  # reverse
+            match = re.search(r'[}\]]', json_text)
+            if match:
+                json_text = json_text[match.start():]
+                logger.debug(f"Removed text from end, new length: {len(json_text)}")
+            json_text = json_text[::-1]  # reverse back
+            
+            cleaned = self._clean_ai_json_response(json_text)
+            logger.debug(f"Aggressively cleaned JSON (first 500 chars): {repr(cleaned[:500])}")
+            result = json.loads(cleaned)
+            logger.info("✅ SUCCESS: Aggressively cleaned JSON parse successful")
+            return result
+        except json.JSONDecodeError as e:
+            logger.error(f"❌ Aggressive cleaning failed: {e}")
+        
+        # Fourth try: Fix truncation and parse
+        try:
+            logger.info("🔧 Attempting truncation repair...")
+            fixed_json = self._fix_truncated_json(json_text)
+            cleaned = self._clean_ai_json_response(fixed_json)
+            result = json.loads(cleaned)
+            logger.info("✅ SUCCESS: Truncation-repaired JSON parse successful")
+            return result
+        except json.JSONDecodeError as e:
+            logger.error(f"❌ Truncation repair failed: {e}")
+        
+        # Log the failure details and save raw content for debugging
+        logger.error("🚨 ALL JSON PARSING ATTEMPTS FAILED")
+        logger.error(f"Original content length: {len(original_text if 'original_text' in locals() else json_text)}")
+        logger.error(f"Final content to parse: {repr(json_text[:1000])}")
+        
+        # Save the failing content to a debug file
+        try:
+            import os
+            from datetime import datetime
+            debug_dir = "/tmp/fit_hero_debug"
+            os.makedirs(debug_dir, exist_ok=True)
+            
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            debug_file = f"{debug_dir}/failed_json_{timestamp}.txt"
+            
+            with open(debug_file, 'w') as f:
+                f.write("=== FAILED JSON CONTENT ===\n")
+                f.write(f"Length: {len(json_text)}\n")
+                f.write(f"Timestamp: {datetime.now().isoformat()}\n")
+                f.write("=== RAW CONTENT ===\n")
+                f.write(json_text)
+            
+            logger.error(f"💾 Raw JSON content saved to: {debug_file}")
+        except Exception as save_error:
+            logger.error(f"❌ Failed to save debug content: {save_error}")
+        
+        # If all else fails, raise the original error with more context
+        error_msg = f"Failed to parse JSON after multiple attempts. Content length: {len(json_text)}, starts with: {repr(json_text[:50])}"
+        raise json.JSONDecodeError(error_msg, json_text, 0)
