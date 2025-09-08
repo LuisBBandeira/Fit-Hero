@@ -9,14 +9,25 @@ interface MonthlyPlan {
   status?: string;
   filteredData?: any;
   validatedData?: any;
+  rawAiResponse?: any;
+  errorLog?: any;
 }
 
 interface APIResponse {
   success: boolean;
   monthly_plan?: MonthlyPlan;
-  workout_plan?: any; // Backward compatibility
-  recommendations?: any; // For meal plans
+  workout_plan?: any;
+  recommendations?: any;
   error?: string;
+}
+
+interface TestParams {
+  month: number;
+  year: number;
+  fitness_level: string;
+  goals: string[];
+  available_time: number;
+  equipment: string[];
 }
 
 export default function AITestPage() {
@@ -26,25 +37,65 @@ export default function AITestPage() {
   const [workoutPlan, setWorkoutPlan] = useState<any>(null);
   const [mealPlan, setMealPlan] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
+  const [testParams, setTestParams] = useState<TestParams>({
+    month: new Date().getMonth() + 1,
+    year: new Date().getFullYear(),
+    fitness_level: 'intermediate',
+    goals: ['muscle_gain', 'strength'],
+    available_time: 60,
+    equipment: ['gym']
+  });
+  const [directAIResponse, setDirectAIResponse] = useState<any>(null);
+  const [showRawData, setShowRawData] = useState(false);
+
+  // Test direct AI service call (bypassing database)
+  const testDirectAI = async () => {
+    setLoading(true);
+    setError(null);
+    
+    try {
+      const response = await fetch('http://localhost:8001/generate-monthly-workout-plan', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          user_id: `test-user-${Date.now()}`,
+          month: testParams.month,
+          year: testParams.year,
+          fitness_level: testParams.fitness_level,
+          goals: testParams.goals,
+          available_time: testParams.available_time,
+          equipment: testParams.equipment,
+          injuries_limitations: [],
+          preferred_activities: []
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`AI Service Error: ${response.status}`);
+      }
+
+      const data = await response.json();
+      setDirectAIResponse(data);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'An error occurred testing direct AI service');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const generateWorkoutPlan = async () => {
     setWorkoutLoading(true);
     setError(null);
     
     try {
-      const response = await fetch('/api/ai/workout-plan', {
+      const response = await fetch('/api/ai/test-workout-plan', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          fitness_level: 'intermediate',
-          goals: ['muscle_gain', 'strength'],
-          available_time: 45,
-          equipment: ['gym'],
-          month: new Date().getMonth() + 1,
-          year: new Date().getFullYear()
-        }),
+        body: JSON.stringify(testParams),
       });
 
       if (!response.ok) {
@@ -53,11 +104,9 @@ export default function AITestPage() {
 
       const data: APIResponse = await response.json();
       
-      // Handle new monthly plan format
       if (data.monthly_plan) {
-        setWorkoutPlan(data.monthly_plan.filteredData || data.monthly_plan.validatedData || data.monthly_plan);
+        setWorkoutPlan(data.monthly_plan);
       } else if (data.workout_plan) {
-        // Backward compatibility
         setWorkoutPlan(data.workout_plan);
       } else {
         throw new Error('No workout plan data received');
@@ -74,7 +123,7 @@ export default function AITestPage() {
     setError(null);
     
     try {
-      const response = await fetch('/api/ai/meal-recommendations', {
+      const response = await fetch('/api/ai/test-meal-recommendations', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -85,8 +134,8 @@ export default function AITestPage() {
           allergies: [],
           meal_prep_time: 30,
           budget_range: 'medium',
-          month: new Date().getMonth() + 1,
-          year: new Date().getFullYear()
+          month: testParams.month,
+          year: testParams.year
         }),
       });
 
@@ -96,11 +145,9 @@ export default function AITestPage() {
 
       const data: APIResponse = await response.json();
       
-      // Handle new monthly plan format
       if (data.monthly_plan) {
-        setMealPlan(data.monthly_plan.filteredData || data.monthly_plan.validatedData || data.monthly_plan);
+        setMealPlan(data.monthly_plan);
       } else if (data.recommendations) {
-        // Backward compatibility
         setMealPlan(data.recommendations);
       } else {
         throw new Error('No meal plan data received');
@@ -112,64 +159,156 @@ export default function AITestPage() {
     }
   };
 
+  const updateTestParams = (key: keyof TestParams, value: any) => {
+    setTestParams(prev => ({ ...prev, [key]: value }));
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-8">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-7xl mx-auto">
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-gray-800 mb-4">
-            🏋️ Fit Hero AI Test Page
+            🧪 AI Service Testing Dashboard
           </h1>
           <p className="text-lg text-gray-600">
-            Test the AI-powered workout and meal plan generation
+            Test the complete AI pipeline: Direct AI Service → Filter → Database Storage
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6 mb-8">
-          <div className="bg-white rounded-lg shadow-lg p-6">
-            <h2 className="text-xl font-semibold mb-4">💪 Workout Plan Generator</h2>
-            <div className="text-center">
-              <button
-                onClick={generateWorkoutPlan}
-                disabled={workoutLoading}
-                className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 text-white font-semibold py-3 px-8 rounded-lg text-lg transition duration-200 w-full"
+        {/* Test Parameters */}
+        <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
+          <h2 className="text-xl font-semibold mb-4">🎛️ Test Parameters</h2>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Month</label>
+              <select 
+                value={testParams.month} 
+                onChange={(e) => updateTestParams('month', parseInt(e.target.value))}
+                className="w-full border border-gray-300 rounded-md px-3 py-2"
               >
-                {workoutLoading ? (
-                  <span className="flex items-center justify-center">
-                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                    Generating...
-                  </span>
-                ) : (
-                  '🚀 Generate Workout Plan'
-                )}
-              </button>
+                {Array.from({length: 12}, (_, i) => (
+                  <option key={i+1} value={i+1}>{new Date(0, i).toLocaleString('default', { month: 'long' })}</option>
+                ))}
+              </select>
             </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Year</label>
+              <select 
+                value={testParams.year} 
+                onChange={(e) => updateTestParams('year', parseInt(e.target.value))}
+                className="w-full border border-gray-300 rounded-md px-3 py-2"
+              >
+                <option value={2025}>2025</option>
+                <option value={2026}>2026</option>
+                <option value={2027}>2027</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Fitness Level</label>
+              <select 
+                value={testParams.fitness_level} 
+                onChange={(e) => updateTestParams('fitness_level', e.target.value)}
+                className="w-full border border-gray-300 rounded-md px-3 py-2"
+              >
+                <option value="beginner">Beginner</option>
+                <option value="intermediate">Intermediate</option>
+                <option value="advanced">Advanced</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Available Time (min)</label>
+              <input 
+                type="number" 
+                value={testParams.available_time} 
+                onChange={(e) => updateTestParams('available_time', parseInt(e.target.value))}
+                className="w-full border border-gray-300 rounded-md px-3 py-2"
+                min="15" max="120" step="15"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Goals</label>
+              <select 
+                multiple 
+                value={testParams.goals} 
+                onChange={(e) => updateTestParams('goals', Array.from(e.target.selectedOptions, option => option.value))}
+                className="w-full border border-gray-300 rounded-md px-3 py-2"
+              >
+                <option value="weight_loss">Weight Loss</option>
+                <option value="muscle_gain">Muscle Gain</option>
+                <option value="strength">Strength</option>
+                <option value="endurance">Endurance</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Equipment</label>
+              <select 
+                multiple 
+                value={testParams.equipment} 
+                onChange={(e) => updateTestParams('equipment', Array.from(e.target.selectedOptions, option => option.value))}
+                className="w-full border border-gray-300 rounded-md px-3 py-2"
+              >
+                <option value="gym">Gym</option>
+                <option value="bodyweight">Bodyweight</option>
+                <option value="dumbbells">Dumbbells</option>
+                <option value="resistance_bands">Resistance Bands</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        {/* Test Buttons */}
+        <div className="grid lg:grid-cols-3 gap-6 mb-6">
+          <div className="bg-white rounded-lg shadow-lg p-6">
+            <h2 className="text-xl font-semibold mb-4">🔧 Direct AI Service Test</h2>
+            <p className="text-sm text-gray-600 mb-4">
+              Tests the AI service directly (bypasses authentication and database)
+            </p>
+            <button
+              onClick={testDirectAI}
+              disabled={loading}
+              className="bg-purple-600 hover:bg-purple-700 disabled:bg-purple-300 text-white font-semibold py-3 px-8 rounded-lg text-lg transition duration-200 w-full"
+            >
+              {loading ? 'Testing...' : '🔧 Test AI Service'}
+            </button>
+          </div>
+
+          <div className="bg-white rounded-lg shadow-lg p-6">
+            <h2 className="text-xl font-semibold mb-4">💪 Full Workout Pipeline</h2>
+            <p className="text-sm text-gray-600 mb-4">
+              Tests the complete workflow: AI → Filter → Database → Validation
+            </p>
+            <button
+              onClick={generateWorkoutPlan}
+              disabled={workoutLoading}
+              className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 text-white font-semibold py-3 px-8 rounded-lg text-lg transition duration-200 w-full"
+            >
+              {workoutLoading ? 'Generating...' : '💪 Generate Workout Plan'}
+            </button>
           </div>
 
           <div className="bg-white rounded-lg shadow-lg p-6">
             <h2 className="text-xl font-semibold mb-4">🍽️ Meal Plan Generator</h2>
-            <div className="text-center">
-              <button
-                onClick={generateMealPlan}
-                disabled={mealLoading}
-                className="bg-green-600 hover:bg-green-700 disabled:bg-green-300 text-white font-semibold py-3 px-8 rounded-lg text-lg transition duration-200 w-full"
-              >
-                {mealLoading ? (
-                  <span className="flex items-center justify-center">
-                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                    Generating...
-                  </span>
-                ) : (
-                  '🥗 Generate Meal Plan'
-                )}
-              </button>
-            </div>
+            <p className="text-sm text-gray-600 mb-4">
+              Tests meal plan generation and database storage
+            </p>
+            <button
+              onClick={generateMealPlan}
+              disabled={mealLoading}
+              className="bg-green-600 hover:bg-green-700 disabled:bg-green-300 text-white font-semibold py-3 px-8 rounded-lg text-lg transition duration-200 w-full"
+            >
+              {mealLoading ? 'Generating...' : '🥗 Generate Meal Plan'}
+            </button>
           </div>
+        </div>
+
+        {/* Toggle for Raw Data */}
+        <div className="mb-6 text-center">
+          <button
+            onClick={() => setShowRawData(!showRawData)}
+            className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg"
+          >
+            {showRawData ? 'Hide' : 'Show'} Raw Data & Debug Info
+          </button>
         </div>
 
         {error && (
@@ -178,95 +317,132 @@ export default function AITestPage() {
           </div>
         )}
 
+        {/* Direct AI Response */}
+        {directAIResponse && (
+          <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">
+              🔧 Direct AI Service Response
+            </h2>
+            
+            <div className="grid grid-cols-3 gap-4 mb-6">
+              <div className="bg-blue-50 p-4 rounded-lg">
+                <h3 className="font-semibold text-blue-800 mb-2">Status</h3>
+                <p className="text-blue-700 text-sm">{directAIResponse.status || 'Unknown'}</p>
+              </div>
+              
+              <div className="bg-green-50 p-4 rounded-lg">
+                <h3 className="font-semibold text-green-800 mb-2">AI Success</h3>
+                <p className="text-green-700 text-sm">
+                  {directAIResponse.raw_response?.success ? '✅ Success' : '❌ Failed'}
+                </p>
+              </div>
+              
+              <div className="bg-purple-50 p-4 rounded-lg">
+                <h3 className="font-semibold text-purple-800 mb-2">Daily Workouts</h3>
+                <p className="text-purple-700 text-sm">
+                  {directAIResponse.filtered_data?.daily_workouts ? 
+                    Object.keys(directAIResponse.filtered_data.daily_workouts).length + ' days' : 
+                    'N/A'
+                  }
+                </p>
+              </div>
+            </div>
+
+            {showRawData && (
+              <div className="space-y-4">
+                <div>
+                  <h4 className="font-semibold mb-2">Validation Errors:</h4>
+                  <pre className="bg-gray-100 p-3 rounded text-xs overflow-auto max-h-32">
+                    {JSON.stringify(directAIResponse.validated_data?.validation_errors || [], null, 2)}
+                  </pre>
+                </div>
+                
+                <div>
+                  <h4 className="font-semibold mb-2">Sample Daily Workout:</h4>
+                  <pre className="bg-gray-100 p-3 rounded text-xs overflow-auto max-h-48">
+                    {JSON.stringify(directAIResponse.filtered_data?.daily_workouts?.['1'] || {}, null, 2)}
+                  </pre>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
         <div className="grid lg:grid-cols-2 gap-6">
           {/* Workout Plan Section */}
           {workoutPlan && (
             <div className="bg-white rounded-lg shadow-lg p-6">
               <h2 className="text-2xl font-bold text-gray-800 mb-4">
-                🎯 Your Personalized Workout Plan
+                🎯 Database Stored Workout Plan
               </h2>
               
               <div className="grid grid-cols-2 gap-4 mb-6">
                 <div className="bg-blue-50 p-4 rounded-lg">
-                  <h3 className="font-semibold text-blue-800 mb-2">📅 Schedule</h3>
-                  <p className="text-blue-700 text-sm">{workoutPlan.weekly_schedule || 'N/A'}</p>
+                  <h3 className="font-semibold text-blue-800 mb-2">📅 Plan Info</h3>
+                  <p className="text-blue-700 text-sm">
+                    Month: {workoutPlan.month}/{workoutPlan.year}<br/>
+                    Status: {workoutPlan.status}
+                  </p>
                 </div>
                 
                 <div className="bg-green-50 p-4 rounded-lg">
-                  <h3 className="font-semibold text-green-800 mb-2">⏱️ Duration</h3>
-                  <p className="text-green-700 text-sm">{workoutPlan.estimated_duration || 'N/A'}</p>
-                </div>
-                
-                <div className="bg-purple-50 p-4 rounded-lg">
-                  <h3 className="font-semibold text-purple-800 mb-2">🎯 Level</h3>
-                  <p className="text-purple-700 text-sm capitalize">{workoutPlan.fitness_level || 'N/A'}</p>
-                </div>
-                
-                <div className="bg-orange-50 p-4 rounded-lg">
-                  <h3 className="font-semibold text-orange-800 mb-2">🏋️ Equipment</h3>
-                  <p className="text-orange-700 text-sm">
-                    {workoutPlan.equipment_used ? 
-                      (Array.isArray(workoutPlan.equipment_used) ? 
-                        workoutPlan.equipment_used.join(', ') : 
-                        workoutPlan.equipment_used) : 
-                      'N/A'}
+                  <h3 className="font-semibold text-green-800 mb-2">⏱️ Details</h3>
+                  <p className="text-green-700 text-sm">
+                    Fitness Level: {workoutPlan.fitnessLevel}<br/>
+                    Time: {workoutPlan.availableTime}min
                   </p>
                 </div>
               </div>
 
-              {workoutPlan.routines && Array.isArray(workoutPlan.routines) && (
-                <div className="mb-6">
-                  <h3 className="text-xl font-semibold text-gray-800 mb-4">📋 Workout Routines</h3>
-                  <div className="space-y-4 max-h-96 overflow-y-auto">
-                    {workoutPlan.routines.map((routine: any, index: number) => (
-                      <div key={index} className="border border-gray-200 rounded-lg p-4">
-                        <h4 className="font-semibold text-lg text-gray-800 mb-2">
-                          {routine.day || `Day ${index + 1}`} - {routine.focus || 'Focus not specified'}
-                        </h4>
-                        {routine.exercises && Array.isArray(routine.exercises) && (
-                          <div className="grid gap-2">
-                            {routine.exercises.map((exercise: any, exIndex: number) => (
-                              <div key={exIndex} className="bg-gray-50 p-3 rounded flex justify-between items-center">
-                                <span className="font-medium">{exercise.name || 'Exercise name not specified'}</span>
-                                <span className="text-sm text-gray-600">
-                                  {exercise.sets ? `${exercise.sets} sets` : ''} 
-                                  {exercise.reps ? ` × ${exercise.reps}` : ''} 
-                                  {exercise.rest ? ` • Rest: ${exercise.rest}` : ''}
-                                </span>
-                              </div>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    ))}
+              {showRawData && (
+                <div className="space-y-4">
+                  <div>
+                    <h4 className="font-semibold mb-2">Database Record:</h4>
+                    <pre className="bg-gray-100 p-3 rounded text-xs overflow-auto max-h-32">
+                      {JSON.stringify({
+                        id: workoutPlan.id,
+                        status: workoutPlan.status,
+                        month: workoutPlan.month,
+                        year: workoutPlan.year,
+                        goals: workoutPlan.goals,
+                        equipment: workoutPlan.equipment
+                      }, null, 2)}
+                    </pre>
                   </div>
+                  
+                  {workoutPlan.errorLog && (
+                    <div>
+                      <h4 className="font-semibold mb-2 text-red-600">Error Log:</h4>
+                      <pre className="bg-red-50 p-3 rounded text-xs overflow-auto max-h-32">
+                        {JSON.stringify(workoutPlan.errorLog, null, 2)}
+                      </pre>
+                    </div>
+                  )}
+                  
+                  {(workoutPlan.filteredData || workoutPlan.validatedData) && (
+                    <div>
+                      <h4 className="font-semibold mb-2">Sample Workout Data:</h4>
+                      <pre className="bg-gray-100 p-3 rounded text-xs overflow-auto max-h-48">
+                        {JSON.stringify(
+                          (workoutPlan.validatedData?.daily_workouts || workoutPlan.filteredData?.daily_workouts)?.['1'] || {}, 
+                          null, 2
+                        )}
+                      </pre>
+                    </div>
+                  )}
                 </div>
               )}
 
-              {workoutPlan.progression && (
-                <div className="mb-4">
-                  <h3 className="text-xl font-semibold text-gray-800 mb-3">📈 Progression</h3>
-                  <p className="text-gray-700 bg-yellow-50 p-3 rounded-lg text-sm">{workoutPlan.progression}</p>
-                </div>
-              )}
-
-              {workoutPlan.safety_notes && Array.isArray(workoutPlan.safety_notes) && workoutPlan.safety_notes.length > 0 && (
-                <div className="mb-4">
-                  <h3 className="text-xl font-semibold text-gray-800 mb-3">⚠️ Safety Notes</h3>
-                  <ul className="list-disc list-inside space-y-1 text-gray-700 text-sm">
-                    {workoutPlan.safety_notes.map((note: any, index: number) => (
-                      <li key={index}>{note}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              <details className="mt-4">
-                <summary className="cursor-pointer text-sm font-medium text-gray-600">View Raw Data</summary>
-                <pre className="mt-2 p-2 bg-gray-100 rounded text-xs overflow-auto max-h-32">
-                  {JSON.stringify(workoutPlan, null, 2)}
-                </pre>
-              </details>
+              {/* Update Button */}
+              <div className="mt-6">
+                <button
+                  onClick={generateWorkoutPlan}
+                  disabled={workoutLoading}
+                  className="bg-orange-600 hover:bg-orange-700 disabled:bg-orange-300 text-white font-semibold py-2 px-6 rounded-lg transition duration-200"
+                >
+                  {workoutLoading ? 'Updating...' : '🔄 Update Plan'}
+                </button>
+              </div>
             </div>
           )}
 
@@ -274,95 +450,81 @@ export default function AITestPage() {
           {mealPlan && (
             <div className="bg-white rounded-lg shadow-lg p-6">
               <h2 className="text-2xl font-bold text-gray-800 mb-4">
-                🍽️ Your Personalized Meal Plan
+                🍽️ Database Stored Meal Plan
               </h2>
               
               <div className="grid grid-cols-2 gap-4 mb-6">
                 <div className="bg-green-50 p-4 rounded-lg">
-                  <h3 className="font-semibold text-green-800 mb-2">🎯 Calorie Target</h3>
-                  <p className="text-green-700 text-sm">{mealPlan.calorie_target || 'N/A'}</p>
-                </div>
-                
-                <div className="bg-blue-50 p-4 rounded-lg">
-                  <h3 className="font-semibold text-blue-800 mb-2">🥗 Diet Style</h3>
-                  <p className="text-blue-700 text-sm">
-                    {mealPlan.dietary_preferences ? 
-                      (Array.isArray(mealPlan.dietary_preferences) ? 
-                        mealPlan.dietary_preferences.join(', ') : 
-                        mealPlan.dietary_preferences) : 
-                      'N/A'}
+                  <h3 className="font-semibold text-green-800 mb-2">📅 Plan Info</h3>
+                  <p className="text-green-700 text-sm">
+                    Month: {mealPlan.month}/{mealPlan.year}<br/>
+                    Status: {mealPlan.status}
                   </p>
                 </div>
                 
-                <div className="bg-purple-50 p-4 rounded-lg">
-                  <h3 className="font-semibold text-purple-800 mb-2">💰 Budget</h3>
-                  <p className="text-purple-700 text-sm capitalize">{mealPlan.budget_range || 'N/A'}</p>
-                </div>
-                
-                <div className="bg-orange-50 p-4 rounded-lg">
-                  <h3 className="font-semibold text-orange-800 mb-2">⏱️ Prep Time</h3>
-                  <p className="text-orange-700 text-sm">{mealPlan.meal_prep_time ? `${mealPlan.meal_prep_time} min` : 'N/A'}</p>
+                <div className="bg-yellow-50 p-4 rounded-lg">
+                  <h3 className="font-semibold text-yellow-800 mb-2">🎯 Target</h3>
+                  <p className="text-yellow-700 text-sm">
+                    Calories: {mealPlan.calorieTarget}<br/>
+                    Budget: {mealPlan.budgetRange}
+                  </p>
                 </div>
               </div>
 
-              {mealPlan.weekly_meals && Array.isArray(mealPlan.weekly_meals) && (
-                <div className="mb-6">
-                  <h3 className="text-xl font-semibold text-gray-800 mb-4">📅 Weekly Meals</h3>
-                  <div className="space-y-4 max-h-96 overflow-y-auto">
-                    {mealPlan.weekly_meals.map((day: any, index: number) => (
-                      <div key={index} className="border border-gray-200 rounded-lg p-4">
-                        <h4 className="font-semibold text-lg text-gray-800 mb-2">
-                          {day.day || `Day ${index + 1}`}
-                        </h4>
-                        {day.meals && Array.isArray(day.meals) && (
-                          <div className="grid gap-2">
-                            {day.meals.map((meal: any, mealIndex: number) => (
-                              <div key={mealIndex} className="bg-gray-50 p-3 rounded flex justify-between items-center">
-                                <div>
-                                  <span className="font-medium">{meal.name || 'Meal name not specified'}</span>
-                                  <span className="text-xs text-gray-600 ml-2">({meal.meal_type || 'Type not specified'})</span>
-                                </div>
-                                {meal.calories && (
-                                  <span className="text-sm text-gray-600">{meal.calories} cal</span>
-                                )}
-                              </div>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    ))}
+              {showRawData && (
+                <div className="space-y-4">
+                  <div>
+                    <h4 className="font-semibold mb-2">Database Record:</h4>
+                    <pre className="bg-gray-100 p-3 rounded text-xs overflow-auto max-h-32">
+                      {JSON.stringify({
+                        id: mealPlan.id,
+                        status: mealPlan.status,
+                        month: mealPlan.month,
+                        year: mealPlan.year,
+                        calorieTarget: mealPlan.calorieTarget,
+                        budgetRange: mealPlan.budgetRange
+                      }, null, 2)}
+                    </pre>
                   </div>
+                  
+                  {(mealPlan.filteredData || mealPlan.validatedData) && (
+                    <div>
+                      <h4 className="font-semibold mb-2">Sample Meal Data:</h4>
+                      <pre className="bg-gray-100 p-3 rounded text-xs overflow-auto max-h-48">
+                        {JSON.stringify(
+                          (mealPlan.validatedData?.daily_meals || mealPlan.filteredData?.daily_meals)?.['1'] || {}, 
+                          null, 2
+                        )}
+                      </pre>
+                    </div>
+                  )}
                 </div>
               )}
 
-              {mealPlan.nutrition_guidelines && (
-                <div className="mb-4">
-                  <h3 className="text-xl font-semibold text-gray-800 mb-3">📊 Nutrition Guidelines</h3>
-                  <p className="text-gray-700 bg-blue-50 p-3 rounded-lg text-sm">{mealPlan.nutrition_guidelines}</p>
-                </div>
-              )}
-
-              <details className="mt-4">
-                <summary className="cursor-pointer text-sm font-medium text-gray-600">View Raw Data</summary>
-                <pre className="mt-2 p-2 bg-gray-100 rounded text-xs overflow-auto max-h-32">
-                  {JSON.stringify(mealPlan, null, 2)}
-                </pre>
-              </details>
+              {/* Update Button */}
+              <div className="mt-6">
+                <button
+                  onClick={generateMealPlan}
+                  disabled={mealLoading}
+                  className="bg-orange-600 hover:bg-orange-700 disabled:bg-orange-300 text-white font-semibold py-2 px-6 rounded-lg transition duration-200"
+                >
+                  {mealLoading ? 'Updating...' : '🔄 Update Plan'}
+                </button>
+              </div>
             </div>
           )}
         </div>
 
-        {!workoutPlan && !mealPlan && !workoutLoading && !mealLoading && (
-          <div className="text-center text-gray-500 mt-8 bg-white rounded-lg shadow-lg p-8">
-            <h3 className="text-xl font-semibold mb-2">🚀 Ready to Test!</h3>
-            <p>Generate a workout plan or meal plan to see the AI results here.</p>
+        {/* Instructions */}
+        <div className="mt-8 bg-gray-100 rounded-lg p-6">
+          <h3 className="text-lg font-semibold mb-4">🔍 Testing Instructions</h3>
+          <div className="space-y-2 text-sm text-gray-700">
+            <p><strong>1. Direct AI Test:</strong> Tests the AI service directly to verify JSON parsing fixes</p>
+            <p><strong>2. Full Pipeline Test:</strong> Tests the complete workflow including database storage</p>
+            <p><strong>3. Update Plans:</strong> Use the update buttons to regenerate plans with the same parameters</p>
+            <p><strong>4. Raw Data:</strong> Toggle to see detailed response data, validation errors, and debug info</p>
+            <p><strong>5. Parameters:</strong> Modify test parameters to test different scenarios</p>
           </div>
-        )}
-
-        <div className="mt-8 text-center text-sm text-gray-500">
-          <p>
-            🤖 Powered by Gemini 2.0 Flash (Monthly Plan System with Filter)
-          </p>
         </div>
       </div>
     </div>
