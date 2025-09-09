@@ -10,6 +10,7 @@ import calendar
 
 from services.monthly_plan_service import MonthlyPlanService
 from services.ai_filter_service import AIFilterService
+from services.webhook_service import webhook_service
 
 # Load environment variables
 load_dotenv()
@@ -210,6 +211,112 @@ async def get_monthly_plan_status(user_id: str, month: int, year: int):
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/activate-ai")
+async def activate_ai_for_player(request: dict):
+    """
+    Activate AI service for a new player - generates both workout and meal plans
+    Sends webhooks on completion/failure
+    """
+    try:
+        user_id = request.get('user_id')
+        player_data = request.get('player_data', {})
+        
+        if not user_id:
+            raise HTTPException(status_code=400, detail="user_id is required")
+        
+        current_date = datetime.now()
+        month = current_date.month
+        year = current_date.year
+        
+        # Extract player data with defaults
+        age = player_data.get('age', 30)
+        weight = player_data.get('weight', 75.0)
+        fitness_level = player_data.get('fitness_level', 'beginner')
+        goals = player_data.get('goals', ['general_fitness'])
+        equipment = player_data.get('equipment', ['bodyweight'])
+        dietary_preferences = player_data.get('dietary_preferences', ['balanced'])
+        
+        results = {
+            'workout_plan_success': False,
+            'meal_plan_success': False,
+            'errors': []
+        }
+        
+        # Generate workout plan
+        try:
+            workout_response = await monthly_plan_service.generate_monthly_workout_plan(
+                user_id=user_id,
+                month=month,
+                year=year,
+                age=age,
+                weight=weight,
+                fitness_level=fitness_level,
+                goals=goals,
+                available_time=45,
+                equipment=equipment,
+                injuries_limitations=[],
+                preferred_activities=[]
+            )
+            results['workout_plan_success'] = workout_response.get('success', False)
+            if not results['workout_plan_success']:
+                results['errors'].append(f"Workout plan: {workout_response.get('error', 'Unknown error')}")
+        except Exception as e:
+            results['errors'].append(f"Workout plan: {str(e)}")
+        
+        # Generate meal plan
+        try:
+            meal_response = await monthly_plan_service.generate_monthly_meal_plan(
+                user_id=user_id,
+                month=month,
+                year=year,
+                age=age,
+                weight=weight,
+                goals=goals,
+                activity_level='moderately_active',
+                dietary_preferences=dietary_preferences,
+                allergies=[],
+                calorie_target=None,
+                meal_prep_time=30,
+                budget_range='medium'
+            )
+            results['meal_plan_success'] = meal_response.get('success', False)
+            if not results['meal_plan_success']:
+                results['errors'].append(f"Meal plan: {meal_response.get('error', 'Unknown error')}")
+        except Exception as e:
+            results['errors'].append(f"Meal plan: {str(e)}")
+        
+        # Send completion or failure webhook
+        if results['workout_plan_success'] and results['meal_plan_success']:
+            await webhook_service.notify_ai_activation_completed(user_id, results)
+        elif results['workout_plan_success'] or results['meal_plan_success']:
+            await webhook_service.notify_ai_activation_completed(user_id, results)
+        else:
+            await webhook_service.notify_ai_activation_failed(user_id, {
+                'error': 'Both workout and meal plan generation failed',
+                'type': 'generation_failure',
+                'details': results['errors']
+            })
+        
+        return {
+            "status": "completed",
+            "user_id": user_id,
+            "results": results,
+            "timestamp": datetime.utcnow().isoformat()
+        }
+        
+    except Exception as e:
+        # Send failure webhook
+        await webhook_service.notify_ai_activation_failed(user_id or 'unknown', {
+            'error': str(e),
+            'type': 'activation_error',
+            'retry_possible': True
+        })
+        
+        raise HTTPException(status_code=500, detail={
+            "error": "Failed to activate AI service",
+            "details": str(e)
+        })
 
 if __name__ == "__main__":
     import uvicorn

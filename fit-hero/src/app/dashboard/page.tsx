@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import LogoutButton from '@/components/LogoutButton';
+import AIActivationWidget from '@/components/AIActivationWidget';
 
 interface DashboardData {
   player: {
@@ -474,6 +475,11 @@ export default function DashboardPage() {
               </div>
             </div>
           </div>
+        </div>
+
+        {/* AI Activation Widget */}
+        <div className={`transition-all duration-1000 delay-600 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
+          <AIActivationWidget />
         </div>
 
         {/* Main Content Grid */}

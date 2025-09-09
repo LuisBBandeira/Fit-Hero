@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '../../../lib/auth'
 import { prisma } from '../../../lib/prisma'
+import { aiActivationService } from '../../../lib/ai-activation-service'
 
 export async function POST(request: NextRequest) {
   try {
@@ -61,8 +62,37 @@ export async function POST(request: NextRequest) {
       }
     })
 
+    // 🤖 TRIGGER AI SERVICE ACTIVATION for new player
+    console.log(`🚀 New player created: ${player.id}. Triggering AI service activation...`)
+    
+    // Fire and forget - don't wait for AI service to complete
+    // This allows the user to proceed to dashboard immediately
+    aiActivationService.activateAIForNewPlayer(player.id, {
+      age: player.age || 30,
+      weight: player.weight || 75.0,
+      character: player.character,
+      objective: player.objective,
+      trainingEnvironment: player.trainingEnvironment,
+      dietaryRestrictions: player.dietaryRestrictions,
+      forbiddenFoods: player.forbiddenFoods
+    }).catch(error => {
+      // Log the error but don't fail the player creation
+      console.error(`❌ AI service activation failed for player ${player.id}:`, error)
+      // In a production environment, you might want to:
+      // - Queue this for retry later
+      // - Send an alert to administrators
+      // - Log to monitoring service
+    })
+
     return NextResponse.json(
-      { message: 'Player profile created successfully', player },
+      { 
+        message: 'Player profile created successfully',
+        player,
+        aiActivation: {
+          status: 'triggered',
+          message: 'AI service activation initiated in background'
+        }
+      },
       { status: 201 }
     )
   } catch (error) {

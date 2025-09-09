@@ -6,6 +6,7 @@ from config import GOOGLE_API_KEY
 import calendar
 from datetime import datetime, timedelta
 from services.standardized_template_service import StandardizedTemplateService
+from services.webhook_service import webhook_service
 
 class MonthlyPlanService:
     def __init__(self):
@@ -188,6 +189,18 @@ class MonthlyPlanService:
             
             # Use robust JSON parsing with multiple fallback strategies
             workout_plan_data = self._robust_json_parse(result_text)
+            
+            # Send webhook notification for successful generation
+            await webhook_service.notify_workout_plan_generated(
+                player_id=user_id,
+                plan_data={
+                    'month': month,
+                    'year': year,
+                    'workout_days': workout_plan_data.get('monthly_overview', {}).get('workout_days', 'unknown'),
+                    'plan_id': f"{user_id}_{month}_{year}_workout",
+                    'success': True
+                }
+            )
             
             return {
                 "success": True,
@@ -425,6 +438,18 @@ class MonthlyPlanService:
             
             # Use robust JSON parsing with multiple fallback strategies
             meal_plan_data = self._robust_json_parse(result_text)
+            
+            # Send webhook notification for successful generation
+            await webhook_service.notify_meal_plan_generated(
+                player_id=user_id,
+                plan_data={
+                    'month': month,
+                    'year': year,
+                    'daily_calories': meal_plan_data.get('monthly_overview', {}).get('nutrition_targets', {}).get('daily_calories', 'unknown'),
+                    'plan_id': f"{user_id}_{month}_{year}_meal",
+                    'success': True
+                }
+            )
             
             return {
                 "success": True,
