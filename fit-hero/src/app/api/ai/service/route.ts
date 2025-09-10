@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth/next'
-import { authOptions } from '../../../../lib/auth'
-import { aiServiceManager } from '../../../../lib/ai-service-manager'
+import { authOptions } from '@/lib/auth'
+import { aiServiceManager } from '@/lib/ai-service-manager'
 
 /**
  * GET /api/ai/service - Get AI service status
