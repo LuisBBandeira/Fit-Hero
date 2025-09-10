@@ -62,36 +62,28 @@ export async function POST(request: NextRequest) {
       }
     })
 
-    // 🤖 TRIGGER AI SERVICE ACTIVATION for new player
-    console.log(`🚀 New player created: ${player.id}. Triggering AI service activation...`)
-    
-    // Fire and forget - don't wait for AI service to complete
-    // This allows the user to proceed to dashboard immediately
-    aiActivationService.activateAIForNewPlayer(player.id, {
-      age: player.age || 30,
-      weight: player.weight || 75.0,
-      character: player.character,
-      objective: player.objective,
-      trainingEnvironment: player.trainingEnvironment,
-      dietaryRestrictions: player.dietaryRestrictions,
-      forbiddenFoods: player.forbiddenFoods
-    }).catch(error => {
-      // Log the error but don't fail the player creation
-      console.error(`❌ AI service activation failed for player ${player.id}:`, error)
-      // In a production environment, you might want to:
-      // - Queue this for retry later
-      // - Send an alert to administrators
-      // - Log to monitoring service
-    })
+    // 🤖 Silently trigger AI service activation for new player
+    // This runs in the background and doesn't affect the user's immediate experience
+    setTimeout(() => {
+      aiActivationService.activateAIForNewPlayer(player.id, {
+        age: player.age || 30,
+        weight: player.weight || 75.0,
+        character: player.character,
+        objective: player.objective,
+        trainingEnvironment: player.trainingEnvironment,
+        dietaryRestrictions: player.dietaryRestrictions,
+        forbiddenFoods: player.forbiddenFoods
+      }).catch(error => {
+        // Silently log the error - user doesn't need to know
+        console.error(`🔥 Background AI activation failed for player ${player.id}:`, error)
+        // In production: queue for retry, alert admins, etc.
+      })
+    }, 100) // Small delay to ensure response is sent first
 
     return NextResponse.json(
       { 
         message: 'Player profile created successfully',
-        player,
-        aiActivation: {
-          status: 'triggered',
-          message: 'AI service activation initiated in background'
-        }
+        player
       },
       { status: 201 }
     )

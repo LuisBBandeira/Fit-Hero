@@ -25,10 +25,11 @@ export async function POST(request: NextRequest) {
         data: {
           userId: 'test-user',
           name: 'Test Player',
-          fitnessLevel: 'BEGINNER',
-          goals: ['muscle_gain'],
-          availableTime: 60,
-          equipment: ['gym'],
+          character: 'FITNESS_WARRIOR',
+          objective: 'GENERAL_FITNESS',
+          trainingEnvironment: 'GYM_TRAINING',
+          age: 25,
+          weight: 70,
           createdAt: new Date(),
           updatedAt: new Date()
         }
