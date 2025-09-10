@@ -163,6 +163,17 @@ export async function PUT(request: NextRequest) {
       )
     }
 
+    // Store previous data for AI trigger comparison
+    const previousPlayerData = {
+      age: existingPlayer.age || undefined,
+      weight: existingPlayer.weight || undefined,
+      character: existingPlayer.character,
+      objective: existingPlayer.objective,
+      trainingEnvironment: existingPlayer.trainingEnvironment,
+      dietaryRestrictions: existingPlayer.dietaryRestrictions,
+      forbiddenFoods: existingPlayer.forbiddenFoods
+    }
+
     // Update player profile
     const player = await prisma.player.update({
       where: { userId: session.user.id },
@@ -178,6 +189,30 @@ export async function PUT(request: NextRequest) {
         forbiddenFoods: forbiddenFoods !== undefined ? forbiddenFoods : existingPlayer.forbiddenFoods,
       }
     })
+
+    // 🔄 Silently trigger AI service for profile updates
+    // This analyzes changes and regenerates plans only if necessary
+    setTimeout(() => {
+      const newPlayerData = {
+        age: player.age || undefined,
+        weight: player.weight || undefined,
+        character: player.character,
+        objective: player.objective,
+        trainingEnvironment: player.trainingEnvironment,
+        dietaryRestrictions: player.dietaryRestrictions,
+        forbiddenFoods: player.forbiddenFoods
+      }
+
+      aiActivationService.activateAIForProfileUpdate(player.id, previousPlayerData, newPlayerData)
+        .then(result => {
+          console.log(`🤖 Profile update AI trigger completed for player ${player.id}:`, result.message)
+        })
+        .catch(error => {
+          // Silently log the error - user doesn't need to know
+          console.error(`🔥 Background AI profile update failed for player ${player.id}:`, error)
+          // In production: queue for retry, alert admins, etc.
+        })
+    }, 100) // Small delay to ensure response is sent first
 
     return NextResponse.json(
       { message: 'Player profile updated successfully', player },

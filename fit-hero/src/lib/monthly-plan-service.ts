@@ -27,8 +27,11 @@ export class MonthlyPlanService {
       })
 
       if (existingPlan && existingPlan.status === MonthlyPlanStatus.ACTIVE) {
+        console.log(`📄 Found existing workout plan: ${existingPlan.id} Status: ${existingPlan.status}`)
         return existingPlan
       }
+
+      console.log(`🆕 No active workout plan found, generating new one for ${params.month}/${params.year}`)
 
       // Create pending plan record
       const pendingPlan = await prisma.monthlyWorkoutPlan.create({
@@ -182,10 +185,12 @@ export class MonthlyPlanService {
         }
       })
 
-      if (existingPlan) {
-        console.log('📄 Found existing meal plan:', existingPlan.id, 'Status:', existingPlan.status)
+      if (existingPlan && existingPlan.status === MonthlyPlanStatus.ACTIVE) {
+        console.log(`📄 Found existing meal plan: ${existingPlan.id} Status: ${existingPlan.status}`)
         return existingPlan
       }
+
+      console.log(`🆕 No active meal plan found, generating new one for ${params.month}/${params.year}`)
 
       // Create pending plan record
       const pendingPlan = await prisma.monthlyMealPlan.create({
@@ -305,6 +310,8 @@ export class MonthlyPlanService {
       ? '/generate-monthly-workout-plan'
       : '/generate-monthly-meal-plan'
 
+    console.log(`🌐 Calling AI service: ${AI_SERVICE_URL}${endpoint}`)
+
     const response = await fetch(`${AI_SERVICE_URL}${endpoint}`, {
       method: 'POST',
       headers: {
@@ -312,6 +319,8 @@ export class MonthlyPlanService {
       },
       body: JSON.stringify(params)
     })
+
+    console.log(`📥 AI service response status: ${response.status} ${response.statusText}`)
 
     if (!response.ok) {
       throw new Error(`AI service error: ${response.statusText}`)

@@ -1,4 +1,5 @@
 import { MonthlyPlanService } from './monthly-plan-service'
+import { prisma } from '@/lib/prisma'
 
 export class AIActivationService {
   private monthlyPlanService: MonthlyPlanService
@@ -124,6 +125,159 @@ export class AIActivationService {
     }
     
     return results
+  }
+
+  /**
+   * Triggers AI service when a player profile is updated
+   * Regenerates monthly plans for the current month if significant changes are detected
+   */
+  async activateAIForProfileUpdate(playerId: string, previousData: {
+    age?: number
+    weight?: number
+    character: string
+    objective: string
+    trainingEnvironment: string
+    dietaryRestrictions: string[]
+    forbiddenFoods: string[]
+  }, newData: {
+    age?: number
+    weight?: number
+    character: string
+    objective: string
+    trainingEnvironment: string
+    dietaryRestrictions: string[]
+    forbiddenFoods: string[]
+  }) {
+    console.log(`🔄 Processing profile update for player: ${playerId}`)
+    
+    try {
+      // Check if changes are significant enough to regenerate plans
+      const significantChanges = this.detectSignificantChanges(previousData, newData)
+      
+      if (!significantChanges.hasSignificantChanges) {
+        console.log(`✅ Minor profile changes detected, no plan regeneration needed`)
+        return { 
+          status: 'success', 
+          message: 'Profile updated, no plan changes needed',
+          changesDetected: significantChanges.changes
+        }
+      }
+
+      console.log(`🚨 Significant changes detected: ${significantChanges.changes.join(', ')}`)
+      console.log(`🔄 Regenerating AI plans due to profile update...`)
+
+      const currentDate = new Date()
+      const currentMonth = currentDate.getMonth() + 1
+      const currentYear = currentDate.getFullYear()
+
+      // Deactivate existing plans before generating new ones
+      await this.deactivateExistingPlans(playerId, currentMonth, currentYear)
+
+      // Use the new player data for regeneration
+      // Provide defaults for required fields if they're missing
+      const dataForRegeneration = {
+        age: newData.age || 30, // Default age
+        weight: newData.weight || 75.0, // Default weight
+        character: newData.character,
+        objective: newData.objective,
+        trainingEnvironment: newData.trainingEnvironment,
+        dietaryRestrictions: newData.dietaryRestrictions,
+        forbiddenFoods: newData.forbiddenFoods
+      }
+      
+      const result = await this.activateAIForNewPlayerFallback(playerId, dataForRegeneration)
+
+      return {
+        status: 'success',
+        message: `Plans regenerated due to significant profile changes: ${significantChanges.changes.join(', ')}`,
+        changesDetected: significantChanges.changes,
+        plansRegenerated: true,
+        result
+      }
+
+    } catch (error) {
+      console.error('🚨 AI Service profile update failed:', error)
+      throw new Error(`AI profile update failed for player ${playerId}: ${error instanceof Error ? error.message : 'Unknown error'}`)
+    }
+  }
+
+  /**
+   * Detects if profile changes are significant enough to trigger plan regeneration
+   */
+  private detectSignificantChanges(previousData: any, newData: any): {
+    hasSignificantChanges: boolean
+    changes: string[]
+  } {
+    const changes: string[] = []
+
+    // Check character change (affects workout difficulty/style)
+    if (String(previousData.character) !== String(newData.character)) {
+      changes.push('character')
+    }
+
+    // Check objective change (affects workout and meal goals)
+    if (String(previousData.objective) !== String(newData.objective)) {
+      changes.push('objective')
+    }
+
+    // Check training environment change (affects available exercises)
+    if (String(previousData.trainingEnvironment) !== String(newData.trainingEnvironment)) {
+      changes.push('training environment')
+    }
+
+    // Check significant weight change (>5kg or >10lbs)
+    if (previousData.weight && newData.weight) {
+      const weightDiff = Math.abs(previousData.weight - newData.weight)
+      if (weightDiff >= 5) {
+        changes.push('significant weight change')
+      }
+    }
+
+    // Check dietary restrictions changes
+    const prevDietary = JSON.stringify(previousData.dietaryRestrictions?.sort() || [])
+    const newDietary = JSON.stringify(newData.dietaryRestrictions?.sort() || [])
+    if (prevDietary !== newDietary) {
+      changes.push('dietary restrictions')
+    }
+
+    // Check forbidden foods changes
+    const prevForbidden = JSON.stringify(previousData.forbiddenFoods?.sort() || [])
+    const newForbidden = JSON.stringify(newData.forbiddenFoods?.sort() || [])
+    if (prevForbidden !== newForbidden) {
+      changes.push('forbidden foods')
+    }
+
+    return {
+      hasSignificantChanges: changes.length > 0,
+      changes
+    }
+  }
+
+  /**
+   * Deactivate existing plans so new ones can be generated
+   */
+  private async deactivateExistingPlans(playerId: string, month: number, year: number) {
+    console.log(`🗑️ Deleting existing plans for ${month}/${year}...`)
+    
+    // Delete existing workout plans (to avoid unique constraint conflicts)
+    const workoutUpdate = await prisma.monthlyWorkoutPlan.deleteMany({
+      where: {
+        playerId,
+        month,
+        year
+      }
+    })
+
+    // Delete existing meal plans (to avoid unique constraint conflicts)
+    const mealUpdate = await prisma.monthlyMealPlan.deleteMany({
+      where: {
+        playerId,
+        month,
+        year
+      }
+    })
+
+    console.log(`✅ Deleted ${workoutUpdate.count} workout plans and ${mealUpdate.count} meal plans`)
   }
 
   /**
