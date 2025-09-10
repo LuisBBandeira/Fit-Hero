@@ -11,6 +11,7 @@ export class AIServiceManager {
   private readonly MAX_STARTUP_ATTEMPTS = 3
   private readonly HEALTH_CHECK_INTERVAL = 5000 // 5 seconds
   private readonly STARTUP_TIMEOUT = 30000 // 30 seconds
+  private readonly IS_PRODUCTION = process.env.NODE_ENV === 'production' || process.env.VERCEL === '1'
   private isStarting = false
   private healthCheckInterval: NodeJS.Timeout | null = null
 
@@ -145,6 +146,13 @@ export class AIServiceManager {
   private async spawnAIService(): Promise<boolean> {
     return new Promise((resolve) => {
       try {
+        // Skip AI service management in production/Vercel environment
+        if (this.IS_PRODUCTION) {
+          console.log('🌐 Skipping AI service spawn in production environment')
+          resolve(true) // Return true to indicate success (external service assumed)
+          return
+        }
+
         // Check if the AI service directory exists
         if (!existsSync(this.AI_SERVICE_PATH)) {
           console.error(`❌ AI service directory not found: ${this.AI_SERVICE_PATH}`)
@@ -238,6 +246,12 @@ export class AIServiceManager {
 
   private async killExistingService(): Promise<void> {
     try {
+      // Skip process killing in production
+      if (this.IS_PRODUCTION) {
+        console.log('🌐 Skipping process management in production environment')
+        return
+      }
+
       // Kill any process using the AI service port
       
       return new Promise((resolve) => {
@@ -289,6 +303,15 @@ export class AIServiceManager {
    */
   async getServiceLogs(lines: number = 50): Promise<string[]> {
     try {
+      // Return placeholder logs in production
+      if (this.IS_PRODUCTION) {
+        return [
+          'Production environment - external AI service',
+          'Log access not available in serverless deployment',
+          `Service URL: ${this.AI_SERVICE_URL}`
+        ]
+      }
+
       const logFile = path.join(this.AI_SERVICE_PATH, 'ai_service.log')
       
       if (!existsSync(logFile)) {
@@ -309,6 +332,13 @@ export class AIServiceManager {
    */
   async installDependencies(): Promise<boolean> {
     return new Promise((resolve) => {
+      // Skip dependency installation in production
+      if (this.IS_PRODUCTION) {
+        console.log('🌐 Skipping dependency installation in production environment')
+        resolve(true)
+        return
+      }
+
       console.log('📦 Installing AI service dependencies...')
       
       const pip = spawn('pip', ['install', '-r', 'requirements.txt'], {
