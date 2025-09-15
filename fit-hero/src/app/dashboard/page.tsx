@@ -641,7 +641,7 @@ export default function DashboardPage() {
 
                     {/* Ingredients */}
                     <div className="text-gray-400 text-xs">
-                      <span className="text-cyan-400">INGREDIENTS:</span> {meal.ingredients.join(', ')}
+                      <span className="text-cyan-400">INGREDIENTS:</span> {meal.ingredients?.join(', ') || 'No ingredients listed'}
                     </div>
                   </div>
                 ))}
