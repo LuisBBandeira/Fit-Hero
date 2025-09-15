@@ -85,7 +85,6 @@ const ALLOWED_EXERCISE_TYPES = [
 
 export class AIResponseFilter {
   /**
-   * Validates and sanitizes a workout plan from AI
    */
   static validateWorkoutPlan(aiResponse: Record<string, unknown>): {
     isValid: boolean;
@@ -95,7 +94,6 @@ export class AIResponseFilter {
     try {
       const errors: string[] = [];
 
-      // Basic structure validation
       const result = WorkoutPlanSchema.safeParse(aiResponse.workout_plan);
       if (!result.success) {
         return {

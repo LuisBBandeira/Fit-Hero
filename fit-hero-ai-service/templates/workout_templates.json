@@ -1,0 +1,261 @@
+{
+  "workout_template": {
+    "user_profiles": {
+      "age_groups": ["18-25", "26-35", "36-45", "46-60", "60+"],
+      "weight_ranges": ["50-70kg", "65-85kg", "80-100kg", "55-75kg", "any"],
+      "experience_levels": ["beginner", "intermediate", "advanced", "adaptive"],
+      "objectives": ["weight_loss", "muscle_building", "strength", "general_fitness", "endurance", "health_maintenance", "mobility", "balance"]
+    },
+    
+    "training_environments": {
+      "gym": {
+        "equipment_available": ["machines", "free_weights", "cardio_equipment", "functional_tools"],
+        "beginner_exercises": {
+          "warm_up": [
+            "5-10 min treadmill/bike (light intensity)",
+            "Dynamic arm circles (10 each direction)",
+            "Leg swings (10 each leg)",
+            "Hip circles (10 each direction)",
+            "Light stretching"
+          ],
+          "strength_training": [
+            "Leg press machine (2-3 sets, 12-15 reps)",
+            "Chest press machine (2-3 sets, 10-12 reps)",
+            "Lat pulldown (2-3 sets, 12-15 reps)",
+            "Shoulder press machine (2-3 sets, 10-12 reps)",
+            "Seated row (2-3 sets, 12-15 reps)",
+            "Leg curl machine (2-3 sets, 12-15 reps)",
+            "Assisted squats (2 sets, 10-15 reps)"
+          ],
+          "cardio": [
+            "Treadmill walking (15-20 min)",
+            "Elliptical (15-20 min, low resistance)",
+            "Stationary bike (15-20 min, easy pace)",
+            "Recumbent bike (15-20 min)"
+          ],
+          "cool_down": [
+            "5-10 min slow walk",
+            "Full body stretching (15 min)",
+            "Deep breathing exercises"
+          ]
+        },
+        "intermediate_exercises": {
+          "warm_up": [
+            "5-8 min moderate cardio",
+            "Dynamic stretching routine",
+            "Joint mobility work",
+            "Activation exercises (glute bridges, band pull-aparts)"
+          ],
+          "strength_training": [
+            "Barbell/dumbbell squats (3-4 sets, 8-12 reps)",
+            "Bench press/dumbbell press (3-4 sets, 8-12 reps)",
+            "Bent-over rows (3-4 sets, 8-12 reps)",
+            "Overhead press (3-4 sets, 8-10 reps)",
+            "Romanian deadlifts (3-4 sets, 10-12 reps)",
+            "Pull-ups/lat pulldowns (3-4 sets, 6-12 reps)",
+            "Dips/tricep extensions (3 sets, 8-12 reps)"
+          ],
+          "cardio": [
+            "HIIT intervals (15-25 min)",
+            "Rowing machine intervals",
+            "Battle ropes (10-15 min)",
+            "Circuit training"
+          ],
+          "cool_down": [
+            "10-15 min walk/light bike",
+            "Dynamic stretching",
+            "Foam rolling (10 min)"
+          ]
+        },
+        "advanced_exercises": {
+          "warm_up": [
+            "10-15 min progressive warm-up",
+            "Movement preparation for main lifts",
+            "Activation and mobility work"
+          ],
+          "strength_training": [
+            "Deadlifts (4-5 sets, 3-8 reps)",
+            "Squats (4-5 sets, 5-10 reps)",
+            "Bench press (4-5 sets, 5-10 reps)",
+            "Overhead press (4 sets, 6-10 reps)",
+            "Weighted pull-ups (3-4 sets, 5-10 reps)",
+            "Romanian deadlifts (3-4 sets, 8-12 reps)",
+            "Accessory exercises (3 sets, 8-15 reps)"
+          ],
+          "conditioning": [
+            "Heavy farmer's walks",
+            "Sled pushes/pulls",
+            "Kettlebell complexes",
+            "Sprint intervals"
+          ],
+          "cool_down": [
+            "15-20 min walk",
+            "Comprehensive stretching (20 min)",
+            "Foam rolling (15 min)"
+          ]
+        }
+      },
+      
+      "home": {
+        "equipment_options": ["bodyweight_only", "minimal_equipment", "full_home_gym"],
+        "bodyweight_exercises": {
+          "warm_up": [
+            "Marching in place (3-5 min)",
+            "Arm circles (10 each direction)",
+            "Leg swings (10 each leg)",
+            "Hip circles (10 each direction)",
+            "Light bodyweight movements"
+          ],
+          "strength_training": [
+            "Bodyweight squats (2-4 sets, 10-20 reps)",
+            "Push-ups (modified to advanced, 2-4 sets, 5-20 reps)",
+            "Lunges (2-4 sets, 8-15 each leg)",
+            "Plank (2-4 sets, 15-90 seconds)",
+            "Glute bridges (2-4 sets, 12-20 reps)",
+            "Wall sits (2-3 sets, 20-60 seconds)",
+            "Mountain climbers (2-4 sets, 20-40 reps)"
+          ],
+          "cardio": [
+            "Jumping jacks (30 sec on/30 sec off)",
+            "High knees (20-30 seconds)",
+            "Burpees (modified to full)",
+            "Step-ups on chair/step",
+            "Dancing/movement to music"
+          ],
+          "cool_down": [
+            "5-10 min gentle movement",
+            "Full body stretching",
+            "Deep breathing"
+          ]
+        },
+        "minimal_equipment": {
+          "equipment_needed": ["resistance_bands", "dumbbells", "yoga_mat"],
+          "exercises": [
+            "Resistance band squats/rows/chest press",
+            "Dumbbell exercises (all major movements)",
+            "Band-assisted stretching",
+            "Yoga/mobility flows"
+          ]
+        }
+      }
+    },
+
+    "workout_structure_by_level": {
+      "beginner": {
+        "weekly_sessions": 3,
+        "session_duration": "30-60 minutes",
+        "warm_up": "8-15 minutes",
+        "main_workout": "20-35 minutes",
+        "cool_down": "10-20 minutes",
+        "rest_between_sets": "60-90 seconds",
+        "progression": "Increase reps, then duration, then intensity"
+      },
+      "intermediate": {
+        "weekly_sessions": 4,
+        "session_duration": "45-75 minutes",
+        "warm_up": "10-15 minutes",
+        "main_workout": "30-50 minutes",
+        "cool_down": "10-15 minutes",
+        "rest_between_sets": "45-90 seconds",
+        "progression": "Increase weight, add variations, increase volume"
+      },
+      "advanced": {
+        "weekly_sessions": "4-6",
+        "session_duration": "60-90 minutes",
+        "warm_up": "12-20 minutes",
+        "main_workout": "40-60 minutes",
+        "cool_down": "15-20 minutes",
+        "rest_between_sets": "90-180 seconds (strength), 45-90 seconds (accessories)",
+        "progression": "Periodization, complex movements, sport-specific"
+      },
+      "adaptive": {
+        "weekly_sessions": "2-3",
+        "session_duration": "20-45 minutes",
+        "warm_up": "10-20 minutes",
+        "main_workout": "10-25 minutes",
+        "cool_down": "10-20 minutes",
+        "rest_between_sets": "As needed",
+        "progression": "Focus on consistency, gentle increases"
+      }
+    },
+
+    "age_specific_considerations": {
+      "18-25": {
+        "recovery": "Fast recovery, can handle higher frequency",
+        "focus": "Building habits, progressive overload",
+        "special_notes": "High energy, good joint stability"
+      },
+      "26-35": {
+        "recovery": "Good recovery, optimal performance years",
+        "focus": "Peak performance, strength building",
+        "special_notes": "Balance work and fitness goals"
+      },
+      "36-45": {
+        "recovery": "Moderate recovery, need more warm-up",
+        "focus": "Maintain strength, functional fitness",
+        "special_notes": "Joint care, stress management"
+      },
+      "46-60": {
+        "recovery": "Slower recovery, longer warm-ups needed",
+        "focus": "Health maintenance, flexibility, balance",
+        "special_notes": "Injury prevention, hormone changes"
+      },
+      "60+": {
+        "recovery": "Extended recovery time needed",
+        "focus": "Mobility, independence, safety",
+        "special_notes": "Fall prevention, gentle progression"
+      }
+    },
+
+    "objective_specific_modifications": {
+      "weight_loss": {
+        "cardio_emphasis": "Higher cardio volume, circuit training",
+        "strength_focus": "Higher reps, shorter rest periods",
+        "duration": "Longer sessions when possible"
+      },
+      "muscle_building": {
+        "strength_emphasis": "Progressive overload, compound movements",
+        "rep_ranges": "8-12 reps primarily, some 6-8 for strength",
+        "rest_periods": "Adequate rest for full recovery"
+      },
+      "strength": {
+        "focus": "Heavy compound movements, lower reps",
+        "rep_ranges": "1-6 reps for main lifts, 6-12 for accessories",
+        "rest_periods": "Longer rest periods (2-5 minutes)"
+      },
+      "general_fitness": {
+        "balance": "Mix of cardio, strength, flexibility",
+        "variety": "Rotate different types of activities",
+        "sustainability": "Focus on enjoyable activities"
+      },
+      "health_maintenance": {
+        "consistency": "Regular moderate activity",
+        "low_impact": "Joint-friendly exercises",
+        "functional": "Daily living movement patterns"
+      }
+    },
+
+    "monthly_progression_framework": {
+      "week_1": {
+        "focus": "Learning movements, establishing routine",
+        "intensity": "50-70% of target",
+        "volume": "Lower volume, focus on form"
+      },
+      "week_2": {
+        "focus": "Building consistency, slight progression",
+        "intensity": "60-80% of target",
+        "volume": "Gradual increase in duration/reps"
+      },
+      "week_3": {
+        "focus": "Pushing boundaries, adding challenge",
+        "intensity": "70-90% of target",
+        "volume": "Peak volume for the month"
+      },
+      "week_4": {
+        "focus": "Consolidation, prepare for next cycle",
+        "intensity": "60-80% of target",
+        "volume": "Slight reduction, focus on recovery"
+      }
+    }
+  }
+}

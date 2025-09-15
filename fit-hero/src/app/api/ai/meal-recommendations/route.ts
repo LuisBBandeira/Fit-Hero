@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth/next'
-import { authOptions } from '../../../../lib/auth'
-import { aiService } from '../../../../lib/ai-service'
-import { prisma } from '../../../../lib/prisma'
+import { authOptions } from '@/lib/auth'
+import { MonthlyPlanService } from '@/lib/monthly-plan-service'
+import { prisma } from '@/lib/prisma'
 
 export async function POST(request: NextRequest) {
   try {
@@ -29,22 +29,41 @@ export async function POST(request: NextRequest) {
 
     const requestData = await request.json()
     
-    // Prepare the request for the AI service
-    const mealRecommendationRequest = {
-      user_id: player.id,
-      dietary_preferences: requestData.dietary_preferences || [],
-      allergies: requestData.allergies,
-      calorie_target: requestData.calorie_target,
-      meal_prep_time: requestData.meal_prep_time,
-      budget_range: requestData.budget_range
+    // Use current month/year if not provided
+    const currentDate = new Date()
+    const month = requestData.month || currentDate.getMonth() + 1
+    const year = requestData.year || currentDate.getFullYear()
+    
+    // Prepare the request for the Monthly Plan Service
+    const monthlyMealRequest = {
+      month,
+      year,
+      dietaryPreferences: requestData.dietary_preferences || [],
+      allergies: requestData.allergies || [],
+      calorieTarget: requestData.calorie_target || 2000,
+      budgetRange: requestData.budget_range || 'medium',
+      mealPrepTime: requestData.meal_prep_time || 30
     }
 
-    // Call the AI service
-    const aiResponse = await aiService.recommendMeals(mealRecommendationRequest)
+    // Call the Monthly Plan Service
+    const monthlyPlanService = new MonthlyPlanService()
+    const monthlyPlan = await monthlyPlanService.generateMonthlyMealPlan(
+      player.id, 
+      monthlyMealRequest
+    )
 
     return NextResponse.json({
       success: true,
-      recommendations: aiResponse.recommendations
+      monthly_plan: {
+        id: monthlyPlan.id,
+        month: monthlyPlan.month,
+        year: monthlyPlan.year,
+        status: monthlyPlan.status,
+        filteredData: monthlyPlan.filteredData,
+        validatedData: monthlyPlan.validatedData
+      },
+      // For backward compatibility, extract meal recommendations if available
+      recommendations: monthlyPlan.filteredData || monthlyPlan.validatedData
     })
 
   } catch (error) {

@@ -33,8 +33,11 @@ class AIFilterService:
         try:
             logger.info("Starting workout plan filtering...")
             
+            # Extract the actual workout data from the response structure
+            workout_data = self._extract_workout_data(raw_response)
+            
             # Step 1: Validate basic structure
-            filtered_data = self._validate_basic_structure(raw_response, self.workout_required_fields)
+            filtered_data = self._validate_basic_structure(workout_data, self.workout_required_fields)
             
             # Step 2: Clean exercise data
             filtered_data = self._clean_exercise_data(filtered_data)
@@ -62,8 +65,11 @@ class AIFilterService:
         try:
             logger.info("Starting meal plan filtering...")
             
+            # Extract the actual meal data from the response structure
+            meal_data = self._extract_meal_data(raw_response)
+            
             # Step 1: Validate basic structure
-            filtered_data = self._validate_basic_structure(raw_response, self.meal_required_fields)
+            filtered_data = self._validate_basic_structure(meal_data, self.meal_required_fields)
             
             # Step 2: Clean meal data
             filtered_data = self._clean_meal_data(filtered_data)
@@ -84,6 +90,77 @@ class AIFilterService:
             logger.error(f"Error filtering meal plan: {e}")
             raise ValueError(f"Meal plan filtering failed: {e}")
     
+    def _extract_workout_data(self, raw_response: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Extract the actual workout data from the response structure.
+        Handles different response formats from the monthly plan service.
+        """
+        logger.info("Extracting workout data from response...")
+        
+        # Case 1: Response with success=True and workout_plan
+        if raw_response.get('success') and 'workout_plan' in raw_response:
+            logger.info("Found workout_plan in successful response")
+            return raw_response['workout_plan']
+        
+        # Case 2: Direct workout data (for backward compatibility)
+        elif 'daily_workouts' in raw_response:
+            logger.info("Found direct workout data structure")
+            return raw_response
+        
+        # Case 3: Response with success=False but raw workout data in raw_result
+        elif not raw_response.get('success', True) and 'raw_result' in raw_response:
+            logger.warning("Response marked as unsuccessful, attempting to parse raw_result...")
+            try:
+                import json
+                # Try to parse the raw_result as it might contain valid JSON
+                raw_result = raw_response['raw_result']
+                if isinstance(raw_result, str):
+                    parsed_data = json.loads(raw_result)
+                    logger.info("Successfully parsed workout data from raw_result")
+                    return parsed_data
+                else:
+                    logger.info("Raw result is already parsed")
+                    return raw_result
+            except json.JSONDecodeError as e:
+                logger.error(f"Failed to parse raw_result: {e}")
+                # Fall through to next case
+        
+        # Case 4: Response with success=False but workout_plan key exists
+        elif not raw_response.get('success', True) and 'workout_plan' in raw_response:
+            logger.warning("Response unsuccessful but found workout_plan")
+            return raw_response['workout_plan']
+        
+        # Case 5: Fallback - return the raw response and let validation handle it
+        logger.warning("Could not identify workout data structure, using raw response")
+        return raw_response
+    
+    def _extract_meal_data(self, raw_response: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Extract the actual meal data from the response structure.
+        Handles different response formats from the monthly plan service.
+        """
+        logger.info("Extracting meal data from response...")
+        
+        # Case 1: Response with success=True and meal_plan
+        if raw_response.get('success') and 'meal_plan' in raw_response:
+            logger.info("Found meal_plan in successful response")
+            return raw_response['meal_plan']
+        
+        # Case 2: Direct meal data (for backward compatibility)
+        elif 'daily_meals' in raw_response:
+            logger.info("Found direct meal data structure")
+            return raw_response
+        
+        # Case 3: Response with success=False but raw meal data
+        elif not raw_response.get('success', True):
+            logger.warning("Response marked as unsuccessful, checking for raw data...")
+            if 'meal_plan' in raw_response:
+                return raw_response['meal_plan']
+        
+        # Case 4: Fallback - return the raw response and let validation handle it
+        logger.warning("Could not identify meal data structure, using raw response")
+        return raw_response
+
     def _validate_basic_structure(self, data: Dict[str, Any], required_fields: List[str]) -> Dict[str, Any]:
         """Validate that all required top-level fields are present."""
         filtered_data = {}
