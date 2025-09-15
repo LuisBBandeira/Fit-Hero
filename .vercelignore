@@ -1,0 +1,19 @@
+# Ignore AI service directory - deployed separately on Render
+fit-hero-ai-service/
+
+# Ignore scripts that are for the AI service
+scripts/daily-plan-generator.sh
+
+# Ignore AI service logs
+ai_service.log
+service_debug.log
+
+# Ignore test scripts for AI service
+test-ai-activation.sh
+test-ai-trigger.sh
+
+# Ignore Docker files from root (if any)
+docker-compose.yml
+
+# Ignore development scripts
+start-dev.sh

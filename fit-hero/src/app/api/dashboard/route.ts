@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '../../../lib/auth'
 import { prisma } from '../../../lib/prisma'
+import { TodaysPlanService } from '../../../lib/todays-plan-service'
 
 export async function GET() {
   try {
@@ -120,93 +121,8 @@ export async function GET() {
       return acc;
     }, {});
 
-    // Default workout plan with completion status based on today's data
-    const workoutPlan = [
-      {
-        id: 'warmup',
-        name: 'WARM-UP',
-        exercises: [
-          { id: 'jumping-jacks', name: '50 Jumping Jacks', completed: completedExerciseIds.has('jumping-jacks'), xp: 50 },
-          { id: 'arm-circles', name: '20 Arm Circles (each direction)', completed: completedExerciseIds.has('arm-circles'), xp: 30 },
-          { id: 'leg-swings', name: '15 Leg Swings (each leg)', completed: completedExerciseIds.has('leg-swings'), xp: 40 }
-        ],
-        icon: '🔥'
-      },
-      {
-        id: 'strength',
-        name: 'STRENGTH TRAINING',
-        exercises: [
-          { id: 'push-ups', name: '3 sets of 15 Push-ups', completed: completedExerciseIds.has('push-ups'), xp: 100 },
-          { id: 'squats', name: '3 sets of 20 Squats', completed: completedExerciseIds.has('squats'), xp: 120 },
-          { id: 'plank', name: '3 sets of 30s Plank', completed: completedExerciseIds.has('plank'), xp: 80 },
-          { id: 'lunges', name: '3 sets of 12 Lunges (each leg)', completed: completedExerciseIds.has('lunges'), xp: 90 }
-        ],
-        icon: '💪'
-      },
-      {
-        id: 'cardio',
-        name: 'CARDIO BLAST',
-        exercises: [
-          { id: 'burpees', name: '3 sets of 10 Burpees', completed: completedExerciseIds.has('burpees'), xp: 150 },
-          { id: 'mountain-climbers', name: '3 sets of 20 Mountain Climbers', completed: completedExerciseIds.has('mountain-climbers'), xp: 110 },
-          { id: 'high-knees', name: '3 sets of 30s High Knees', completed: completedExerciseIds.has('high-knees'), xp: 80 }
-        ],
-        icon: '❤️'
-      },
-      {
-        id: 'cooldown',
-        name: 'COOL DOWN',
-        exercises: [
-          { id: 'stretching', name: '10 minutes Full Body Stretching', completed: completedExerciseIds.has('stretching'), xp: 60 },
-          { id: 'breathing', name: '5 minutes Deep Breathing', completed: completedExerciseIds.has('breathing'), xp: 40 }
-        ],
-        icon: '🧘‍♂️'
-      }
-    ];
-
-    // Default meal plan with actual completion status
-    const mealPlan = {
-      breakfast: {
-        name: 'PROTEIN POWER BOWL',
-        calories: 450,
-        protein: '35g',
-        carbs: '25g',
-        fat: '18g',
-        ingredients: ['Oatmeal', 'Greek Yogurt', 'Berries', 'Almonds', 'Honey'],
-        icon: '🥣',
-        completed: !!mealsByType.breakfast
-      },
-      lunch: {
-        name: 'WARRIOR SALAD',
-        calories: 520,
-        protein: '42g',
-        carbs: '30g',
-        fat: '22g',
-        ingredients: ['Grilled Chicken', 'Mixed Greens', 'Quinoa', 'Avocado', 'Olive Oil'],
-        icon: '🥗',
-        completed: !!mealsByType.lunch
-      },
-      snack: {
-        name: 'ENERGY BOOST',
-        calories: 200,
-        protein: '15g',
-        carbs: '18g',
-        fat: '8g',
-        ingredients: ['Apple', 'Almond Butter', 'Protein Powder'],
-        icon: '🍎',
-        completed: !!mealsByType.snack
-      },
-      dinner: {
-        name: 'HERO FEAST',
-        calories: 680,
-        protein: '48g',
-        carbs: '55g',
-        fat: '25g',
-        ingredients: ['Salmon', 'Sweet Potato', 'Broccoli', 'Brown Rice', 'Herbs'],
-        icon: '🍽️',
-        completed: !!mealsByType.dinner
-      }
-    };
+    // Get today's dynamic plans from AI-generated monthly plans
+    const todaysPlans = await TodaysPlanService.getTodaysPlans(session.user.id);
 
     const dashboardData = {
       player: {
@@ -221,8 +137,8 @@ export async function GET() {
           imagePath: characterImageMap[player.character] || '/orange_wariar%20/rotations/south.png'
         }
       },
-      workoutPlan,
-      mealPlan,
+      workoutPlan: todaysPlans.workoutPlan,
+      mealPlan: todaysPlans.mealPlan,
       stats: {
         currentWeight: latestWeight?.weight || player.weight,
         workoutStreak: progressStats?.currentWorkoutStreak || 0,

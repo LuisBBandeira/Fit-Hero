@@ -84,6 +84,10 @@ model Player {
   progressStats       ProgressStats?
   weightEntries       WeightEntry[]
   workoutSessions     WorkoutSession[]
+  dailyWorkoutPlans   DailyWorkoutPlan[]
+  dailyMealPlans      DailyMealPlan[]
+  monthlyWorkoutPlans MonthlyWorkoutPlan[]
+  monthlyMealPlans    MonthlyMealPlan[]
 
   @@map("players")
 }
@@ -257,4 +261,108 @@ enum AchievementRarity {
   LEGENDARY @map("legendary")
 
   @@map("achievement_rarity")
+}
+
+model DailyWorkoutPlan {
+  id               String   @id @default(cuid())
+  playerId         String   @map("player_id")
+  date             DateTime @db.Date
+  fitnessLevel     String   @map("fitness_level")
+  goals            String[] // Array of goals like ["strength", "weight_loss"]
+  availableTime    Int      @map("available_time") // in minutes
+  equipment        String[] // Array of equipment like ["dumbbells", "resistance_bands"]
+  workoutData      Json     @map("workout_data") // Store the full AI-generated workout plan
+  generatedBy      String   @default("ai") @map("generated_by") // "ai" or "mock"
+  monthlyPlanId    String?  @map("monthly_plan_id") // Reference to monthly plan
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+  player           Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  monthlyWorkoutPlan MonthlyWorkoutPlan? @relation(fields: [monthlyPlanId], references: [id])
+
+  @@unique([playerId, date])
+  @@map("daily_workout_plans")
+}
+
+model DailyMealPlan {
+  id                  String   @id @default(cuid())
+  playerId            String   @map("player_id")
+  date                DateTime @db.Date
+  dietaryPreferences  String[] @map("dietary_preferences") // Array like ["vegetarian", "low_carb"]
+  allergies           String[] // Array of allergies
+  calorieTarget       Int      @map("calorie_target")
+  mealData            Json     @map("meal_data") // Store the full AI-generated meal plan
+  generatedBy         String   @default("ai") @map("generated_by") // "ai" or "mock"
+  monthlyPlanId       String?  @map("monthly_plan_id") // Reference to monthly plan
+  createdAt           DateTime @default(now()) @map("created_at")
+  updatedAt           DateTime @updatedAt @map("updated_at")
+  player              Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  monthlyMealPlan     MonthlyMealPlan? @relation(fields: [monthlyPlanId], references: [id])
+
+  @@unique([playerId, date])
+  @@map("daily_meal_plans")
+}
+
+model MonthlyWorkoutPlan {
+  id                String   @id @default(cuid())
+  playerId          String   @map("player_id")
+  month             Int      // 1-12
+  year              Int      // 2024, 2025, etc.
+  fitnessLevel      String   @map("fitness_level")
+  goals             String[] // Array of goals
+  availableTime     Int      @map("available_time")
+  equipment         String[] // Array of equipment
+  injuries          String[] // Array of injuries/limitations
+  preferences       String[] // Array of preferred activities
+  rawAiResponse     Json     @map("raw_ai_response") // Unfiltered AI response
+  filteredData      Json     @map("filtered_data") // AI-service filtered data
+  validatedData     Json     @map("validated_data") // Fit-Hero validated data
+  status            MonthlyPlanStatus @default(PENDING)
+  errorLog          Json?    @map("error_log") // Validation errors if any
+  generatedAt       DateTime @default(now()) @map("generated_at")
+  lastPopulatedDate DateTime? @map("last_populated_date")
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
+  player            Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  dailyWorkoutPlans DailyWorkoutPlan[]
+
+  @@unique([playerId, month, year])
+  @@map("monthly_workout_plans")
+}
+
+model MonthlyMealPlan {
+  id                String   @id @default(cuid())
+  playerId          String   @map("player_id")
+  month             Int      // 1-12
+  year              Int      // 2024, 2025, etc.
+  dietaryPreferences String[] @map("dietary_preferences")
+  allergies         String[] // Array of allergies
+  calorieTarget     Int      @map("calorie_target")
+  budgetRange       String?  @map("budget_range")
+  mealPrepTime      Int?     @map("meal_prep_time")
+  rawAiResponse     Json     @map("raw_ai_response") // Unfiltered AI response
+  filteredData      Json     @map("filtered_data") // AI-service filtered data
+  validatedData     Json     @map("validated_data") // Fit-Hero validated data
+  status            MonthlyPlanStatus @default(PENDING)
+  errorLog          Json?    @map("error_log") // Validation errors if any
+  generatedAt       DateTime @default(now()) @map("generated_at")
+  lastPopulatedDate DateTime? @map("last_populated_date")
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
+  player            Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  dailyMealPlans    DailyMealPlan[]
+
+  @@unique([playerId, month, year])
+  @@map("monthly_meal_plans")
+}
+
+enum MonthlyPlanStatus {
+  PENDING     @map("pending")      // AI generation in progress
+  GENERATED   @map("generated")    // AI response received, filtering in progress
+  FILTERED    @map("filtered")     // AI service filtering complete
+  VALIDATED   @map("validated")    // Fit-Hero validation complete
+  ACTIVE      @map("active")       // Ready for daily population
+  ERROR       @map("error")        // Error occurred during processing
+  EXPIRED     @map("expired")      // Month has passed
+
+  @@map("monthly_plan_status")
 }
