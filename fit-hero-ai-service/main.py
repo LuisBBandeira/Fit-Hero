@@ -20,7 +20,11 @@ app = FastAPI(title="Fit Hero AI Service", version="1.0.0")
 # Configure CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # Next.js app
+    allow_origins=[
+        "http://localhost:3000",  # Local development
+        "https://*.vercel.app",   # Vercel deployments
+        "https://fit-hero.vercel.app",  # Your production domain (update this)
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -320,4 +324,5 @@ async def activate_ai_for_player(request: dict):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8001)  # Different port from main service
+    port = int(os.getenv("PORT", 8001))  # Use PORT env var or default to 8001
+    uvicorn.run(app, host="0.0.0.0", port=port)
