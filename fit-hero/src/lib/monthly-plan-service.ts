@@ -305,7 +305,7 @@ export class MonthlyPlanService {
    * Call AI service for plan generation
    */
   private async callAIService(type: 'workout' | 'meal', params: any) {
-    const AI_SERVICE_URL = process.env.AI_SERVICE_URL || 'http://localhost:8001'
+    const AI_SERVICE_URL = process.env.NEXT_PUBLIC_AI_SERVICE_URL || 'http://localhost:8001'
     const endpoint = type === 'workout' 
       ? '/generate-monthly-workout-plan'
       : '/generate-monthly-meal-plan'
