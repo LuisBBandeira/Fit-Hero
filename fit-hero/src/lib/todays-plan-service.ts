@@ -134,7 +134,8 @@ export class TodaysPlanService {
               console.log('TodaysPlanService: Found nested workout structure in:', key);
               console.log('TodaysPlanService: Nested keys:', Object.keys(value));
               // Try to extract from nested structure
-              todaysWorkout = value[`day_${dayOfMonth}`] || value[`${dayOfMonth}`] || value[`day${dayOfMonth}`];
+              const nestedData = value as Record<string, any>;
+              todaysWorkout = nestedData[`day_${dayOfMonth}`] || nestedData[`${dayOfMonth}`] || nestedData[`day${dayOfMonth}`];
               if (todaysWorkout) {
                 console.log('TodaysPlanService: Found workout in nested structure');
                 break;
@@ -153,7 +154,14 @@ export class TodaysPlanService {
           console.log('TodaysPlanService: Found workout for day', dayOfMonth, ':', todaysWorkout.name || 'Unnamed workout');
           
           // Transform the workout into the expected format
-          const exercises = [];          // Add warm-up exercises
+          const exercises: Array<{
+            id: string;
+            name: string;
+            completed: boolean;
+            xp: number;
+          }> = [];
+          
+          // Add warm-up exercises
           if (todaysWorkout.warm_up || todaysWorkout.warmup) {
             const warmUpExercises = todaysWorkout.warm_up || todaysWorkout.warmup;
             if (Array.isArray(warmUpExercises)) {
