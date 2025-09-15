@@ -5,7 +5,7 @@ import path from 'path'
 
 export class AIServiceManager {
   private aiServiceProcess: ChildProcess | null = null
-  private readonly AI_SERVICE_URL = process.env.AI_SERVICE_URL || 'http://localhost:8001'
+  private readonly AI_SERVICE_URL = process.env.NEXT_PUBLIC_AI_SERVICE_URL || 'http://localhost:8001'
   private readonly AI_SERVICE_PORT = 8001
   private readonly AI_SERVICE_PATH = path.join(process.cwd(), '../fit-hero-ai-service')
   private readonly MAX_STARTUP_ATTEMPTS = 3
