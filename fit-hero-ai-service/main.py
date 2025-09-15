@@ -23,7 +23,7 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:3000",  # Local development
         "https://*.vercel.app",   # Vercel deployments
-        "https://fit-hero.vercel.app",  # Your production domain (update this)
+        "https://fit-hero.vercel.app",  # Your production domain
     ],
     allow_credentials=True,
     allow_methods=["*"],
