@@ -90,7 +90,8 @@ export async function POST(request: NextRequest) {
         `
       } else {
         // User has password, send normal reset link
-        const resetUrl = `${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/reset-password?token=${resetToken}`
+        const baseUrl = (process.env.NEXTAUTH_URL || 'http://localhost:3000').replace(/\/+$/, '')
+        const resetUrl = `${baseUrl}/reset-password?token=${resetToken}`
         
         emailContent = `
         <div style="font-family: 'Courier New', monospace; background-color: #000; color: #00ff00; padding: 20px; border: 1px solid #00ff00;">
@@ -107,8 +108,8 @@ export async function POST(request: NextRequest) {
           
           <p><strong>⏰ This link will expire in 1 hour.</strong></p>
           
-          <p>If you can't click the link, copy and paste this URL into your browser:</p>
-          <code style="background-color: #333; padding: 5px; display: block; word-wrap: break-word;">${resetUrl}</code>
+          <p>If you can't click the button above, copy and paste this URL into your browser:</p>
+          <code style="background-color: #333; padding: 10px; display: block; word-wrap: break-word; color: #00ffff; border: 1px solid #666; border-radius: 4px; font-size: 12px; line-height: 1.4;">${resetUrl}</code>
           
           <div style="margin-top: 20px; padding: 10px; border: 1px solid #ffff00; background-color: #333;">
             <p style="color: #ffff00; margin: 0;"><strong>Security Notice:</strong> If you didn't request this password reset, please ignore this email. Your password won't be changed unless you click the link above.</p>
