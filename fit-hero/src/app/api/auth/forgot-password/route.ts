@@ -22,6 +22,15 @@ export async function POST(request: NextRequest) {
       }
     })
 
+    // Internal logging for debugging (not exposed to user)
+    if (!user) {
+      console.log('Password reset requested for non-existent email:', email)
+      console.log('No email will be sent - user does not exist in database')
+    } else {
+      console.log('Password reset requested for existing user:', email)
+      console.log('User ID:', user.id)
+    }
+
     // Always return success message for security (don't reveal if email exists)
     // But only actually send email if user exists
     if (user) {
@@ -127,6 +136,8 @@ export async function POST(request: NextRequest) {
         })
         // Don't expose email sending errors to user for security
       }
+    } else {
+      console.log('No email sent - user does not exist in database')
     }
 
     // Always return success message for security
