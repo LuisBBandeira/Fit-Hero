@@ -15,7 +15,7 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: 'Courier New', monospace;
+  font-family: var(--font-monofonto), 'Courier New', monospace;
   overflow-x: hidden;
 }
 
@@ -355,4 +355,314 @@ body {
 
 .filter-green {
   filter: hue-rotate(100deg) saturate(1.2) brightness(1.1);
+}
+
+/* Fallout-style Hologram Icon Styles */
+.fallout-icon-container {
+  position: relative;
+  display: inline-block;
+}
+
+.fallout-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 0 8px #00ff41) drop-shadow(0 0 16px #00ff41) drop-shadow(0 0 24px #00ff41);
+  transition: all 0.3s ease;
+}
+
+.fallout-svg {
+  z-index: 2;
+  filter: contrast(1.3) brightness(1.2) saturate(1.1);
+  transition: filter 0.3s ease;
+}
+
+.fallout-scanlines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 1px,
+    rgba(0, 255, 65, 0.08) 1px,
+    rgba(0, 255, 65, 0.08) 2px,
+    transparent 2px,
+    transparent 4px
+  );
+  pointer-events: none;
+  z-index: 3;
+  animation: scanline-flicker 4s infinite;
+}
+
+@keyframes scanline-flicker {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 0.3; }
+}
+
+.fallout-noise {
+  display: none;
+}
+
+.fallout-glow {
+  display: none;
+}
+
+.fallout-chromatic {
+  display: none;
+}
+
+/* Enhanced Fallout Animation Keyframes */
+@keyframes fallout-drift {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  25% { transform: translate(1px, -1px) rotate(0.5deg); }
+  50% { transform: translate(-1px, 1px) rotate(-0.5deg); }
+  75% { transform: translate(1px, 1px) rotate(0.3deg); }
+}
+
+@keyframes fallout-spark {
+  0%, 100% { 
+    filter: drop-shadow(0 0 5px #00ff41) brightness(1);
+    transform: scale(1);
+  }
+  10% { 
+    filter: drop-shadow(0 0 15px #00ff41) drop-shadow(0 0 25px #ffffff) brightness(1.5);
+    transform: scale(1.1);
+  }
+  20% { 
+    filter: drop-shadow(0 0 8px #00ff41) brightness(1.2);
+    transform: scale(1.02);
+  }
+  30% { 
+    filter: drop-shadow(0 0 20px #00ff41) drop-shadow(0 0 30px #ffffff) brightness(1.8);
+    transform: scale(1.15);
+  }
+  40% { 
+    filter: drop-shadow(0 0 5px #00ff41) brightness(1);
+    transform: scale(1);
+  }
+}
+
+/* Fallout Animation Keyframes */
+@keyframes fallout-glitch {
+  0%, 92%, 100% { 
+    transform: translate(0); 
+    filter: hue-rotate(0deg) saturate(1);
+  }
+  2% { 
+    transform: translate(3px, 2px); 
+    filter: hue-rotate(90deg) saturate(1.5);
+  }
+  4% { 
+    transform: translate(-2px, -2px); 
+    filter: hue-rotate(-90deg) saturate(1.5);
+  }
+  6% { 
+    transform: translate(-3px, 1px); 
+    filter: hue-rotate(180deg) saturate(2);
+  }
+  8% { 
+    transform: translate(2px, -1px); 
+    filter: hue-rotate(-180deg) saturate(1.5);
+  }
+  10% { 
+    transform: translate(-1px, 3px); 
+    filter: hue-rotate(45deg) saturate(1.8);
+  }
+  12% { 
+    transform: translate(-2px, -2px); 
+    filter: hue-rotate(-45deg) saturate(1.3);
+  }
+  14% { 
+    transform: translate(1px, 2px); 
+    filter: hue-rotate(270deg) saturate(1.6);
+  }
+  16% { 
+    transform: translate(-2px, -1px); 
+    filter: hue-rotate(-270deg) saturate(1.4);
+  }
+  18% { 
+    transform: translate(3px, -3px); 
+    filter: hue-rotate(135deg) saturate(2);
+  }
+  20% { 
+    transform: translate(-3px, 3px); 
+    filter: hue-rotate(-135deg) saturate(1.7);
+  }
+}
+
+@keyframes fallout-flicker {
+  0%, 96%, 100% { 
+    opacity: 1; 
+    filter: brightness(1) contrast(1);
+  }
+  1% { 
+    opacity: 0.7; 
+    filter: brightness(0.7) contrast(1.3);
+  }
+  2% { 
+    opacity: 0.4; 
+    filter: brightness(0.4) contrast(1.6);
+  }
+  3% { 
+    opacity: 0.8; 
+    filter: brightness(0.8) contrast(1.1);
+  }
+  4% { 
+    opacity: 1; 
+    filter: brightness(1.3) contrast(0.8);
+  }
+  6% { 
+    opacity: 0.6; 
+    filter: brightness(0.6) contrast(1.4);
+  }
+  7% { 
+    opacity: 1; 
+    filter: brightness(1.1) contrast(1);
+  }
+  10% { 
+    opacity: 0.3; 
+    filter: brightness(0.3) contrast(1.8);
+  }
+  11% { 
+    opacity: 0.9; 
+    filter: brightness(0.9) contrast(1.2);
+  }
+  12% { 
+    opacity: 1; 
+    filter: brightness(1.2) contrast(0.9);
+  }
+}
+
+@keyframes fallout-pulse {
+  0%, 100% { 
+    filter: drop-shadow(0 0 5px #00ff41) drop-shadow(0 0 10px #00ff41) brightness(1);
+    transform: scale(1);
+  }
+  50% { 
+    filter: drop-shadow(0 0 15px #00ff41) drop-shadow(0 0 25px #00ff41) brightness(1.3);
+    transform: scale(1.05);
+  }
+}
+
+@keyframes fallout-scan {
+  0% { 
+    background-position: -100% 0;
+    filter: brightness(1);
+  }
+  50% { 
+    background-position: 100% 0;
+    filter: brightness(1.5);
+  }
+  100% { 
+    background-position: 200% 0;
+    filter: brightness(1);
+  }
+}
+
+@keyframes fallout-corrupt {
+  0%, 90%, 100% { 
+    transform: scale(1) skew(0deg); 
+    filter: hue-rotate(0deg);
+  }
+  10% { 
+    transform: scale(1.02) skew(1deg); 
+    filter: hue-rotate(90deg);
+  }
+  20% { 
+    transform: scale(0.98) skew(-1deg); 
+    filter: hue-rotate(-90deg);
+  }
+  30% { 
+    transform: scale(1.01) skew(0.5deg); 
+    filter: hue-rotate(45deg);
+  }
+  40% { 
+    transform: scale(0.99) skew(-0.5deg); 
+    filter: hue-rotate(-45deg);
+  }
+}
+
+@keyframes fallout-static {
+  0%, 95%, 100% { opacity: 1; }
+  96% { opacity: 0.4; transform: translate(1px, -1px); }
+  97% { opacity: 0.7; transform: translate(-1px, 1px); }
+  98% { opacity: 0.5; transform: translate(1px, 1px); }
+  99% { opacity: 0.8; transform: translate(-1px, -1px); }
+}
+
+/* Animation Classes */
+.fallout-glitch {
+  animation: fallout-glitch 3s infinite linear;
+}
+
+.fallout-glitch:hover {
+  animation: fallout-glitch 0.5s infinite linear;
+}
+
+.fallout-flicker {
+  animation: fallout-flicker 4s infinite;
+}
+
+.fallout-pulse {
+  animation: fallout-pulse 2s infinite ease-in-out;
+}
+
+.fallout-scan {
+  background: linear-gradient(
+    90deg, 
+    transparent 0%, 
+    rgba(0, 255, 65, 0.2) 45%, 
+    rgba(0, 255, 65, 0.4) 50%, 
+    rgba(0, 255, 65, 0.2) 55%, 
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: fallout-scan 3s infinite;
+}
+
+.fallout-corrupt {
+  animation: fallout-corrupt 5s infinite;
+}
+
+.fallout-static {
+  animation: fallout-static 8s infinite;
+}
+
+.fallout-drift {
+  animation: fallout-drift 6s infinite ease-in-out;
+}
+
+.fallout-spark {
+  animation: fallout-spark 3s infinite;
+}
+
+/* Enhanced hover effects */
+.fallout-icon:hover .fallout-svg {
+  filter: contrast(1.6) brightness(1.5) saturate(1.3) drop-shadow(0 0 25px #00ff41);
+  transform: scale(1.05);
+}
+
+.fallout-icon:hover .fallout-glow {
+  background: radial-gradient(circle, rgba(0, 255, 65, 0.4) 0%, rgba(0, 255, 65, 0.1) 50%, transparent 70%);
+  transform: scale(1.1);
+}
+
+.fallout-icon:hover .fallout-scanlines {
+  animation: scanline-flicker 0.5s infinite, fallout-scan 2s infinite;
+}
+
+.fallout-icon:hover .fallout-chromatic {
+  opacity: 0.8;
+  animation: fallout-corrupt 1s infinite;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .fallout-icon {
+    filter: drop-shadow(0 0 5px #00ff41) drop-shadow(0 0 10px #00ff41);
+  }
 }

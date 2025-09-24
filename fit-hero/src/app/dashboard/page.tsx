@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import LogoutButton from '@/components/LogoutButton';
+import { FalloutIcon } from '@/components/FalloutIcon';
 
 interface DashboardData {
   player: {
@@ -288,7 +289,9 @@ export default function DashboardPage() {
     return (
       <div className="min-h-screen bg-black text-green-400 font-mono flex items-center justify-center">
         <div className="text-center">
-          <div className="text-6xl mb-4 animate-pulse">⚡</div>
+          <div className="mb-4 flex justify-center">
+            <FalloutIcon type="lightning" size="6xl" animate="static" />
+          </div>
           <div className="text-xl">Loading Dashboard...</div>
           <div className="text-sm text-gray-400 mt-2">
             {status === 'loading' ? 'Authenticating user...' : 'Fetching player data...'}
@@ -303,7 +306,9 @@ export default function DashboardPage() {
     return (
       <div className="min-h-screen bg-black text-green-400 font-mono flex items-center justify-center">
         <div className="text-center">
-          <div className="text-6xl mb-4 animate-pulse">🏃‍♂️</div>
+          <div className="mb-4 flex justify-center">
+            <FalloutIcon type="gear" size="6xl" animate="corrupt" />
+          </div>
           <div className="text-xl">No player data found</div>
           <div className="text-sm text-gray-400 mt-2">
             Please complete your character creation first
@@ -378,8 +383,9 @@ export default function DashboardPage() {
                 <div className="flex-1">
                   <div className="text-cyan-400 text-lg lg:text-2xl xl:text-3xl font-bold tracking-wide">{dashboardData.player.name}</div>
                   <div className="text-green-400 text-sm lg:text-base xl:text-lg font-medium">{dashboardData.player.character.name}</div>
-                  <div className="text-gray-400 text-xs lg:text-sm xl:text-base uppercase tracking-wider font-bold bg-gray-800/60 px-2 lg:px-3 py-1 rounded-md inline-block mt-1">
-                    ⚡ FITNESS WARRIOR
+                  <div className="text-gray-400 text-xs lg:text-sm xl:text-base uppercase tracking-wider font-bold bg-gray-800/60 px-2 lg:px-3 py-1 rounded-md inline-block mt-1 flex items-center">
+                    <FalloutIcon type="lightning" size="sm" animate="flicker" className="mr-1" />
+                    FITNESS WARRIOR
                   </div>
                 </div>
               </div>
@@ -482,7 +488,10 @@ export default function DashboardPage() {
           <div className={`transition-all duration-1000 delay-700 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
             <div className="border border-green-800 rounded-lg bg-gray-900 p-6">
               <div className="flex items-center justify-between mb-6">
-                <div className="text-green-400 text-xl font-bold">💪 TODAY&apos;S WORKOUT</div>
+                <div className="text-green-400 text-xl font-bold flex items-center">
+                  <FalloutIcon type="gear" size="lg" animate="spark" className="mr-2" />
+                  TODAY&apos;S WORKOUT
+                </div>
                 <div className="text-cyan-400 text-sm font-mono bg-black px-3 py-1 rounded border border-cyan-600">
                   {Math.round(getWorkoutProgress())}% COMPLETE
                 </div>
@@ -573,7 +582,10 @@ export default function DashboardPage() {
           <div className={`transition-all duration-1000 delay-900 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
             <div className="border border-green-800 rounded-lg bg-gray-900 p-6">
               <div className="flex items-center justify-between mb-6">
-                <div className="text-green-400 text-xl font-bold">🍽️ DAILY MEAL PLAN</div>
+                <div className="text-green-400 text-xl font-bold flex items-center">
+                  <FalloutIcon type="gear" size="lg" animate="scan" className="mr-2" />
+                  DAILY MEAL PLAN
+                </div>
                 <div className="text-cyan-400 text-sm font-mono bg-black px-3 py-1 rounded border border-cyan-600">
                   {getTotalDailyCalories()} KCAL
                 </div>
@@ -683,7 +695,9 @@ export default function DashboardPage() {
               className="border border-green-800 bg-gray-900 hover:bg-gray-800 hover:border-green-500 transition-all duration-300 p-6 rounded-lg hover-lift"
             >
               <div className="text-center">
-                <span className="text-3xl mb-3 block animate-pulse">📊</span>
+                <div className="mb-3 flex justify-center">
+                  <FalloutIcon type="target" size="3xl" animate="pulse" />
+                </div>
                 <div className="text-green-400 font-bold text-lg mb-2">VIEW_PROGRESS</div>
                 <div className="text-gray-400 text-xs font-mono">$ analyze --stats --charts</div>
               </div>
@@ -693,7 +707,9 @@ export default function DashboardPage() {
               className="border border-purple-800 bg-gray-900 hover:bg-gray-800 hover:border-purple-500 transition-all duration-300 p-6 rounded-lg hover-lift"
             >
               <div className="text-center">
-                <span className="text-3xl mb-3 block animate-bounce-slow">🏆</span>
+                <div className="mb-3 flex justify-center">
+                  <FalloutIcon type="star" size="3xl" animate="flicker" />
+                </div>
                 <div className="text-purple-400 font-bold text-lg mb-2">ACHIEVEMENTS</div>
                 <div className="text-gray-400 text-xs font-mono">$ unlock --trophies --badges</div>
               </div>
@@ -703,7 +719,9 @@ export default function DashboardPage() {
               className="border border-cyan-800 bg-gray-900 hover:bg-gray-800 hover:border-cyan-500 transition-all duration-300 p-6 rounded-lg hover-lift"
             >
               <div className="text-center">
-                <span className="text-3xl mb-3 block animate-rotate-slow">⚙️</span>
+                <div className="mb-3 flex justify-center">
+                  <FalloutIcon type="gear" size="3xl" animate="corrupt" />
+                </div>
                 <div className="text-cyan-400 font-bold text-lg mb-2">SETTINGS</div>
                 <div className="text-gray-400 text-xs font-mono">$ configure --profile --prefs</div>
               </div>
@@ -721,7 +739,9 @@ export default function DashboardPage() {
               className="flex-1 border border-green-800 bg-gray-800/90 hover:bg-gray-700 hover:border-green-500 transition-all duration-300 p-3 rounded-lg active:scale-95"
             >
               <div className="text-center">
-                <span className="text-lg block mb-1">📊</span>
+                <div className="mb-1 flex justify-center">
+                  <FalloutIcon type="target" size="lg" animate="pulse" />
+                </div>
                 <div className="text-green-400 font-bold text-xs">PROGRESS</div>
               </div>
             </button>
@@ -730,7 +750,9 @@ export default function DashboardPage() {
               className="flex-1 border border-purple-800 bg-gray-800/90 hover:bg-gray-700 hover:border-purple-500 transition-all duration-300 p-3 rounded-lg active:scale-95"
             >
               <div className="text-center">
-                <span className="text-lg block mb-1">🏆</span>
+                <div className="mb-1 flex justify-center">
+                  <FalloutIcon type="star" size="lg" animate="flicker" />
+                </div>
                 <div className="text-purple-400 font-bold text-xs">ACHIEVEMENTS</div>
               </div>
             </button>
@@ -739,7 +761,9 @@ export default function DashboardPage() {
               className="flex-1 border border-cyan-800 bg-gray-800/90 hover:bg-gray-700 hover:border-cyan-500 transition-all duration-300 p-3 rounded-lg active:scale-95"
             >
               <div className="text-center">
-                <span className="text-lg block mb-1">⚙️</span>
+                <div className="mb-1 flex justify-center">
+                  <FalloutIcon type="gear" size="lg" animate="corrupt" />
+                </div>
                 <div className="text-cyan-400 font-bold text-xs">SETTINGS</div>
               </div>
             </button>

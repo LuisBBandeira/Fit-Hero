@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { FalloutIcon } from "@/components/FalloutIcon";
 
 export default function Home() {
   const [currentLevel] = useState(42);
@@ -101,12 +102,12 @@ export default function Home() {
 
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mb-8 sm:mb-12 px-4">
             <Link href="/signup" className="btn btn-primary text-sm sm:text-lg px-4 sm:px-8 py-3 sm:py-4 hover-lift animate-glow">
-              <span className="animate-rotate-slow inline-block">⚡</span>
+              <FalloutIcon type="lightning" size="md" animate="glitch" className="inline-block mr-2" />
               <span className="hidden sm:inline">$ git clone fitness</span>
               <span className="sm:hidden">Get Started</span>
             </Link>
             <Link href="/login" className="btn btn-success text-sm sm:text-lg px-4 sm:px-8 py-3 sm:py-4 hover-lift">
-              <span className="animate-bounce-slow inline-block">🚀</span>
+              <FalloutIcon type="rocket" size="md" animate="pulse" className="inline-block mr-2" />
               <span className="hidden sm:inline">$ ./start_journey.sh</span>
               <span className="sm:hidden">Start Journey</span>
             </Link>
@@ -134,7 +135,9 @@ export default function Home() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8 mb-8 sm:mb-16">
           {/* Step 1 */}
           <div className={`border border-green-800 rounded-lg bg-gray-900 p-4 sm:p-6 text-center card-hover hover-lift transition-all duration-700 delay-700 ${isVisible ? 'animate-slide-in-bottom' : 'opacity-0'}`}>
-            <div className="text-3xl sm:text-4xl mb-3 sm:mb-4 animate-bounce-slow">🎮</div>
+            <div className="mb-3 sm:mb-4 flex justify-center">
+              <FalloutIcon type="controller" size="3xl" animate="drift" />
+            </div>
             <div className="text-green-400 text-lg sm:text-xl font-bold mb-2">01. CREATE CHARACTER</div>
             <div className="text-gray-300 mb-3 sm:mb-4 text-sm sm:text-base">
               Sign up and set your fitness goals. Choose your difficulty level and customize your avatar with starting stats.
@@ -146,7 +149,9 @@ export default function Home() {
 
           {/* Step 2 */}
           <div className={`border border-yellow-800 rounded-lg bg-gray-900 p-4 sm:p-6 text-center card-hover hover-lift transition-all duration-700 delay-800 ${isVisible ? 'animate-slide-in-bottom' : 'opacity-0'}`}>
-            <div className="text-3xl sm:text-4xl mb-3 sm:mb-4 animate-rotate-slow">⚔️</div>
+            <div className="mb-3 sm:mb-4 flex justify-center">
+              <FalloutIcon type="sword" size="3xl" animate="corrupt" />
+            </div>
             <div className="text-yellow-400 text-lg sm:text-xl font-bold mb-2">02. COMPLETE QUESTS</div>
             <div className="text-gray-300 mb-3 sm:mb-4 text-sm sm:text-base">
               Turn workouts into epic adventures. Gain XP, unlock achievements, and level up your real-life stats.
@@ -158,7 +163,9 @@ export default function Home() {
 
           {/* Step 3 */}
           <div className={`border border-red-800 rounded-lg bg-gray-900 p-4 sm:p-6 text-center card-hover hover-lift transition-all duration-700 delay-900 sm:col-span-2 lg:col-span-1 ${isVisible ? 'animate-slide-in-bottom' : 'opacity-0'}`}>
-            <div className="text-3xl sm:text-4xl mb-3 sm:mb-4 animate-pulse">🧪</div>
+            <div className="mb-3 sm:mb-4 flex justify-center">
+              <FalloutIcon type="tube" size="3xl" animate="spark" />
+            </div>
             <div className="text-red-400 text-lg sm:text-xl font-bold mb-2">03. OPTIMIZE STATS</div>
             <div className="text-gray-300 mb-3 sm:mb-4 text-sm sm:text-base">
               AI-powered nutrition planning helps you maximize your character&apos;s performance and recovery.
@@ -195,7 +202,10 @@ export default function Home() {
               <div className="text-gray-400 text-xs sm:text-sm">Currently leveling up</div>
             </div>
             <div className="hover-glow p-3 sm:p-4 rounded sm:col-span-1 col-span-1">
-              <div className="text-3xl sm:text-4xl font-bold text-yellow-500 mb-1 sm:mb-2 animate-bounce-slow">4.9★</div>
+              <div className="text-3xl sm:text-4xl font-bold text-yellow-500 mb-1 sm:mb-2 flex justify-center">
+                <FalloutIcon type="star" size="xl" animate="pulse" />
+                <span className="ml-2">4.9</span>
+              </div>
               <div className="text-yellow-400 text-sm sm:text-lg">Hero Rating</div>
               <div className="text-gray-400 text-xs sm:text-sm">App store reviews</div>
             </div>
@@ -210,11 +220,11 @@ export default function Home() {
           </div>
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
             <Link href="/signup" className="btn btn-success text-sm sm:text-lg px-6 sm:px-8 py-3 sm:py-4 hover-lift animate-glow">
-              <span className="animate-rotate-slow inline-block">🎯</span>
+              <FalloutIcon type="target" size="md" animate="scan" className="inline-block mr-2" />
               START JOURNEY
             </Link>
             <Link href="/login" className="btn btn-primary text-sm sm:text-lg px-6 sm:px-8 py-3 sm:py-4 hover-lift">
-              <span className="animate-bounce inline-block">🔐</span>
+              <FalloutIcon type="lock" size="md" animate="glitch" className="inline-block mr-2" />
               LOGIN
             </Link>
           </div>

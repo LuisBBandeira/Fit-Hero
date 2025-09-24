@@ -14,7 +14,7 @@ const config: Config = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       fontFamily: {
-        'mono': ['Courier New', 'monospace'],
+        'mono': ['var(--font-monofonto)', 'Courier New', 'monospace'],
       },
       animation: {
         'terminal-blink': 'terminal-blink 1s infinite',

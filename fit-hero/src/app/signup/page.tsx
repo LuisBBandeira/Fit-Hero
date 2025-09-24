@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { FalloutIcon } from '@/components/FalloutIcon';
 
 export default function SignupPage() {
   const [isVisible, setIsVisible] = useState(false);
@@ -174,8 +175,9 @@ export default function SignupPage() {
             {/* Terminal Body */}
             <div className="p-6">
               <div className="mb-6">
-                <div className="text-green-400 text-xl font-bold mb-2 animate-pulse">
-                  ⚡ CREATE NEW HERO
+                <div className="text-green-400 text-xl font-bold mb-2 animate-pulse flex items-center">
+                  <FalloutIcon type="lightning" size="lg" animate="glitch" className="mr-2" />
+                  CREATE NEW HERO
                 </div>
                 <div className="text-gray-300 text-sm mb-4">
                   Initialize your fitness character profile
@@ -312,12 +314,12 @@ export default function SignupPage() {
                 >
                   {isLoading ? (
                     <span className="flex items-center justify-center">
-                      <span className="animate-spin mr-2">⚡</span>
+                      <FalloutIcon type="lightning" size="md" animate="static" className="mr-2" />
                       CREATING_HERO...
                     </span>
                   ) : (
                     <span className="flex items-center justify-center">
-                      <span className="mr-2">🎮</span>
+                      <FalloutIcon type="controller" size="md" animate="pulse" className="mr-2" />
                       INITIALIZE_HERO
                     </span>
                   )}

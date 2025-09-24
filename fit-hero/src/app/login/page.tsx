@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { signIn, getSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { FalloutIcon } from '@/components/FalloutIcon';
 
 export default function LoginPage() {
   const [isVisible, setIsVisible] = useState(false);
@@ -131,8 +132,9 @@ export default function LoginPage() {
             {/* Terminal Body */}
             <div className="p-6">
               <div className="mb-6">
-                <div className="text-green-400 text-xl font-bold mb-2 animate-pulse">
-                  🔐 USER AUTHENTICATION
+                <div className="text-green-400 text-xl font-bold mb-2 animate-pulse flex items-center">
+                  <FalloutIcon type="lock" size="lg" animate="glitch" className="mr-2" />
+                  USER AUTHENTICATION
                 </div>
                 <div className="text-gray-300 text-sm mb-4">
                   Enter your credentials to access the fitness matrix
@@ -176,13 +178,14 @@ export default function LoginPage() {
                 {error && (
                   <div className="bg-red-900/30 border border-red-600 text-red-400 px-4 py-3 rounded mb-4">
                     <div className="flex items-start">
-                      <span className="mr-2 mt-0.5">⚠️</span>
+                      <FalloutIcon type="target" size="sm" animate="static" className="mr-2 mt-0.5 text-red-400" />
                       <div>
                         <div className="font-semibold text-red-300 mb-1">Authentication Error</div>
                         <div className="text-sm">{error}</div>
                         {(error.includes('Google') || error.includes('GitHub')) && (
-                          <div className="mt-2 text-xs text-red-300">
-                            💡 Use the social login buttons below instead
+                          <div className="mt-2 text-xs text-red-300 flex items-center">
+                            <FalloutIcon type="gear" size="sm" animate="flicker" className="mr-1" />
+                            Use the social login buttons below instead
                           </div>
                         )}
                       </div>
@@ -197,12 +200,12 @@ export default function LoginPage() {
                 >
                   {isLoading ? (
                     <span className="flex items-center justify-center">
-                      <span className="animate-spin mr-2">⚡</span>
+                      <FalloutIcon type="lightning" size="md" animate="static" className="mr-2" />
                       AUTHENTICATING...
                     </span>
                   ) : (
                     <span className="flex items-center justify-center">
-                      <span className="mr-2">🚀</span>
+                      <FalloutIcon type="rocket" size="md" animate="pulse" className="mr-2" />
                       EXECUTE_LOGIN
                     </span>
                   )}
