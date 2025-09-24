@@ -17,6 +17,8 @@ export default withAuth(
           '/',                    // Root page
           '/login',              // Login page
           '/signup',             // Signup page
+          '/forgot-password',    // Forgot password page
+          '/reset-password',     // Reset password page
           '/auth/callback',      // Auth callback page for smart redirection
           // Note: /character-creation requires authentication (accessed after login)
           // Note: /dashboard, /settings, /achievements, /view-progress require authentication
@@ -27,6 +29,9 @@ export default withAuth(
           '/api/auth',           // NextAuth API routes (for login/signup functionality)
           '/api/auth/signin',    // Custom signin API
           '/api/auth/signup',    // Custom signup API
+          '/api/auth/forgot-password',     // Forgot password API
+          '/api/auth/reset-password',      // Reset password API
+          '/api/auth/validate-reset-token', // Validate reset token API
         ]
 
         // Semi-protected API routes (require authentication but are used in auth flow)

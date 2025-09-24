@@ -40,6 +40,16 @@ body {
   100% { transform: translateY(0); opacity: 1; }
 }
 
+@keyframes slideInFromTop {
+  0% { transform: translateY(-50px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
 @keyframes fadeInUp {
   0% { transform: translateY(30px); opacity: 0; }
   100% { transform: translateY(0); opacity: 1; }
@@ -98,6 +108,14 @@ body {
 
 .animate-slide-in-bottom {
   animation: slideInFromBottom 0.6s ease-out;
+}
+
+.animate-slide-in-down {
+  animation: slideInFromTop 0.6s ease-out;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out;
 }
 
 .animate-fade-in-up {
