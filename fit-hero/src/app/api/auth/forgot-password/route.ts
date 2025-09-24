@@ -121,9 +121,9 @@ export async function POST(request: NextRequest) {
       } catch (emailError) {
         console.error('Failed to send reset email:', emailError)
         console.error('Email error details:', {
-          message: emailError.message,
-          code: emailError.code,
-          command: emailError.command
+          message: emailError instanceof Error ? emailError.message : 'Unknown error',
+          code: (emailError as any)?.code || 'UNKNOWN',
+          command: (emailError as any)?.command || 'UNKNOWN'
         })
         // Don't expose email sending errors to user for security
       }
