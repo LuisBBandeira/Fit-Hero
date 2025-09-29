@@ -27,31 +27,26 @@ jobs:
           python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Create and start virtual environment
+        working-directory: ./fit-hero-ai-service
         run: |
-          cd fit-hero-ai-service
           python -m venv venv
           source venv/bin/activate
-          pip install --upgrade pip
-          
+      
       - name: Install dependencies
+        working-directory: ./fit-hero-ai-service
         run: |
-          cd fit-hero-ai-service
           source venv/bin/activate
           pip install -r requirements.txt
-          
+        
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
-      
-      - name: Zip artifact for deployment
-        run: |
-          cd fit-hero-ai-service
-          zip -r ../fit-hero-ai-service.zip . -x venv/\*
 
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v4
         with:
           name: python-app
           path: |
-            fit-hero-ai-service.zip
+            fit-hero-ai-service/
+            !fit-hero-ai-service/venv/
 
   deploy:
     permissions:
@@ -67,9 +62,6 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: python-app
-          
-      - name: Unzip artifact for deployment
-        run: unzip fit-hero-ai-service.zip
 
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
