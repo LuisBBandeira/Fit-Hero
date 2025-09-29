@@ -7,7 +7,7 @@ name: Build and deploy Python app to Azure Web App - fit-hero-ai-service-uk
 on:
   push:
     branches:
-      - feat/ai-service-migrate-to-azure
+      - main
   workflow_dispatch:
 
 jobs:
