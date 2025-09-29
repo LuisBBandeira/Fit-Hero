@@ -2,6 +2,9 @@ name: Deploy Fit Hero AI Service to Azure App Service
 
 on:
   push:
+    branches: [ main, feat/ai-service-migrate-to-azure ]
+    paths: [ 'fit-hero-ai-service/**' ]
+  pull_request:
     branches: [ main ]
     paths: [ 'fit-hero-ai-service/**' ]
   workflow_dispatch:
@@ -27,26 +30,31 @@ jobs:
           python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Create and start virtual environment
-        working-directory: ./fit-hero-ai-service
+        working-directory: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
         run: |
           python -m venv venv
           source venv/bin/activate
-      
+          pip install --upgrade pip
+          
       - name: Install dependencies
-        working-directory: ./fit-hero-ai-service
+        working-directory: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
         run: |
           source venv/bin/activate
           pip install -r requirements.txt
-        
+          
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
+      
+      - name: Zip artifact for deployment
+        working-directory: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+        run: |
+          zip -r ../fit-hero-ai-service.zip . -x venv/\*
 
       - name: Upload artifact for deployment jobs
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: python-app
           path: |
-            fit-hero-ai-service/
-            !fit-hero-ai-service/venv/
+            fit-hero-ai-service.zip
 
   deploy:
     permissions:
@@ -59,14 +67,17 @@ jobs:
 
     steps:
       - name: Download artifact from build job
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v3
         with:
           name: python-app
+          
+      - name: Unzip artifact for deployment
+        run: unzip fit-hero-ai-service.zip
 
       - name: 'Deploy to Azure Web App'
-        uses: azure/webapps-deploy@v3
+        uses: azure/webapps-deploy@v2
         id: deploy-to-webapp
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
-          package: './fit-hero-ai-service'
+          package: '.'
