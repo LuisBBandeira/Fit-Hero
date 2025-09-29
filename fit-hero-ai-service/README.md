@@ -57,3 +57,4 @@ This service uses CrewAI agents powered by **Google Gemini 2.0 Flash**:
 - **Cost-effective** for high-volume applications
 - **Multimodal capabilities** (ready for future image analysis features)
 # Deployment test - Mon 29 Sep 2025 03:51:38 PM WEST
+# Deployment test with publish profile - Mon 29 Sep 2025 04:04:29 PM WEST
