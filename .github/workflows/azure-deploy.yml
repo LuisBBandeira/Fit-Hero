@@ -1,12 +1,13 @@
 name: Deploy Fit Hero AI Service to Azure App Service
 
 on:
-  push:
-    branches: [ main, feat/ai-service-migrate-to-azure ]
-    paths: [ 'fit-hero-ai-service/**' ]
-  pull_request:
-    branches: [ main ]
-    paths: [ 'fit-hero-ai-service/**' ]
+  # Disabled - using main_fit-hero-ai-service-uk.yml instead
+  # push:
+  #   branches: [ main, feat/ai-service-migrate-to-azure ]
+  #   paths: [ 'fit-hero-ai-service/**' ]
+  # pull_request:
+  #   branches: [ main ]
+  #   paths: [ 'fit-hero-ai-service/**' ]
   workflow_dispatch:
 
 env:
