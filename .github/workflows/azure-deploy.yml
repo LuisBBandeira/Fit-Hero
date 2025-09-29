@@ -30,22 +30,23 @@ jobs:
           python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Create and start virtual environment
+        working-directory: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
         run: |
-          cd ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
           python -m venv venv
           source venv/bin/activate
+          pip install --upgrade pip
           
       - name: Install dependencies
+        working-directory: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
         run: |
-          cd ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
           source venv/bin/activate
           pip install -r requirements.txt
           
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
       
       - name: Zip artifact for deployment
+        working-directory: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
         run: |
-          cd ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
           zip -r ../fit-hero-ai-service.zip . -x venv/\*
 
       - name: Upload artifact for deployment jobs
