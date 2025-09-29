@@ -57,3 +57,7 @@ logs/
 # Temporary files
 *.tmp
 *.temp
+
+# Azure publish profiles
+*.PublishSettings
+publish-profile*.xml

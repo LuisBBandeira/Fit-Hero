@@ -1,0 +1,29 @@
+# Azure App Service deployment configuration for Fit Hero AI Service
+version: 1.0
+
+# Azure App Service configuration
+services:
+  - name: fit-hero-ai-service
+    type: web
+    runtime: python:3.11
+    build:
+      commands:
+        - pip install --upgrade pip
+        - pip install -r requirements.txt
+    run:
+      command: uvicorn main:app --host 0.0.0.0 --port 8000
+    environment_variables:
+      - name: PORT
+        value: 8000
+      - name: PYTHON_VERSION
+        value: 3.11
+      - name: PYTHONPATH
+        value: /home/site/wwwroot
+    scaling:
+      min_instances: 1
+      max_instances: 3
+    health_check:
+      path: /health
+      port: 8000
+      timeout: 30
+      interval: 60
