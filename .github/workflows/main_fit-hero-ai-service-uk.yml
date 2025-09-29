@@ -5,10 +5,9 @@
 name: Build and deploy Python app to Azure Web App - fit-hero-ai-service-uk
 
 on:
-  # Disabled - using azure-deploy.yml with publish profile instead
-  # push:
-  #   branches:
-  #     - main
+  push:
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
@@ -26,16 +25,12 @@ jobs:
           python-version: '3.11'
 
       - name: Create and start virtual environment
-        working-directory: ./fit-hero-ai-service
         run: |
           python -m venv venv
           source venv/bin/activate
       
       - name: Install dependencies
-        working-directory: ./fit-hero-ai-service
-        run: |
-          source venv/bin/activate
-          pip install -r requirements.txt
+        run: pip install -r requirements.txt
         
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
 
@@ -44,33 +39,23 @@ jobs:
         with:
           name: python-app
           path: |
-            fit-hero-ai-service/
-            !fit-hero-ai-service/venv/
+            .
+            !venv/
 
   deploy:
     runs-on: ubuntu-latest
     needs: build
-    permissions:
-      id-token: write #This is required for requesting the JWT
-      contents: read #This is required for actions/checkout
-
+    
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
           name: python-app
       
-      - name: Login to Azure
-        uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_D959F996E3A24E95A9085F4F1CE4D189 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_B336DC99361A4C898D9D269C41F61177 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_1AEFCE9B54364C0E983DE9582EA81ADA }}
-
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
         id: deploy-to-webapp
         with:
           app-name: 'fit-hero-ai-service-uk'
           slot-name: 'Production'
-          
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_9D2B7A4AF26B498389DFC692359D66D3 }}
