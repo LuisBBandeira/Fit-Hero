@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_WEBAPP_NAME: fit-hero-ai-service    # IMPORTANT: Change this to match your Azure app name
+  AZURE_WEBAPP_NAME: fit-hero-ai-service-eu    # EU region deployment
   AZURE_WEBAPP_PACKAGE_PATH: './fit-hero-ai-service'  # Set this to the path to your web app project
   PYTHON_VERSION: '3.11'                   # Set this to the Python version to use
 
