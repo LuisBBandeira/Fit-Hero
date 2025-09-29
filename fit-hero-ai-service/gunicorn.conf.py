@@ -9,7 +9,7 @@ backlog = 2048
 workers = 1
 worker_class = "uvicorn.workers.UvicornWorker"
 worker_connections = 1000
-timeout = 30
+timeout = 300  # Increased to 5 minutes for AI operations
 keepalive = 30
 max_requests = 1000
 max_requests_jitter = 50
@@ -33,3 +33,7 @@ pidfile = '/tmp/gunicorn.pid'
 user = None
 group = None
 tmp_upload_dir = None
+
+# Additional timeout configurations for AI operations
+graceful_timeout = 300  # 5 minutes for graceful shutdown
+worker_tmp_dir = '/dev/shm'  # Use shared memory for better performance
