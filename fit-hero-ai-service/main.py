@@ -11,20 +11,28 @@ import calendar
 from services.monthly_plan_service import MonthlyPlanService
 from services.ai_filter_service import AIFilterService
 from services.webhook_service import webhook_service
+from config import get_base_url, AZURE_WEBSITE_SITE_NAME
 
 # Load environment variables
 load_dotenv()
 
 app = FastAPI(title="Fit Hero AI Service", version="1.0.0")
 
-# Configure CORS
+# Configure CORS with Azure support
+allowed_origins = [
+    "http://localhost:3000",  # Local development
+    "https://*.vercel.app",   # Vercel deployments
+    "https://fit-hero.vercel.app",  # Your production domain
+]
+
+# Add Azure App Service URL if running on Azure
+if AZURE_WEBSITE_SITE_NAME:
+    azure_url = f"https://{AZURE_WEBSITE_SITE_NAME}.azurewebsites.net"
+    allowed_origins.append(azure_url)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000",  # Local development
-        "https://*.vercel.app",   # Vercel deployments
-        "https://fit-hero.vercel.app",  # Your production domain
-    ],
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
