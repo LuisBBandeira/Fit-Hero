@@ -8,8 +8,13 @@ export PYTHONPATH="/home/site/wwwroot"
 # Change to the application directory
 cd /home/site/wwwroot
 
-# Activate the virtual environment created by Azure
-source antenv/bin/activate
+#!/bin/bash
 
-# Start the FastAPI application with gunicorn using uvicorn workers
-exec gunicorn main:app -w 1 -k uvicorn.workers.UvicornWorker --bind 0.0.0.0:$PORT
+# Activate the Azure virtual environment
+source /tmp/*/antenv/bin/activate
+
+# Change to the application directory
+cd /home/site/wwwroot
+
+# Start the application using gunicorn with our configuration
+gunicorn -c gunicorn.conf.py main:app
