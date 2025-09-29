@@ -1,13 +1,9 @@
 name: Deploy Fit Hero AI Service to Azure App Service
 
 on:
-  # Disabled - using main_fit-hero-ai-service-uk.yml instead
-  # push:
-  #   branches: [ main, feat/ai-service-migrate-to-azure ]
-  #   paths: [ 'fit-hero-ai-service/**' ]
-  # pull_request:
-  #   branches: [ main ]
-  #   paths: [ 'fit-hero-ai-service/**' ]
+  push:
+    branches: [ main ]
+    paths: [ 'fit-hero-ai-service/**' ]
   workflow_dispatch:
 
 env:
@@ -76,9 +72,9 @@ jobs:
         run: unzip fit-hero-ai-service.zip
 
       - name: 'Deploy to Azure Web App'
-        uses: azure/webapps-deploy@v2
+        uses: azure/webapps-deploy@v3
         id: deploy-to-webapp
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
-          package: '.'
+          package: './fit-hero-ai-service'

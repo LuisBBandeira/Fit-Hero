@@ -5,9 +5,10 @@
 name: Build and deploy Python app to Azure Web App - fit-hero-ai-service-uk
 
 on:
-  push:
-    branches:
-      - main
+  # Disabled - using azure-deploy.yml with publish profile instead
+  # push:
+  #   branches:
+  #     - main
   workflow_dispatch:
 
 jobs:
