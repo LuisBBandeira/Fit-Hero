@@ -1,5 +1,6 @@
 import { MonthlyPlanService } from './monthly-plan-service'
 import { prisma } from '@/lib/prisma'
+import { withDbTransaction } from './db-utils'
 
 export class AIActivationService {
   private monthlyPlanService: MonthlyPlanService
@@ -259,22 +260,27 @@ export class AIActivationService {
   private async deactivateExistingPlans(playerId: string, month: number, year: number) {
     console.log(`🗑️ Deleting existing plans for ${month}/${year}...`)
     
-    // Delete existing workout plans (to avoid unique constraint conflicts)
-    const workoutUpdate = await prisma.monthlyWorkoutPlan.deleteMany({
-      where: {
-        playerId,
-        month,
-        year
-      }
-    })
+    // Delete existing plans with connection pool retry logic
+    const [workoutUpdate, mealUpdate] = await withDbTransaction(async () => {
+      // Delete existing workout plans (to avoid unique constraint conflicts)
+      const workoutResult = await prisma.monthlyWorkoutPlan.deleteMany({
+        where: {
+          playerId,
+          month,
+          year
+        }
+      })
 
-    // Delete existing meal plans (to avoid unique constraint conflicts)
-    const mealUpdate = await prisma.monthlyMealPlan.deleteMany({
-      where: {
-        playerId,
-        month,
-        year
-      }
+      // Delete existing meal plans (to avoid unique constraint conflicts)
+      const mealResult = await prisma.monthlyMealPlan.deleteMany({
+        where: {
+          playerId,
+          month,
+          year
+        }
+      })
+
+      return [workoutResult, mealResult]
     })
 
     console.log(`✅ Deleted ${workoutUpdate.count} workout plans and ${mealUpdate.count} meal plans`)
