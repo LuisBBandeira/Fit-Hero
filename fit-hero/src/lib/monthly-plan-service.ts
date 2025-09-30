@@ -79,19 +79,33 @@ export class MonthlyPlanService {
         params.year
       )
 
-      // Update workout plan with AI response and filter results
-      const updatedPlan = await prisma.monthlyWorkoutPlan.update({
-        where: { id: pendingPlan.id },
-        data: {
-          rawAiResponse: aiResponse.raw_response,
-          filteredData: (workoutFilterResult.filteredData || {}) as any,
-          status: workoutFilterResult.isValid ? MonthlyPlanStatus.FILTERED : MonthlyPlanStatus.ERROR,
-          errorLog: workoutFilterResult.validationErrors ? { 
-            errors: workoutFilterResult.validationErrors,
-            filterMetadata: workoutFilterResult.filterMetadata 
-          } as any : null
+      // Update workout plan with AI response and filter results (with retry logic)
+      let updatedPlan;
+      const maxRetries = 3;
+      for (let attempt = 1; attempt <= maxRetries; attempt++) {
+        try {
+          updatedPlan = await prisma.monthlyWorkoutPlan.update({
+            where: { id: pendingPlan.id },
+            data: {
+              rawAiResponse: aiResponse.raw_response,
+              filteredData: (workoutFilterResult.filteredData || {}) as any,
+              status: workoutFilterResult.isValid ? MonthlyPlanStatus.FILTERED : MonthlyPlanStatus.ERROR,
+              errorLog: workoutFilterResult.validationErrors ? { 
+                errors: workoutFilterResult.validationErrors,
+                filterMetadata: workoutFilterResult.filterMetadata 
+              } as any : null
+            }
+          })
+          break; // Success, exit retry loop
+        } catch (error) {
+          console.log(`❌ Database update attempt ${attempt}/${maxRetries} failed:`, error);
+          if (attempt === maxRetries) {
+            throw error; // Re-throw on final attempt
+          }
+          // Wait before retry (exponential backoff)
+          await new Promise(resolve => setTimeout(resolve, 1000 * attempt));
         }
-      })
+      }
 
       // If we found meal data in the AI response, create a meal plan too
       if (mealFilterResult.isValid && mealFilterResult.filteredData && Object.keys(mealFilterResult.filteredData).length > 0) {
