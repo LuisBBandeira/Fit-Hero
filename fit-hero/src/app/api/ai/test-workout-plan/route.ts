@@ -66,6 +66,14 @@ export async function POST(request: NextRequest) {
       monthlyPlanRequest
     )
 
+    if (!monthlyPlan) {
+      console.log('❌ Monthly plan generation failed - no plan returned')
+      return NextResponse.json({
+        success: false,
+        error: 'Failed to generate monthly plan'
+      }, { status: 500 })
+    }
+
     console.log('✅ Monthly plan generated:', {
       id: monthlyPlan.id,
       status: monthlyPlan.status,

@@ -80,7 +80,7 @@ export class MonthlyPlanService {
       )
 
       // Update workout plan with AI response and filter results (with retry logic)
-      let updatedPlan;
+      let updatedPlan: any = null;
       const maxRetries = 3;
       for (let attempt = 1; attempt <= maxRetries; attempt++) {
         try {
@@ -105,6 +105,10 @@ export class MonthlyPlanService {
           // Wait before retry (exponential backoff)
           await new Promise(resolve => setTimeout(resolve, 1000 * attempt));
         }
+      }
+
+      if (!updatedPlan) {
+        throw new Error('Failed to update plan after retries');
       }
 
       // If we found meal data in the AI response, create a meal plan too
