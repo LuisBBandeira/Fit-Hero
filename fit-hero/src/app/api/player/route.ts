@@ -75,7 +75,7 @@ export async function POST(request: NextRequest) {
         forbiddenFoods: player.forbiddenFoods
       }).catch(error => {
         // Silently log the error - user doesn't need to know
-        console.error(`🔥 Background AI activation failed for player ${player.id}:`, error)
+        console.error(`FIRE Background AI activation failed for player ${player.id}:`, error)
         // In production: queue for retry, alert admins, etc.
       })
     }, 100) // Small delay to ensure response is sent first
@@ -209,7 +209,7 @@ export async function PUT(request: NextRequest) {
         })
         .catch(error => {
           // Silently log the error - user doesn't need to know
-          console.error(`🔥 Background AI profile update failed for player ${player.id}:`, error)
+          console.error(`FIRE Background AI profile update failed for player ${player.id}:`, error)
           // In production: queue for retry, alert admins, etc.
         })
     }, 100) // Small delay to ensure response is sent first

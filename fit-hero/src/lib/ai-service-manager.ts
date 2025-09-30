@@ -32,7 +32,7 @@ export class AIServiceManager {
       return true
     }
 
-    console.log('🚀 Starting AI service...')
+    console.log('ROCKET Starting AI service...')
     this.isStarting = true
 
     try {

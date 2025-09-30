@@ -102,10 +102,10 @@ export default function AIServiceManager() {
   };
 
   const getStatusIcon = () => {
-    if (!serviceData?.service) return '❓';
-    if (serviceData.service.healthy) return '✅';
-    if (serviceData.service.running) return '⚠️';
-    return '❌';
+    if (!serviceData?.service) return <img src="/bust-in-silhouette.png" alt="Unknown" className="w-8 h-8" />;
+    if (serviceData.service.healthy) return <img src="/star.png" alt="Healthy" className="w-8 h-8" />;
+    if (serviceData.service.running) return <img src="/warning.png" alt="Warning" className="w-8 h-8" />;
+    return <img src="/prohibited.png" alt="Stopped" className="w-8 h-8" />;
   };
 
   const getStatusText = () => {
@@ -119,7 +119,10 @@ export default function AIServiceManager() {
     <div className="border border-green-800 rounded-lg bg-gray-900 p-6">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
-        <div className="text-green-400 font-bold text-lg">🔧 AI SERVICE MANAGER</div>
+        <div className="text-green-400 font-bold text-lg flex items-center">
+          <img src="/gear.png" alt="AI Service" className="w-6 h-6 mr-2" />
+          AI SERVICE MANAGER
+        </div>
         <div className="flex items-center space-x-2">
           <button
             onClick={() => setAutoRefresh(!autoRefresh)}
@@ -136,7 +139,8 @@ export default function AIServiceManager() {
             disabled={isLoading}
             className="text-cyan-400 hover:text-cyan-300 text-sm transition-colors"
           >
-            {isLoading ? '🔄' : '🔄'} Refresh
+            <img src="/gear.png" alt="Refresh" className="w-4 h-4 inline mr-1" />
+            Refresh
           </button>
         </div>
       </div>
@@ -147,7 +151,7 @@ export default function AIServiceManager() {
           <div className="border border-gray-700 rounded p-4 bg-gray-800">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center space-x-3">
-                <span className="text-2xl">{getStatusIcon()}</span>
+                <div className="flex justify-center">{getStatusIcon()}</div>
                 <div>
                   <div className={`font-bold ${getStatusColor()}`}>
                     {getStatusText()}
@@ -176,7 +180,11 @@ export default function AIServiceManager() {
             disabled={isActioning || serviceData?.service?.healthy}
             className="bg-green-600 hover:bg-green-500 disabled:bg-gray-600 disabled:cursor-not-allowed text-black font-bold py-2 px-3 rounded text-sm transition-colors"
           >
-            {isActioning ? '⏳' : '▶️'} Start
+            {isActioning ? (
+              <img src="/hourglass.png" alt="Loading" className="w-4 h-4 inline mr-1" />
+            ) : (
+              <img src="/rocket.png" alt="Start" className="w-4 h-4 inline mr-1" />
+            )} Start
           </button>
           
           <button
@@ -184,7 +192,11 @@ export default function AIServiceManager() {
             disabled={isActioning || !serviceData?.service?.running}
             className="bg-red-600 hover:bg-red-500 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-bold py-2 px-3 rounded text-sm transition-colors"
           >
-            {isActioning ? '⏳' : '⏹️'} Stop
+            {isActioning ? (
+              <img src="/hourglass.png" alt="Loading" className="w-4 h-4 inline mr-1" />
+            ) : (
+              <img src="/prohibited.png" alt="Stop" className="w-4 h-4 inline mr-1" />
+            )} Stop
           </button>
           
           <button
@@ -192,7 +204,11 @@ export default function AIServiceManager() {
             disabled={isActioning}
             className="bg-yellow-600 hover:bg-yellow-500 disabled:bg-gray-600 disabled:cursor-not-allowed text-black font-bold py-2 px-3 rounded text-sm transition-colors"
           >
-            {isActioning ? '⏳' : '🔄'} Restart
+            {isActioning ? (
+              <img src="/hourglass.png" alt="Loading" className="w-4 h-4 inline mr-1" />
+            ) : (
+              <img src="/gear.png" alt="Restart" className="w-4 h-4 inline mr-1" />
+            )} Restart
           </button>
           
           <button
@@ -200,7 +216,11 @@ export default function AIServiceManager() {
             disabled={isActioning}
             className="bg-blue-600 hover:bg-blue-500 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-bold py-2 px-3 rounded text-sm transition-colors"
           >
-            {isActioning ? '⏳' : '📦'} Install Deps
+            {isActioning ? (
+              <img src="/hourglass.png" alt="Loading" className="w-4 h-4 inline mr-1" />
+            ) : (
+              <img src="/floppy-disk.png" alt="Install" className="w-4 h-4 inline mr-1" />
+            )} Install Deps
           </button>
         </div>
 
@@ -208,7 +228,7 @@ export default function AIServiceManager() {
         {error && (
           <div className="bg-red-900/30 border border-red-600 rounded p-3">
             <div className="flex items-start">
-              <span className="text-red-400 mr-2">❌</span>
+              <img src="/cross.png" alt="Stopped" className="w-4 h-4 mr-2" />
               <div>
                 <div className="text-red-300 font-semibold text-sm">Error</div>
                 <div className="text-red-200 text-xs">{error}</div>
@@ -221,7 +241,7 @@ export default function AIServiceManager() {
         {success && (
           <div className="bg-green-900/30 border border-green-600 rounded p-3">
             <div className="flex items-start">
-              <span className="text-green-400 mr-2">✅</span>
+              <img src="/checkmark.png" alt="Running" className="w-4 h-4 mr-2" />
               <div>
                 <div className="text-green-300 font-semibold text-sm">Success</div>
                 <div className="text-green-200 text-xs">{success}</div>

@@ -137,7 +137,7 @@ function transformMealForDashboard(dailyMeal: any) {
       carbs: dailyMeal.breakfast.carbs || '45g',
       fat: dailyMeal.breakfast.fat || '15g',
       ingredients: dailyMeal.breakfast.ingredients || [],
-      icon: '🍳',
+      icon: '/salad.png',
       completed: false
     };
   }
@@ -151,7 +151,7 @@ function transformMealForDashboard(dailyMeal: any) {
       carbs: dailyMeal.lunch.carbs || '55g',
       fat: dailyMeal.lunch.fat || '18g',
       ingredients: dailyMeal.lunch.ingredients || [],
-      icon: '🥗',
+      icon: '/salad.png',
       completed: false
     };
   }
@@ -165,7 +165,7 @@ function transformMealForDashboard(dailyMeal: any) {
       carbs: dailyMeal.dinner.carbs || '60g',
       fat: dailyMeal.dinner.fat || '22g',
       ingredients: dailyMeal.dinner.ingredients || [],
-      icon: '🍽️',
+      icon: '/salad.png',
       completed: false
     };
   }
@@ -180,7 +180,7 @@ function transformMealForDashboard(dailyMeal: any) {
         carbs: '15g',
         fat: '8g',
         ingredients: snack.ingredients || [],
-        icon: '🍎',
+        icon: '/salad.png',
         completed: false
       };
     });
@@ -192,15 +192,15 @@ function transformMealForDashboard(dailyMeal: any) {
 function getWorkoutIcon(workoutType: string): string {
   switch (workoutType?.toLowerCase()) {
     case 'cardio':
-      return '🏃';
+      return '/gym.png';
     case 'strength':
-      return '💪';
+      return '/gym.png';
     case 'flexibility':
-      return '🧘';
+      return '/yoga.png';
     case 'rest':
-      return '😴';
+      return '/hourglass.png';
     default:
-      return '🏋️';
+      return '/gym.png';
   }
 }
 
@@ -214,7 +214,7 @@ function getDefaultWorkout() {
       completed: false,
       xp: 0
     }],
-    icon: '🤖'
+    icon: '/robot.png'
   }];
 }
 
@@ -227,7 +227,7 @@ function getDefaultMeals() {
       carbs: '0g',
       fat: '0g',
       ingredients: ['Click to generate AI meal plan'],
-      icon: '🤖',
+      icon: '/robot.png',
       completed: false
     },
     lunch: {
@@ -237,7 +237,7 @@ function getDefaultMeals() {
       carbs: '0g',
       fat: '0g',
       ingredients: ['Click to generate AI meal plan'],
-      icon: '🤖',
+      icon: '/robot.png',
       completed: false
     },
     dinner: {
@@ -247,7 +247,7 @@ function getDefaultMeals() {
       carbs: '0g',
       fat: '0g',
       ingredients: ['Click to generate AI meal plan'],
-      icon: '🤖',
+      icon: '/robot.png',
       completed: false
     }
   };

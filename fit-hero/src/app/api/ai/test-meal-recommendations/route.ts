@@ -56,7 +56,7 @@ export async function POST(request: NextRequest) {
       budgetRange: requestData.budget_range || 'medium'
     }
 
-    console.log('🍽️ Meal plan request:', mealPlanRequest)
+    console.log('MEAL Meal plan request:', mealPlanRequest)
 
     // Call the Monthly Plan Service
     const monthlyPlanService = new MonthlyPlanService()

@@ -288,7 +288,9 @@ export default function DashboardPage() {
     return (
       <div className="min-h-screen bg-black text-green-400 font-mono flex items-center justify-center">
         <div className="text-center">
-          <div className="text-6xl mb-4 animate-pulse">⚡</div>
+          <div className="mb-4 animate-pulse flex justify-center">
+            <img src="/lightning-bolt.png" alt="Loading" className="w-24 h-24" />
+          </div>
           <div className="text-xl">Loading Dashboard...</div>
           <div className="text-sm text-gray-400 mt-2">
             {status === 'loading' ? 'Authenticating user...' : 'Fetching player data...'}
@@ -303,7 +305,9 @@ export default function DashboardPage() {
     return (
       <div className="min-h-screen bg-black text-green-400 font-mono flex items-center justify-center">
         <div className="text-center">
-          <div className="text-6xl mb-4 animate-pulse">🏃‍♂️</div>
+          <div className="mb-4 animate-pulse flex justify-center">
+            <img src="/gym.png" alt="Running" className="w-24 h-24" />
+          </div>
           <div className="text-xl">No player data found</div>
           <div className="text-sm text-gray-400 mt-2">
             Please complete your character creation first
@@ -379,7 +383,8 @@ export default function DashboardPage() {
                   <div className="text-cyan-400 text-lg lg:text-2xl xl:text-3xl font-bold tracking-wide">{dashboardData.player.name}</div>
                   <div className="text-green-400 text-sm lg:text-base xl:text-lg font-medium">{dashboardData.player.character.name}</div>
                   <div className="text-gray-400 text-xs lg:text-sm xl:text-base uppercase tracking-wider font-bold bg-gray-800/60 px-2 lg:px-3 py-1 rounded-md inline-block mt-1">
-                    ⚡ FITNESS WARRIOR
+                    <img src="/lightning-bolt.png" alt="Fitness" className="w-4 h-4 inline mr-1" />
+                    FITNESS WARRIOR
                   </div>
                 </div>
               </div>
@@ -482,7 +487,10 @@ export default function DashboardPage() {
           <div className={`transition-all duration-1000 delay-700 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
             <div className="border border-green-800 rounded-lg bg-gray-900 p-6">
               <div className="flex items-center justify-between mb-6">
-                <div className="text-green-400 text-xl font-bold">💪 TODAY&apos;S WORKOUT</div>
+                <div className="text-green-400 text-xl font-bold flex items-center">
+                  <img src="/gym.png" alt="Workout" className="w-6 h-6 mr-2" />
+                  TODAY&apos;S WORKOUT
+                </div>
                 <div className="text-cyan-400 text-sm font-mono bg-black px-3 py-1 rounded border border-cyan-600">
                   {Math.round(getWorkoutProgress())}% COMPLETE
                 </div>
@@ -531,7 +539,7 @@ export default function DashboardPage() {
                               +{exercise.xp} XP
                             </span>
                             {exercise.completed && (
-                              <span className="text-cyan-400 text-sm">✓</span>
+                              <img src="/checkmark.png" alt="Completed" className="w-3 h-3" />
                             )}
                           </div>
                         </div>
@@ -573,7 +581,10 @@ export default function DashboardPage() {
           <div className={`transition-all duration-1000 delay-900 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
             <div className="border border-green-800 rounded-lg bg-gray-900 p-6">
               <div className="flex items-center justify-between mb-6">
-                <div className="text-green-400 text-xl font-bold">🍽️ DAILY MEAL PLAN</div>
+                <div className="text-green-400 text-xl font-bold flex items-center">
+                  <img src="/salad.png" alt="Meal Plan" className="w-6 h-6 mr-2" />
+                  DAILY MEAL PLAN
+                </div>
                 <div className="text-cyan-400 text-sm font-mono bg-black px-3 py-1 rounded border border-cyan-600">
                   {getTotalDailyCalories()} KCAL
                 </div>
@@ -618,7 +629,10 @@ export default function DashboardPage() {
                           {meal.calories} kcal
                         </div>
                         {meal.completed && (
-                          <div className="text-green-400 text-xs font-bold">✓ COMPLETED</div>
+                          <div className="text-green-400 text-xs font-bold flex items-center gap-1">
+                            <img src="/checkmark.png" alt="Completed" className="w-3 h-3" />
+                            COMPLETED
+                          </div>
                         )}
                       </div>
                     </div>
@@ -683,7 +697,9 @@ export default function DashboardPage() {
               className="border border-green-800 bg-gray-900 hover:bg-gray-800 hover:border-green-500 transition-all duration-300 p-6 rounded-lg hover-lift"
             >
               <div className="text-center">
-                <span className="text-3xl mb-3 block animate-pulse">📊</span>
+                <div className="mb-3 flex justify-center animate-pulse">
+                  <img src="/chart.png" alt="Progress" className="w-12 h-12" />
+                </div>
                 <div className="text-green-400 font-bold text-lg mb-2">VIEW_PROGRESS</div>
                 <div className="text-gray-400 text-xs font-mono">$ analyze --stats --charts</div>
               </div>
@@ -693,7 +709,9 @@ export default function DashboardPage() {
               className="border border-purple-800 bg-gray-900 hover:bg-gray-800 hover:border-purple-500 transition-all duration-300 p-6 rounded-lg hover-lift"
             >
               <div className="text-center">
-                <span className="text-3xl mb-3 block animate-bounce-slow">🏆</span>
+                <div className="mb-3 flex justify-center animate-bounce-slow">
+                  <img src="/trophy.png" alt="Achievements" className="w-12 h-12" />
+                </div>
                 <div className="text-purple-400 font-bold text-lg mb-2">ACHIEVEMENTS</div>
                 <div className="text-gray-400 text-xs font-mono">$ unlock --trophies --badges</div>
               </div>
@@ -703,7 +721,9 @@ export default function DashboardPage() {
               className="border border-cyan-800 bg-gray-900 hover:bg-gray-800 hover:border-cyan-500 transition-all duration-300 p-6 rounded-lg hover-lift"
             >
               <div className="text-center">
-                <span className="text-3xl mb-3 block animate-rotate-slow">⚙️</span>
+                <div className="mb-3 flex justify-center animate-rotate-slow">
+                  <img src="/gear.png" alt="Settings" className="w-12 h-12" />
+                </div>
                 <div className="text-cyan-400 font-bold text-lg mb-2">SETTINGS</div>
                 <div className="text-gray-400 text-xs font-mono">$ configure --profile --prefs</div>
               </div>
@@ -721,7 +741,9 @@ export default function DashboardPage() {
               className="flex-1 border border-green-800 bg-gray-800/90 hover:bg-gray-700 hover:border-green-500 transition-all duration-300 p-3 rounded-lg active:scale-95"
             >
               <div className="text-center">
-                <span className="text-lg block mb-1">📊</span>
+                <div className="mb-1 flex justify-center">
+                  <img src="/chart.png" alt="Progress" className="w-5 h-5" />
+                </div>
                 <div className="text-green-400 font-bold text-xs">PROGRESS</div>
               </div>
             </button>
@@ -730,7 +752,9 @@ export default function DashboardPage() {
               className="flex-1 border border-purple-800 bg-gray-800/90 hover:bg-gray-700 hover:border-purple-500 transition-all duration-300 p-3 rounded-lg active:scale-95"
             >
               <div className="text-center">
-                <span className="text-lg block mb-1">🏆</span>
+                <div className="mb-1 flex justify-center">
+                  <img src="/trophy.png" alt="Achievements" className="w-5 h-5" />
+                </div>
                 <div className="text-purple-400 font-bold text-xs">ACHIEVEMENTS</div>
               </div>
             </button>
@@ -739,7 +763,9 @@ export default function DashboardPage() {
               className="flex-1 border border-cyan-800 bg-gray-800/90 hover:bg-gray-700 hover:border-cyan-500 transition-all duration-300 p-3 rounded-lg active:scale-95"
             >
               <div className="text-center">
-                <span className="text-lg block mb-1">⚙️</span>
+                <div className="mb-1 flex justify-center">
+                  <img src="/gear.png" alt="Settings" className="w-5 h-5" />
+                </div>
                 <div className="text-cyan-400 font-bold text-xs">SETTINGS</div>
               </div>
             </button>

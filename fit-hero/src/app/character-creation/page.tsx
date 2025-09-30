@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
@@ -97,15 +97,15 @@ export default function CharacterCreationPage() {
   ], []);
 
   const fitnessGoals = [
-    { id: 'BUILD_MUSCLE', name: 'BUILD MUSCLE', icon: '💪', description: 'Gain strength and muscle mass' },
-    { id: 'IMPROVE_CARDIO', name: 'IMPROVE CARDIO', icon: '❤️', description: 'Enhance cardiovascular fitness' },
-    { id: 'LOSE_WEIGHT', name: 'LOSE WEIGHT', icon: '📉', description: 'Reduce body fat percentage' },
-    { id: 'GENERAL_FITNESS', name: 'GENERAL FITNESS', icon: '⚡', description: 'Overall health improvement' }
+    { id: 'BUILD_MUSCLE', name: 'BUILD MUSCLE', icon: '/gym.png', description: 'Gain strength and muscle mass' },
+    { id: 'IMPROVE_CARDIO', name: 'IMPROVE CARDIO', icon: '/heart.png', description: 'Enhance cardiovascular fitness' },
+    { id: 'LOSE_WEIGHT', name: 'LOSE WEIGHT', icon: '/chart.png', description: 'Reduce body fat percentage' },
+    { id: 'GENERAL_FITNESS', name: 'GENERAL FITNESS', icon: '/lightning-bolt.png', description: 'Overall health improvement' }
   ];
 
   const trainingLocations = [
-    { id: 'GYM_TRAINING', name: 'GYM TRAINING', icon: '🏋️', description: 'Full equipment access and group motivation' },
-    { id: 'HOME_TRAINING', name: 'HOME TRAINING', icon: '🏠', description: 'Bodyweight and minimal equipment workouts' }
+    { id: 'GYM_TRAINING', name: 'GYM TRAINING', icon: '/gym.png', description: 'Full equipment access and group motivation' },
+    { id: 'HOME_TRAINING', name: 'HOME TRAINING', icon: '/house.png', description: 'Bodyweight and minimal equipment workouts' }
   ];
 
   const commonDietaryRestrictions = [
@@ -306,7 +306,8 @@ export default function CharacterCreationPage() {
           <div className={`transition-all duration-1000 delay-500 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
             <div className="text-center mb-8">
               <div className="text-green-400 text-3xl font-bold mb-4 animate-pulse">
-                📊 INITIALIZE CHARACTER STATS
+                <img src="/chart.png" alt="Stats" className="w-6 h-6 inline mr-2" />
+                INITIALIZE CHARACTER STATS
               </div>
               <div className="text-gray-300 text-lg mb-4">
                 Enter your basic information to begin your fitness journey
@@ -394,7 +395,9 @@ export default function CharacterCreationPage() {
                 
                 <div className="space-y-4">
                   <div className="text-center">
-                    <div className="text-6xl mb-4 animate-bounce-slow">🏃‍♂️</div>
+                    <div className="mb-4 animate-bounce-slow flex justify-center">
+                      <img src="/gym.png" alt="Running" className="w-24 h-24" />
+                    </div>
                     <div className="text-gray-300 text-sm">Your character will be created based on your stats</div>
                   </div>
 
@@ -423,7 +426,8 @@ export default function CharacterCreationPage() {
           <div className={`transition-all duration-1000 delay-500 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
             <div className="text-center mb-8">
               <div className="text-green-400 text-3xl font-bold mb-4 animate-pulse">
-                🎭 SELECT CHARACTER CLASS
+                <img src="/preforming-arts.png" alt="Character" className="w-6 h-6 inline mr-2" />
+                SELECT CHARACTER CLASS
               </div>
               <div className="text-gray-300 text-lg mb-4">
                 Choose your fitness specialization and play style
@@ -478,7 +482,8 @@ export default function CharacterCreationPage() {
           <div className={`transition-all duration-1000 delay-500 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
             <div className="text-center mb-8">
               <div className="text-green-400 text-3xl font-bold mb-4 animate-pulse">
-                🎯 SET PRIMARY OBJECTIVE
+                <img src="/target.png" alt="Objective" className="w-6 h-6 inline mr-2" />
+                SET PRIMARY OBJECTIVE
               </div>
               <div className="text-gray-300 text-lg mb-4">
                 Define your main fitness goal to customize your experience
@@ -499,7 +504,9 @@ export default function CharacterCreationPage() {
                       : 'border-green-800 bg-gray-900'
                   }`}
                 >
-                  <div className="text-5xl mb-4 animate-bounce-slow">{goal.icon}</div>
+                  <div className="mb-4 animate-bounce-slow flex justify-center">
+                    <img src={goal.icon} alt={goal.name} className="w-20 h-20" />
+                  </div>
                   <div className="text-green-400 font-bold text-lg mb-2">{goal.name}</div>
                   <div className="text-gray-300 text-sm">{goal.description}</div>
                 </div>
@@ -513,7 +520,8 @@ export default function CharacterCreationPage() {
           <div className={`transition-all duration-1000 delay-500 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
             <div className="text-center mb-8">
               <div className="text-green-400 text-3xl font-bold mb-4 animate-pulse">
-                🏋️ CHOOSE TRAINING ENVIRONMENT
+                <img src="/gym.png" alt="Training" className="w-6 h-6 inline mr-2" />
+                CHOOSE TRAINING ENVIRONMENT
               </div>
               <div className="text-gray-300 text-lg mb-4">
                 Select where you prefer to train for customized workout plans
@@ -534,7 +542,9 @@ export default function CharacterCreationPage() {
                       : 'border-green-800 bg-gray-900 hover:border-green-400 hover:shadow-lg hover:shadow-green-400/20'
                   }`}
                 >
-                  <div className="text-8xl mb-6 animate-bounce-slow">{location.icon}</div>
+                  <div className="mb-6 animate-bounce-slow flex justify-center">
+                    <img src={location.icon} alt={location.name} className="w-32 h-32" />
+                  </div>
                   <div className="text-green-400 font-bold text-xl mb-4">{location.name}</div>
                   <div className="text-gray-300 text-sm">{location.description}</div>
                 </div>
@@ -548,7 +558,8 @@ export default function CharacterCreationPage() {
           <div className={`transition-all duration-1000 delay-500 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
             <div className="text-center mb-8">
               <div className="text-green-400 text-3xl font-bold mb-4 animate-pulse">
-                🍽️ DIETARY PREFERENCES
+                <img src="/salad.png" alt="Diet" className="w-6 h-6 inline mr-2" />
+                DIETARY PREFERENCES
               </div>
               <div className="text-gray-300 text-lg mb-4">
                 Configure your meal plan preferences and restrictions
@@ -561,7 +572,10 @@ export default function CharacterCreationPage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {/* Forbidden Foods */}
               <div className="border border-green-800 rounded-lg bg-gray-900 p-6">
-                <div className="text-green-400 text-xl font-bold mb-4">🚫 FORBIDDEN FOODS</div>
+                <div className="text-green-400 text-xl font-bold mb-4 flex items-center">
+                  <img src="/prohibited.png" alt="Forbidden" className="w-6 h-6 mr-2" />
+                  FORBIDDEN FOODS
+                </div>
                 <label className="block text-green-400 text-sm mb-3">
                   FOODS TO AVOID IN MEAL PLAN:
                 </label>
@@ -578,7 +592,10 @@ export default function CharacterCreationPage() {
 
               {/* Dietary Restrictions */}
               <div className="border border-green-800 rounded-lg bg-gray-900 p-6">
-                <div className="text-green-400 text-xl font-bold mb-4">📋 DIETARY RESTRICTIONS</div>
+                <div className="text-green-400 text-xl font-bold mb-4 flex items-center">
+                  <img src="/floppy-disk.png" alt="Restrictions" className="w-6 h-6 mr-2" />
+                  DIETARY RESTRICTIONS
+                </div>
                 <label className="block text-green-400 text-sm mb-3">
                   SELECT YOUR DIETARY PREFERENCES:
                 </label>
@@ -637,12 +654,12 @@ export default function CharacterCreationPage() {
             >
               {isLoading ? (
                 <span className="flex items-center">
-                  <span className="animate-spin mr-2">⚡</span>
+                  <img src="/lightning-bolt.png" alt="Loading" className="w-5 h-5 animate-spin mr-2" />
                   CREATING...
                 </span>
               ) : (
                 <span className="flex items-center">
-                  <span className="mr-2">🚀</span>
+                  <img src="/rocket.png" alt="Launch" className="w-5 h-5 mr-2" />
                   CREATE HERO
                 </span>
               )}

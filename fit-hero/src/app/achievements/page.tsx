@@ -64,11 +64,11 @@ export default function AchievementsPage() {
   };
 
   const categories = [
-    { id: 'all', name: 'ALL ACHIEVEMENTS', icon: '🏆' },
-    { id: 'workout', name: 'WORKOUT', icon: '💪' },
-    { id: 'weight', name: 'WEIGHT LOSS', icon: '📊' },
-    { id: 'nutrition', name: 'NUTRITION', icon: '🥗' },
-    { id: 'special', name: 'SPECIAL', icon: '✨' }
+    { id: 'all', name: 'ALL ACHIEVEMENTS', icon: '/trophy.png' },
+    { id: 'workout', name: 'WORKOUT', icon: '/gym.png' },
+    { id: 'weight', name: 'WEIGHT LOSS', icon: '/chart.png' },
+    { id: 'nutrition', name: 'NUTRITION', icon: '/salad.png' },
+    { id: 'special', name: 'SPECIAL', icon: '/star.png' }
   ];
 
   const rarityColors = {
@@ -107,7 +107,9 @@ export default function AchievementsPage() {
     return (
       <div className="min-h-screen bg-black text-green-400 font-mono flex items-center justify-center">
         <div className="text-center">
-          <div className="text-6xl mb-4 animate-pulse">🏆</div>
+          <div className="mb-4 animate-pulse flex justify-center">
+            <img src="/trophy.png" alt="Trophy" className="w-24 h-24" />
+          </div>
           <div className="text-xl">Loading achievements...</div>
         </div>
       </div>
@@ -118,7 +120,9 @@ export default function AchievementsPage() {
     return (
       <div className="min-h-screen bg-black text-yellow-400 font-mono flex items-center justify-center">
         <div className="text-center">
-          <div className="text-6xl mb-4">🔒</div>
+          <div className="mb-4 flex justify-center">
+            <img src="/lock-locked.png" alt="Locked" className="w-24 h-24" />
+          </div>
           <div className="text-xl mb-4">Please log in to view achievements</div>
           <Link href="/login" className="px-4 py-2 border border-yellow-600 rounded hover:bg-yellow-900/20 transition-colors">
             Go to Login
@@ -132,7 +136,7 @@ export default function AchievementsPage() {
     return (
       <div className="min-h-screen bg-black text-red-400 font-mono flex items-center justify-center">
         <div className="text-center">
-          <div className="text-6xl mb-4">❌</div>
+          <img src="/cross.png" alt="No achievements" className="w-16 h-16 mb-4" />
           <div className="text-xl mb-4">Error loading achievements</div>
           <div className="text-sm mb-4">{error}</div>
           <div className="space-x-4">
@@ -189,7 +193,8 @@ export default function AchievementsPage() {
         {/* Header Section */}
         <div className={`text-center mb-6 md:mb-8 transition-all duration-1000 delay-500 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
           <div className="text-green-400 text-2xl md:text-4xl font-bold mb-2 md:mb-4 animate-pulse">
-            🏆 ACHIEVEMENTS VAULT
+            <img src="/trophy.png" alt="Achievements" className="w-6 h-6 inline mr-2" />
+            ACHIEVEMENTS VAULT
           </div>
           <div className="text-gray-300 text-sm md:text-lg mb-4 md:mb-6">
             Track your fitness journey milestones and unlock new challenges
@@ -231,9 +236,12 @@ export default function AchievementsPage() {
                     : 'border-green-800 bg-gray-900 text-green-400 hover:border-green-400'
                 }`}
               >
-                <span className="hidden md:inline">{category.icon} {category.name}</span>
+                <span className="hidden md:inline flex items-center gap-2">
+                  <img src={category.icon} alt={category.name} className="w-5 h-5" />
+                  {category.name}
+                </span>
                 <span className="md:hidden flex items-center gap-1">
-                  <span>{category.icon}</span>
+                  <img src={category.icon} alt={category.name} className="w-4 h-4" />
                   <span className="text-xs">
                     {category.id === 'all' ? 'ALL' : 
                      category.id === 'workout' ? 'WORKOUT' :
@@ -261,7 +269,7 @@ export default function AchievementsPage() {
               <div className="text-center">
                 {/* Achievement Icon */}
                 <div className="text-4xl md:text-6xl mb-2 md:mb-4 animate-bounce-slow">
-                  {achievement.unlocked ? achievement.icon : '🔒'}
+                  {achievement.unlocked ? achievement.icon : <img src="/lock-locked.png" alt="Locked" className="w-8 h-8" />}
                 </div>
                 
                 {/* Achievement Info */}
@@ -290,7 +298,10 @@ export default function AchievementsPage() {
                 {achievement.unlocked ? (
                   <div className="space-y-1 md:space-y-2">
                     <div className="text-green-400 text-xs md:text-sm font-mono">
-                      ✅ UNLOCKED: <span className="hidden sm:inline">{achievement.unlockedDate}</span>
+                      <div className="flex items-center gap-1">
+                        <img src="/checkmark.png" alt="Unlocked" className="w-3 h-3" />
+                        UNLOCKED: <span className="hidden sm:inline">{achievement.unlockedDate}</span>
+                      </div>
                     </div>
                     <div className="text-cyan-400 text-xs md:text-sm font-mono">
                       +{achievement.points} POINTS
@@ -324,7 +335,9 @@ export default function AchievementsPage() {
         {/* Empty State */}
         {filteredAchievements.length === 0 && (
           <div className="text-center py-12">
-            <div className="text-6xl mb-4">🎯</div>
+            <div className="mb-4 flex justify-center">
+              <img src="/target.png" alt="Target" className="w-24 h-24" />
+            </div>
             <div className="text-gray-400 text-xl mb-2">No achievements in this category yet</div>
             <div className="text-gray-500 text-sm">Keep training to unlock new achievements!</div>
           </div>
@@ -332,7 +345,10 @@ export default function AchievementsPage() {
 
         {/* Achievement Tips */}
         <div className={`mt-8 md:mt-12 border border-cyan-800 rounded-lg bg-gray-900 p-3 md:p-6 transition-all duration-1000 delay-1100 ${isVisible ? 'animate-slide-in-bottom' : 'opacity-0'}`}>
-          <div className="text-cyan-400 text-lg md:text-xl font-bold mb-2 md:mb-4">💡 ACHIEVEMENT TIPS</div>
+          <div className="text-cyan-400 text-lg md:text-xl font-bold mb-2 md:mb-4 flex items-center">
+            <img src="/light-bulb.png" alt="Tips" className="w-6 h-6 md:w-8 md:h-8 mr-2" />
+            ACHIEVEMENT TIPS
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4 text-xs md:text-sm text-gray-300">
             <div>
               <span className="text-green-400">• CONSISTENCY</span> - <span className="hidden sm:inline">Complete daily workouts to unlock streak achievements</span><span className="sm:hidden">Daily workouts unlock streaks</span>

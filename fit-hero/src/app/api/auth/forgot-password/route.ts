@@ -64,7 +64,7 @@ export async function POST(request: NextRequest) {
         
         emailContent = `
         <div style="font-family: 'Courier New', monospace; background-color: #000; color: #00ff00; padding: 20px; border: 1px solid #00ff00;">
-          <h2 style="color: #00ffff;">🔒 FIT HERO - Account Access Information</h2>
+          <h2 style="color: #00ffff;">[LOCK] FIT HERO - Account Access Information</h2>
           
           <p>A password reset was requested for this email address, but your account is linked to OAuth providers only.</p>
           
@@ -72,8 +72,8 @@ export async function POST(request: NextRequest) {
           
           <p>Please use one of these methods to sign in:</p>
           <ul>
-            ${hasGoogleAccount ? '<li>🔵 Sign in with Google</li>' : ''}
-            ${hasGithubAccount ? '<li>⚫ Sign in with GitHub</li>' : ''}
+            ${hasGoogleAccount ? '<li>BLUE_CIRCLE Sign in with Google</li>' : ''}
+            ${hasGithubAccount ? '<li>BLACK_CIRCLE Sign in with GitHub</li>' : ''}
           </ul>
           
           <p>If you need to add a password to your account for email/password login, please contact support.</p>
@@ -95,14 +95,14 @@ export async function POST(request: NextRequest) {
         
         emailContent = `
         <div style="font-family: 'Courier New', monospace; background-color: #000; color: #00ff00; padding: 20px; border: 1px solid #00ff00;">
-          <h2 style="color: #00ffff;">🔓 FIT HERO - Password Reset</h2>
+          <h2 style="color: #00ffff;">[UNLOCK] FIT HERO - Password Reset</h2>
           
           <p>A password reset was requested for your account.</p>
           
           <div style="margin: 20px 0; padding: 15px; border: 1px solid #00ff00; background-color: #001100;">
             <p><strong>Click the link below to reset your password:</strong></p>
             <a href="${resetUrl}" style="color: #00ffff; background-color: #006600; padding: 10px 20px; text-decoration: none; border: 1px solid #00ff00; display: inline-block; margin: 10px 0;">
-              🚀 RESET_PASSWORD
+              [ROCKET] RESET_PASSWORD
             </a>
           </div>
           
@@ -117,7 +117,7 @@ export async function POST(request: NextRequest) {
           
           <p style="margin-top: 20px; color: #666;">
             FIT HERO Security System v2.4.1<br>
-            Secure connection established 🔒
+            Secure connection established [LOCK]
           </p>
         </div>
         `

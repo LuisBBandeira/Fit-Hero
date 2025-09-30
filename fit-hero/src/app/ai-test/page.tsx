@@ -168,7 +168,8 @@ export default function AITestPage() {
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-gray-800 mb-4">
-            🧪 AI Service Testing Dashboard
+            <img src="/test-tube.png" alt="Testing" className="w-6 h-6 inline mr-2" />
+            AI Service Testing Dashboard
           </h1>
           <p className="text-lg text-gray-600">
             Test the complete AI pipeline: Direct AI Service → Filter → Database Storage
@@ -177,7 +178,10 @@ export default function AITestPage() {
 
         {/* Test Parameters */}
         <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-          <h2 className="text-xl font-semibold mb-4">🎛️ Test Parameters</h2>
+          <h2 className="text-xl font-semibold mb-4 flex items-center">
+            <img src="/gear.png" alt="Parameters" className="w-6 h-6 mr-2" />
+            Test Parameters
+          </h2>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Month</label>
@@ -259,7 +263,10 @@ export default function AITestPage() {
         {/* Test Buttons */}
         <div className="grid lg:grid-cols-3 gap-6 mb-6">
           <div className="bg-white rounded-lg shadow-lg p-6">
-            <h2 className="text-xl font-semibold mb-4">🔧 Direct AI Service Test</h2>
+            <h2 className="text-xl font-semibold mb-4 flex items-center">
+              <img src="/gear.png" alt="Service Test" className="w-6 h-6 mr-2" />
+              Direct AI Service Test
+            </h2>
             <p className="text-sm text-gray-600 mb-4">
               Tests the AI service directly (bypasses authentication and database)
             </p>
@@ -268,12 +275,20 @@ export default function AITestPage() {
               disabled={loading}
               className="bg-purple-600 hover:bg-purple-700 disabled:bg-purple-300 text-white font-semibold py-3 px-8 rounded-lg text-lg transition duration-200 w-full"
             >
-              {loading ? 'Testing...' : '🔧 Test AI Service'}
+              {loading ? 'Testing...' : (
+                <>
+                  <img src="/gear.png" alt="Test" className="w-5 h-5 inline mr-2" />
+                  Test AI Service
+                </>
+              )}
             </button>
           </div>
 
           <div className="bg-white rounded-lg shadow-lg p-6">
-            <h2 className="text-xl font-semibold mb-4">💪 Full Workout Pipeline</h2>
+            <h2 className="text-xl font-semibold mb-4 flex items-center">
+              <img src="/gym.png" alt="Workout" className="w-6 h-6 mr-2" />
+              Full Workout Pipeline
+            </h2>
             <p className="text-sm text-gray-600 mb-4">
               Tests the complete workflow: AI → Filter → Database → Validation
             </p>
@@ -282,12 +297,20 @@ export default function AITestPage() {
               disabled={workoutLoading}
               className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 text-white font-semibold py-3 px-8 rounded-lg text-lg transition duration-200 w-full"
             >
-              {workoutLoading ? 'Generating...' : '💪 Generate Workout Plan'}
+              {workoutLoading ? 'Generating...' : (
+                <>
+                  <img src="/gym.png" alt="Workout" className="w-5 h-5 inline mr-2" />
+                  Generate Workout Plan
+                </>
+              )}
             </button>
           </div>
 
           <div className="bg-white rounded-lg shadow-lg p-6">
-            <h2 className="text-xl font-semibold mb-4">🍽️ Meal Plan Generator</h2>
+            <h2 className="text-xl font-semibold mb-4 flex items-center">
+              <img src="/salad.png" alt="Meal Plan" className="w-6 h-6 mr-2" />
+              Meal Plan Generator
+            </h2>
             <p className="text-sm text-gray-600 mb-4">
               Tests meal plan generation and database storage
             </p>
@@ -296,7 +319,12 @@ export default function AITestPage() {
               disabled={mealLoading}
               className="bg-green-600 hover:bg-green-700 disabled:bg-green-300 text-white font-semibold py-3 px-8 rounded-lg text-lg transition duration-200 w-full"
             >
-              {mealLoading ? 'Generating...' : '🥗 Generate Meal Plan'}
+              {mealLoading ? 'Generating...' : (
+                <>
+                  <img src="/salad.png" alt="Meal Plan" className="w-5 h-5 inline mr-2" />
+                  Generate Meal Plan
+                </>
+              )}
             </button>
           </div>
         </div>
@@ -321,7 +349,8 @@ export default function AITestPage() {
         {directAIResponse && (
           <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
             <h2 className="text-2xl font-bold text-gray-800 mb-4">
-              🔧 Direct AI Service Response
+              <img src="/gear.png" alt="Service" className="w-5 h-5 inline mr-2" />
+              Direct AI Service Response
             </h2>
             
             <div className="grid grid-cols-3 gap-4 mb-6">
@@ -373,12 +402,16 @@ export default function AITestPage() {
           {workoutPlan && (
             <div className="bg-white rounded-lg shadow-lg p-6">
               <h2 className="text-2xl font-bold text-gray-800 mb-4">
-                🎯 Database Stored Workout Plan
+                <img src="/target.png" alt="Target" className="w-5 h-5 inline mr-2" />
+                Database Stored Workout Plan
               </h2>
               
               <div className="grid grid-cols-2 gap-4 mb-6">
                 <div className="bg-blue-50 p-4 rounded-lg">
-                  <h3 className="font-semibold text-blue-800 mb-2">📅 Plan Info</h3>
+                  <h3 className="font-semibold text-blue-800 mb-2 flex items-center">
+                    <img src="/floppy-disk.png" alt="Plan Info" className="w-5 h-5 mr-2" />
+                    Plan Info
+                  </h3>
                   <p className="text-blue-700 text-sm">
                     Month: {workoutPlan.month}/{workoutPlan.year}<br/>
                     Status: {workoutPlan.status}
@@ -386,7 +419,10 @@ export default function AITestPage() {
                 </div>
                 
                 <div className="bg-green-50 p-4 rounded-lg">
-                  <h3 className="font-semibold text-green-800 mb-2">⏱️ Details</h3>
+                  <h3 className="font-semibold text-green-800 mb-2 flex items-center">
+                    <img src="/hourglass.png" alt="Details" className="w-5 h-5 mr-2" />
+                    Details
+                  </h3>
                   <p className="text-green-700 text-sm">
                     Fitness Level: {workoutPlan.fitnessLevel}<br/>
                     Time: {workoutPlan.availableTime}min
@@ -440,7 +476,12 @@ export default function AITestPage() {
                   disabled={workoutLoading}
                   className="bg-orange-600 hover:bg-orange-700 disabled:bg-orange-300 text-white font-semibold py-2 px-6 rounded-lg transition duration-200"
                 >
-                  {workoutLoading ? 'Updating...' : '🔄 Update Plan'}
+                  {workoutLoading ? 'Updating...' : (
+                    <>
+                      <img src="/gear.png" alt="Update" className="w-4 h-4 inline mr-1" />
+                      Update Plan
+                    </>
+                  )}
                 </button>
               </div>
             </div>
@@ -450,12 +491,16 @@ export default function AITestPage() {
           {mealPlan && (
             <div className="bg-white rounded-lg shadow-lg p-6">
               <h2 className="text-2xl font-bold text-gray-800 mb-4">
-                🍽️ Database Stored Meal Plan
+                <img src="/salad.png" alt="Meal Plan" className="w-5 h-5 inline mr-2" />
+                Database Stored Meal Plan
               </h2>
               
               <div className="grid grid-cols-2 gap-4 mb-6">
                 <div className="bg-green-50 p-4 rounded-lg">
-                  <h3 className="font-semibold text-green-800 mb-2">📅 Plan Info</h3>
+                  <h3 className="font-semibold text-green-800 mb-2 flex items-center">
+                    <img src="/floppy-disk.png" alt="Plan Info" className="w-5 h-5 mr-2" />
+                    Plan Info
+                  </h3>
                   <p className="text-green-700 text-sm">
                     Month: {mealPlan.month}/{mealPlan.year}<br/>
                     Status: {mealPlan.status}
@@ -463,7 +508,10 @@ export default function AITestPage() {
                 </div>
                 
                 <div className="bg-yellow-50 p-4 rounded-lg">
-                  <h3 className="font-semibold text-yellow-800 mb-2">🎯 Target</h3>
+                  <h3 className="font-semibold text-yellow-800 mb-2 flex items-center">
+                    <img src="/target.png" alt="Target" className="w-5 h-5 mr-2" />
+                    Target
+                  </h3>
                   <p className="text-yellow-700 text-sm">
                     Calories: {mealPlan.calorieTarget}<br/>
                     Budget: {mealPlan.budgetRange}
@@ -508,7 +556,12 @@ export default function AITestPage() {
                   disabled={mealLoading}
                   className="bg-orange-600 hover:bg-orange-700 disabled:bg-orange-300 text-white font-semibold py-2 px-6 rounded-lg transition duration-200"
                 >
-                  {mealLoading ? 'Updating...' : '🔄 Update Plan'}
+                  {mealLoading ? 'Updating...' : (
+                    <>
+                      <img src="/gear.png" alt="Update" className="w-4 h-4 inline mr-1" />
+                      Update Plan
+                    </>
+                  )}
                 </button>
               </div>
             </div>
@@ -517,7 +570,10 @@ export default function AITestPage() {
 
         {/* Instructions */}
         <div className="mt-8 bg-gray-100 rounded-lg p-6">
-          <h3 className="text-lg font-semibold mb-4">🔍 Testing Instructions</h3>
+          <h3 className="text-lg font-semibold mb-4 flex items-center">
+            <img src="/test-tube.png" alt="Instructions" className="w-6 h-6 mr-2" />
+            Testing Instructions
+          </h3>
           <div className="space-y-2 text-sm text-gray-700">
             <p><strong>1. Direct AI Test:</strong> Tests the AI service directly to verify JSON parsing fixes</p>
             <p><strong>2. Full Pipeline Test:</strong> Tests the complete workflow including database storage</p>

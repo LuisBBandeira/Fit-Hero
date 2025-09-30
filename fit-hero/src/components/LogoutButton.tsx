@@ -61,7 +61,15 @@ export default function LogoutButton({
         ${className}
       `}
     >
-      {showIcon && <span>{isLoggingOut ? '⏳' : '🚪'}</span>}
+      {showIcon && (
+        <span>
+          {isLoggingOut ? (
+            <img src="/hourglass.png" alt="Logging out" className="w-4 h-4 inline" />
+          ) : (
+            <img src="/door.png" alt="Logout" className="w-4 h-4 inline" />
+          )}
+        </span>
+      )}
       <span>{isLoggingOut ? 'LOGGING_OUT...' : 'LOGOUT'}</span>
     </button>
   );
