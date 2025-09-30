@@ -7,6 +7,12 @@ import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import LogoutButton from '@/components/LogoutButton';
 
+interface PlaceholderError {
+  type: string;
+  message: string;
+  originalError?: Error;
+}
+
 interface DashboardData {
   player: {
     name: string;
@@ -43,6 +49,10 @@ interface DashboardData {
       completed: boolean;
     };
   };
+  isPlaceholder?: boolean;
+  placeholderMessage?: string;
+  placeholderError?: PlaceholderError;
+  isFallback?: boolean;
   stats: {
     currentWeight?: number;
     workoutStreak: number;
@@ -59,23 +69,91 @@ export default function DashboardPage() {
   const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString());
   const [dashboardData, setDashboardData] = useState<DashboardData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [showTransitionNotification, setShowTransitionNotification] = useState(false);
+  const [refreshError, setRefreshError] = useState<string | null>(null);
+  const [lastRefreshTime, setLastRefreshTime] = useState<Date | null>(null);
+  const [placeholderError, setPlaceholderError] = useState<PlaceholderError | null>(null);
+  const [showErrorDetails, setShowErrorDetails] = useState(false);
 
-  // Fetch dashboard data from API
-  const fetchDashboardData = async () => {
+  // Fetch dashboard data from API with comprehensive error handling
+  const fetchDashboardData = async (isAutoRefresh = false) => {
     try {
-      setLoading(true);
+      if (!isAutoRefresh) {
+        setLoading(true);
+      }
+      setRefreshError(null);
+      setPlaceholderError(null);
+      
       const response = await fetch('/api/dashboard');
       if (response.ok) {
         const result = await response.json();
+        
+        // Validate response structure
+        if (!result || !result.data) {
+          throw new Error('Invalid response structure from dashboard API');
+        }
+        
+        // Check for placeholder errors in the response
+        if (result.data.placeholderError) {
+          setPlaceholderError(result.data.placeholderError);
+          console.warn('Dashboard: Placeholder service error detected:', result.data.placeholderError);
+        }
+        
+        // Validate essential data structure
+        if (!result.data.player || !Array.isArray(result.data.workoutPlan) || !result.data.mealPlan) {
+          throw new Error('Dashboard data is missing essential components');
+        }
+        
+        // Check if we're transitioning from placeholder to custom content
+        if (dashboardData?.isPlaceholder && !result.data.isPlaceholder) {
+          setShowTransitionNotification(true);
+          setTimeout(() => setShowTransitionNotification(false), 5000); // Hide after 5 seconds
+        }
+        
         setDashboardData(result.data);
+        setLastRefreshTime(new Date());
       } else {
-        console.error('Failed to fetch dashboard data');
+        let errorMsg = `Failed to fetch dashboard data (${response.status})`;
+        
+        // Try to get more specific error information
+        try {
+          const errorData = await response.json();
+          if (errorData.error) {
+            errorMsg += `: ${errorData.error}`;
+          }
+        } catch {
+          // Ignore JSON parsing errors for error responses
+        }
+        
+        console.error(errorMsg);
+        setRefreshError(errorMsg);
       }
     } catch (error) {
+      let errorMsg = 'Network error while fetching dashboard data';
+      
+      if (error instanceof Error) {
+        if (error.message.includes('Invalid response') || error.message.includes('missing essential')) {
+          errorMsg = 'Dashboard data is corrupted. Please try refreshing.';
+        } else if (error.message.includes('fetch')) {
+          errorMsg = 'Unable to connect to server. Please check your internet connection.';
+        } else {
+          errorMsg = `Dashboard error: ${error.message}`;
+        }
+      }
+      
       console.error('Error fetching dashboard data:', error);
+      setRefreshError(errorMsg);
     } finally {
-      setLoading(false);
+      if (!isAutoRefresh) {
+        setLoading(false);
+      }
     }
+  };
+
+  // Manual refresh function for user-triggered refreshes
+  const handleManualRefresh = async () => {
+    console.log('🔄 Manual refresh triggered by user');
+    await fetchDashboardData(false);
   };
 
   useEffect(() => {
@@ -99,8 +177,70 @@ export default function DashboardPage() {
       setCurrentTime(new Date().toLocaleTimeString());
     }, 1000);
     
-    return () => clearInterval(timeInterval);
+    return () => {
+      clearInterval(timeInterval);
+    };
   }, [status, router]);
+
+  // Separate useEffect for auto-refresh functionality
+  useEffect(() => {
+    let refreshInterval: NodeJS.Timeout | null = null;
+    
+    // Only set up auto-refresh if we have placeholder content
+    if (dashboardData?.isPlaceholder) {
+      console.log('🔄 Setting up auto-refresh for placeholder content (checking every 2.5 minutes)');
+      
+      refreshInterval = setInterval(async () => {
+        console.log('🔄 Auto-refresh: Checking for custom plans update...');
+        
+        try {
+          const response = await fetch('/api/dashboard');
+          if (response.ok) {
+            const result = await response.json();
+            
+            // Check if we're transitioning from placeholder to custom content
+            if (dashboardData?.isPlaceholder && !result.data.isPlaceholder) {
+              console.log('✅ Auto-refresh: Custom plans are now available! Transitioning...');
+              
+              // Show transition notification
+              setShowTransitionNotification(true);
+              setTimeout(() => setShowTransitionNotification(false), 5000);
+              
+              // Update dashboard data
+              setDashboardData(result.data);
+              setLastRefreshTime(new Date());
+              setRefreshError(null);
+              
+              // Clear the refresh interval since we no longer need it
+              if (refreshInterval) {
+                clearInterval(refreshInterval);
+                refreshInterval = null;
+              }
+            } else if (result.data.isPlaceholder) {
+              // Still placeholder content, just update the data in case there are changes
+              setDashboardData(result.data);
+              setLastRefreshTime(new Date());
+              setRefreshError(null);
+            }
+          } else {
+            console.warn('🔄 Auto-refresh: Failed to fetch dashboard data');
+            setRefreshError(`Auto-refresh failed (${response.status})`);
+          }
+        } catch (error) {
+          console.error('🔄 Auto-refresh: Error checking for plan updates:', error);
+          setRefreshError('Auto-refresh network error');
+        }
+      }, 2.5 * 60 * 1000); // Check every 2.5 minutes
+    }
+    
+    // Cleanup function
+    return () => {
+      if (refreshInterval) {
+        console.log('🔄 Cleaning up auto-refresh interval');
+        clearInterval(refreshInterval);
+      }
+    };
+  }, [dashboardData?.isPlaceholder]); // Re-run when placeholder status changes
 
   const handleExerciseToggle = async (sectionId: string, exerciseId: string) => {
     if (!dashboardData) return;
@@ -361,6 +501,230 @@ export default function DashboardPage() {
       </div>
 
       <div className="max-w-7xl mx-auto p-4 sm:p-6 pb-24 md:pb-6">
+        {/* Transition Notification */}
+        {showTransitionNotification && (
+          <div className="fixed top-4 right-4 z-50 animate-slide-in-right">
+            <div className="border border-green-500 rounded-lg bg-gradient-to-r from-green-900/90 via-green-800/90 to-green-900/90 p-4 shadow-xl shadow-green-900/50 backdrop-blur-sm max-w-sm">
+              <div className="flex items-start space-x-3">
+                <div className="flex-shrink-0">
+                  <div className="relative">
+                    <img src="/trophy.png" alt="Success" className="w-6 h-6" />
+                    <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full animate-ping"></div>
+                  </div>
+                </div>
+                <div className="flex-1">
+                  <div className="text-green-400 text-sm font-bold mb-1 flex items-center">
+                    <span className="mr-1">🎉</span>
+                    Custom Plans Ready!
+                  </div>
+                  <div className="text-green-200 text-xs mb-2">
+                    Your personalized AI-generated workout and meal plans are now active. The placeholder content has been replaced with your custom fitness program.
+                  </div>
+                  <div className="text-green-300 text-xs bg-green-900/30 px-2 py-1 rounded border border-green-600/30">
+                    ✨ Auto-refresh successful
+                  </div>
+                </div>
+                <button 
+                  onClick={() => setShowTransitionNotification(false)}
+                  className="text-green-400 hover:text-green-300 text-lg font-bold flex-shrink-0"
+                  title="Close notification"
+                >
+                  ×
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Error Notification */}
+        {refreshError && (
+          <div className="fixed top-4 right-4 z-50 animate-slide-in-right">
+            <div className="border border-red-500 rounded-lg bg-gradient-to-r from-red-900/90 via-red-800/90 to-red-900/90 p-4 shadow-xl shadow-red-900/50 backdrop-blur-sm max-w-sm">
+              <div className="flex items-start space-x-3">
+                <div className="flex-shrink-0">
+                  <div className="relative">
+                    <img src="/warning.png" alt="Error" className="w-6 h-6" />
+                    <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-400 rounded-full animate-ping"></div>
+                  </div>
+                </div>
+                <div className="flex-1">
+                  <div className="text-red-400 text-sm font-bold mb-1 flex items-center">
+                    <span className="mr-1">⚠️</span>
+                    Connection Error
+                  </div>
+                  <div className="text-red-200 text-xs mb-2">
+                    {refreshError}
+                  </div>
+                  <div className="flex space-x-2">
+                    <button
+                      onClick={handleManualRefresh}
+                      className="text-red-300 text-xs bg-red-900/30 px-2 py-1 rounded border border-red-600/30 hover:bg-red-900/50 transition-colors"
+                    >
+                      🔄 Retry
+                    </button>
+                    <button
+                      onClick={() => setRefreshError(null)}
+                      className="text-red-300 text-xs bg-red-900/30 px-2 py-1 rounded border border-red-600/30 hover:bg-red-900/50 transition-colors"
+                    >
+                      Dismiss
+                    </button>
+                  </div>
+                </div>
+                <button 
+                  onClick={() => setRefreshError(null)}
+                  className="text-red-400 hover:text-red-300 text-lg font-bold flex-shrink-0"
+                  title="Close notification"
+                >
+                  ×
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Enhanced Placeholder Content Banner with Error Handling */}
+        {dashboardData.isPlaceholder && (
+          <div className={`transition-all duration-1000 delay-400 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'} mb-6`}>
+            <div className={`border rounded-lg p-5 shadow-xl backdrop-blur-sm ${
+              dashboardData.isFallback || placeholderError 
+                ? 'border-red-500/70 bg-gradient-to-r from-red-900/30 via-orange-900/30 to-red-900/30 shadow-red-900/30'
+                : 'border-yellow-500 bg-gradient-to-r from-yellow-900/30 via-orange-900/30 to-yellow-900/30 shadow-yellow-900/30'
+            }`}>
+              <div className="flex items-center space-x-4">
+                <div className="flex-shrink-0">
+                  <div className="relative">
+                    {dashboardData.isFallback || placeholderError ? (
+                      <img src="/warning.png" alt="Warning" className="w-8 h-8 animate-pulse" />
+                    ) : (
+                      <img src="/hourglass.png" alt="Loading" className="w-8 h-8 animate-pulse" />
+                    )}
+                    <div className={`absolute -top-1 -right-1 w-3 h-3 rounded-full animate-ping ${
+                      dashboardData.isFallback || placeholderError ? 'bg-red-400' : 'bg-yellow-400'
+                    }`}></div>
+                  </div>
+                </div>
+                <div className="flex-1">
+                  <div className={`text-base font-bold tracking-wider mb-2 flex items-center ${
+                    dashboardData.isFallback || placeholderError ? 'text-red-400' : 'text-yellow-400'
+                  }`}>
+                    <span className="mr-2">{dashboardData.isFallback || placeholderError ? '⚠️' : '⚡'}</span>
+                    {dashboardData.isFallback || placeholderError ? 'SERVICE ISSUE DETECTED' : 'CUSTOM PLANS BEING GENERATED'}
+                  </div>
+                  <div className={`text-sm mb-3 ${
+                    dashboardData.isFallback || placeholderError ? 'text-red-200' : 'text-orange-200'
+                  }`}>
+                    {dashboardData.isFallback || placeholderError 
+                      ? (placeholderError?.message || "We're experiencing technical difficulties. Using basic backup plans.")
+                      : (dashboardData.placeholderMessage || "Your personalized workout and meal plans are being created by our AI. These temporary plans will keep you on track!")
+                    }
+                  </div>
+                  
+                  {/* Placeholder Error Details */}
+                  {placeholderError && (
+                    <div className="mb-3">
+                      <div className="text-xs text-red-300 mb-2 flex items-center space-x-2">
+                        <img src="/warning.png" alt="Error" className="w-3 h-3" />
+                        <span>Error Type: {placeholderError.type.replace(/_/g, ' ')}</span>
+                        <button
+                          onClick={() => setShowErrorDetails(!showErrorDetails)}
+                          className="text-red-400 hover:text-red-300 underline"
+                        >
+                          {showErrorDetails ? 'Hide Details' : 'Show Details'}
+                        </button>
+                      </div>
+                      {showErrorDetails && (
+                        <div className="text-xs text-red-200 bg-red-900/20 p-2 rounded border border-red-600/30">
+                          <div className="mb-1"><strong>Error:</strong> {placeholderError.message}</div>
+                          {placeholderError.originalError && (
+                            <div><strong>Details:</strong> {placeholderError.originalError.message}</div>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  )}
+                  
+                  {/* Auto-refresh status */}
+                  {!dashboardData.isFallback && (
+                    <div className="text-xs text-orange-300 mb-3 flex items-center space-x-2">
+                      <div className={`w-2 h-2 rounded-full animate-pulse ${
+                        refreshError ? 'bg-red-400' : 'bg-green-400'
+                      }`}></div>
+                      <span>Auto-checking for updates every 2.5 minutes</span>
+                      {lastRefreshTime && (
+                        <span className="text-gray-400">
+                          • Last checked: {lastRefreshTime.toLocaleTimeString()}
+                        </span>
+                      )}
+                    </div>
+                  )}
+                  
+                  {/* Error message if refresh fails */}
+                  {refreshError && (
+                    <div className="text-xs text-red-400 mb-3 flex items-center space-x-2">
+                      <img src="/warning.png" alt="Warning" className="w-3 h-3" />
+                      <span>{refreshError}</span>
+                    </div>
+                  )}
+                  
+                  {/* Progress Indicator or Error State */}
+                  <div className="flex items-center space-x-3">
+                    <div className="flex-1">
+                      {dashboardData.isFallback || placeholderError ? (
+                        <div className="w-full bg-red-900/40 rounded-full h-2 border border-red-600/30">
+                          <div className="bg-gradient-to-r from-red-500 via-orange-400 to-red-500 h-2 rounded-full animate-pulse" style={{ width: '100%' }}>
+                            <div className="h-full bg-gradient-to-r from-transparent via-white/20 to-transparent rounded-full animate-shimmer"></div>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="w-full bg-yellow-900/40 rounded-full h-2 border border-yellow-600/30">
+                          <div className="bg-gradient-to-r from-yellow-500 via-orange-400 to-yellow-500 h-2 rounded-full animate-pulse" style={{ width: '65%' }}>
+                            <div className="h-full bg-gradient-to-r from-transparent via-white/30 to-transparent rounded-full animate-shimmer"></div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                    <div className={`text-xs font-mono px-3 py-1 rounded-full border animate-pulse ${
+                      dashboardData.isFallback || placeholderError 
+                        ? 'text-red-400 bg-red-900/40 border-red-600/50'
+                        : 'text-yellow-400 bg-yellow-900/40 border-yellow-600/50'
+                    }`}>
+                      {dashboardData.isFallback || placeholderError ? 'FALLBACK MODE' : 'PROCESSING...'}
+                    </div>
+                  </div>
+                </div>
+                <div className="flex-shrink-0 flex flex-col items-center space-y-2">
+                  <div className="text-center">
+                    {dashboardData.isFallback || placeholderError ? (
+                      <div className="w-12 h-12 border-4 border-red-600/30 border-t-red-400 rounded-full animate-spin mb-2"></div>
+                    ) : (
+                      <div className="w-12 h-12 border-4 border-yellow-600/30 border-t-yellow-400 rounded-full animate-spin mb-2"></div>
+                    )}
+                    <div className={`text-xs font-bold ${
+                      dashboardData.isFallback || placeholderError ? 'text-red-400' : 'text-yellow-400'
+                    }`}>
+                      {dashboardData.isFallback || placeholderError ? 'BACKUP MODE' : 'AI WORKING'}
+                    </div>
+                  </div>
+                  
+                  {/* Manual refresh button */}
+                  <button
+                    onClick={handleManualRefresh}
+                    className={`text-xs px-3 py-1 border rounded-full transition-colors duration-200 flex items-center space-x-1 ${
+                      dashboardData.isFallback || placeholderError
+                        ? 'border-red-600/50 bg-red-900/20 text-red-300 hover:bg-red-900/40 hover:text-red-200'
+                        : 'border-yellow-600/50 bg-yellow-900/20 text-yellow-300 hover:bg-yellow-900/40 hover:text-yellow-200'
+                    }`}
+                    title={dashboardData.isFallback || placeholderError ? "Try to recover from error" : "Check for updates now"}
+                  >
+                    <span>🔄</span>
+                    <span>{dashboardData.isFallback || placeholderError ? 'Retry' : 'Refresh'}</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Player Stats Header */}
         <div className={`transition-all duration-1000 delay-500 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'} mb-6`}>
           {/* Responsive: stack on mobile, grid on lg+ */}
@@ -485,13 +849,28 @@ export default function DashboardPage() {
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
           {/* Daily Workout Plan */}
           <div className={`transition-all duration-1000 delay-700 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
-            <div className="border border-green-800 rounded-lg bg-gray-900 p-6">
+            <div className={`border rounded-lg p-6 ${
+              dashboardData.isPlaceholder 
+                ? 'border-yellow-600/50 bg-gradient-to-br from-gray-900 via-yellow-900/10 to-gray-900 shadow-lg shadow-yellow-900/20' 
+                : 'border-green-800 bg-gray-900'
+            }`}>
               <div className="flex items-center justify-between mb-6">
-                <div className="text-green-400 text-xl font-bold flex items-center">
+                <div className={`text-xl font-bold flex items-center ${
+                  dashboardData.isPlaceholder ? 'text-yellow-400' : 'text-green-400'
+                }`}>
                   <img src="/gym.png" alt="Workout" className="w-6 h-6 mr-2" />
                   TODAY&apos;S WORKOUT
+                  {dashboardData.isPlaceholder && (
+                    <span className="ml-2 text-xs bg-yellow-900/40 text-yellow-300 px-2 py-1 rounded-full border border-yellow-600/50 animate-pulse">
+                      TEMPORARY
+                    </span>
+                  )}
                 </div>
-                <div className="text-cyan-400 text-sm font-mono bg-black px-3 py-1 rounded border border-cyan-600">
+                <div className={`text-sm font-mono px-3 py-1 rounded border ${
+                  dashboardData.isPlaceholder 
+                    ? 'text-yellow-400 bg-yellow-900/20 border-yellow-600' 
+                    : 'text-cyan-400 bg-black border-cyan-600'
+                }`}>
                   {Math.round(getWorkoutProgress())}% COMPLETE
                 </div>
               </div>
@@ -579,13 +958,28 @@ export default function DashboardPage() {
 
           {/* Daily Meal Plan */}
           <div className={`transition-all duration-1000 delay-900 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
-            <div className="border border-green-800 rounded-lg bg-gray-900 p-6">
+            <div className={`border rounded-lg p-6 ${
+              dashboardData.isPlaceholder 
+                ? 'border-yellow-600/50 bg-gradient-to-br from-gray-900 via-yellow-900/10 to-gray-900 shadow-lg shadow-yellow-900/20' 
+                : 'border-green-800 bg-gray-900'
+            }`}>
               <div className="flex items-center justify-between mb-6">
-                <div className="text-green-400 text-xl font-bold flex items-center">
+                <div className={`text-xl font-bold flex items-center ${
+                  dashboardData.isPlaceholder ? 'text-yellow-400' : 'text-green-400'
+                }`}>
                   <img src="/salad.png" alt="Meal Plan" className="w-6 h-6 mr-2" />
                   DAILY MEAL PLAN
+                  {dashboardData.isPlaceholder && (
+                    <span className="ml-2 text-xs bg-yellow-900/40 text-yellow-300 px-2 py-1 rounded-full border border-yellow-600/50 animate-pulse">
+                      TEMPORARY
+                    </span>
+                  )}
                 </div>
-                <div className="text-cyan-400 text-sm font-mono bg-black px-3 py-1 rounded border border-cyan-600">
+                <div className={`text-sm font-mono px-3 py-1 rounded border ${
+                  dashboardData.isPlaceholder 
+                    ? 'text-yellow-400 bg-yellow-900/20 border-yellow-600' 
+                    : 'text-cyan-400 bg-black border-cyan-600'
+                }`}>
                   {getTotalDailyCalories()} KCAL
                 </div>
               </div>

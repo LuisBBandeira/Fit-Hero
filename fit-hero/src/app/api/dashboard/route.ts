@@ -121,8 +121,50 @@ export async function GET() {
       return acc;
     }, {});
 
-    // Get today's dynamic plans from AI-generated monthly plans
-    const todaysPlans = await TodaysPlanService.getTodaysPlans(session.user.id);
+    // Get today's dynamic plans from AI-generated monthly plans with error handling
+    let todaysPlans;
+    try {
+      todaysPlans = await TodaysPlanService.getTodaysPlans(session.user.id);
+    } catch (error) {
+      console.error('Dashboard API: Critical error getting today\'s plans:', error);
+      
+      // Return a minimal response that won't crash the dashboard
+      todaysPlans = {
+        workoutPlan: [{
+          id: 'api_fallback',
+          name: 'Basic Activity',
+          icon: '/gym.png',
+          exercises: [
+            {
+              id: 'api_fallback_1',
+              name: 'Take a 15-minute walk',
+              completed: false,
+              xp: 30
+            }
+          ]
+        }],
+        mealPlan: {
+          breakfast: {
+            name: 'Healthy Breakfast',
+            calories: 350,
+            protein: '15g',
+            carbs: '45g',
+            fat: '12g',
+            ingredients: ['Choose a balanced breakfast'],
+            icon: '/salad.png',
+            completed: false
+          }
+        },
+        isPlaceholder: true,
+        message: "We're experiencing technical difficulties. Please try refreshing the page.",
+        error: {
+          type: 'SERVICE_UNAVAILABLE',
+          message: 'Unable to load fitness plans',
+          originalError: error instanceof Error ? error : new Error(String(error))
+        },
+        isFallback: true
+      };
+    }
 
     const dashboardData = {
       player: {
@@ -137,8 +179,12 @@ export async function GET() {
           imagePath: characterImageMap[player.character] || '/orange_wariar%20/rotations/south.png'
         }
       },
-      workoutPlan: todaysPlans.workoutPlan,
-      mealPlan: todaysPlans.mealPlan,
+      workoutPlan: todaysPlans.workoutPlan || [],
+      mealPlan: todaysPlans.mealPlan || {},
+      isPlaceholder: todaysPlans.isPlaceholder || false,
+      placeholderMessage: todaysPlans.message || null,
+      placeholderError: todaysPlans.error || null,
+      isFallback: todaysPlans.isFallback || false,
       stats: {
         currentWeight: latestWeight?.weight || player.weight,
         workoutStreak: progressStats?.currentWorkoutStreak || 0,
