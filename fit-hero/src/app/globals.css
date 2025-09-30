@@ -97,6 +97,11 @@ body {
   75% { transform: translateX(5px); }
 }
 
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
 /* Animation classes */
 .animate-slide-in-left {
   animation: slideInFromLeft 0.8s ease-out;
@@ -147,6 +152,10 @@ body {
 
 .animate-rotate-slow {
   animation: rotate 3s linear infinite;
+}
+
+.animate-shimmer {
+  animation: shimmer 2s ease-in-out infinite;
 }
 
 .terminal-cursor {
