@@ -200,8 +200,8 @@ export default function Home() {
               <div className="text-cyan-400 text-sm sm:text-lg">Active Heroes</div>
               <div className="text-gray-400 text-xs sm:text-sm">Currently leveling up</div>
             </div>
-            <div className="hover-glow p-3 sm:p-4 rounded sm:col-span-1 col-span-1">
-              <div className="text-3xl sm:text-4xl font-bold text-yellow-500 mb-1 sm:mb-2 animate-bounce-slow flex items-center gap-1">
+            <div className="hover-glow p-3 sm:p-4 rounded sm:col-span-1 col-span-1 text-center">
+              <div className="text-3xl sm:text-4xl font-bold text-yellow-500 mb-1 sm:mb-2 animate-bounce-slow flex items-center justify-center gap-1">
                 4.9<img src="/star.png" alt="Star" className="w-6 h-6 sm:w-8 sm:h-8" />
               </div>
               <div className="text-yellow-400 text-sm sm:text-lg">Hero Rating</div>

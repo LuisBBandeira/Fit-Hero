@@ -503,7 +503,7 @@ export default function DashboardPage() {
                     className="border border-green-700 rounded-lg p-4 bg-gray-800"
                   >
                     <div className="flex items-center space-x-3 mb-4">
-                      <span className="text-2xl">{section.icon}</span>
+                      <img src={section.icon} alt="Section icon" className="w-6 h-6" />
                       <div className="text-green-400 font-bold text-lg">{section.name}</div>
                     </div>
 
@@ -614,7 +614,7 @@ export default function DashboardPage() {
                             </svg>
                           )}
                         </button>
-                        <span className="text-2xl">{meal.icon}</span>
+                        <img src={meal.icon} alt="Meal icon" className="w-6 h-6" />
                         <div>
                           <div className="text-green-400 font-bold text-sm uppercase">
                             {mealType}
