@@ -175,7 +175,8 @@ export default function SignupPage() {
             <div className="p-6">
               <div className="mb-6">
                 <div className="text-green-400 text-xl font-bold mb-2 animate-pulse">
-                  ⚡ CREATE NEW HERO
+                  <img src="/lightning-bolt.png" alt="Create" className="w-6 h-6 inline mr-2" />
+                  CREATE NEW HERO
                 </div>
                 <div className="text-gray-300 text-sm mb-4">
                   Initialize your fitness character profile
@@ -264,9 +265,15 @@ export default function SignupPage() {
                   {formData.confirmPassword && (
                     <div className="mt-1">
                       {formData.password === formData.confirmPassword ? (
-                        <span className="text-green-400 text-xs">✓ PASSWORDS_MATCH</span>
+                        <div className="text-green-400 text-xs flex items-center gap-1">
+                          <img src="/checkmark.png" alt="Match" className="w-3 h-3" />
+                          PASSWORDS_MATCH
+                        </div>
                       ) : (
-                        <span className="text-red-400 text-xs">✗ PASSWORDS_MISMATCH</span>
+                        <div className="text-red-400 text-xs flex items-center gap-1">
+                          <img src="/cross.png" alt="Mismatch" className="w-3 h-3" />
+                          PASSWORDS_MISMATCH
+                        </div>
                       )}
                     </div>
                   )}
@@ -275,23 +282,23 @@ export default function SignupPage() {
                 {error && (
                   <div className="bg-red-900/30 border border-red-600 text-red-400 px-4 py-3 rounded mb-4">
                     <div className="flex items-start">
-                      <span className="mr-2 mt-0.5">⚠️</span>
+                      <img src="/warning.png" alt="Warning" className="w-5 h-5 mr-2 mt-0.5" />
                       <div>
                         <div className="font-semibold text-red-300 mb-1">Registration Error</div>
                         <div className="text-sm">{error}</div>
                         {(error.includes('Google') || error.includes('GitHub')) && (
                           <div className="mt-2 text-xs text-red-300">
-                            💡 Use the social login buttons below instead, or try the login page
+                            <img src="/light-bulb.png" alt="Tip" className="w-4 h-4 inline mr-1" /> Use the social login buttons below instead, or try the login page
                           </div>
                         )}
                         {error.includes('username') && (
                           <div className="mt-2 text-xs text-red-300">
-                            💡 Try adding numbers or special characters to make it unique
+                            <img src="/light-bulb.png" alt="Tip" className="w-4 h-4 inline mr-1" /> Try adding numbers or special characters to make it unique
                           </div>
                         )}
                         {error.includes('already registered') && !error.includes('Google') && !error.includes('GitHub') && (
                           <div className="mt-2 text-xs text-red-300">
-                            💡 Try the <Link href="/login" className="text-cyan-400 hover:text-cyan-300 underline">login page</Link> instead
+                            <img src="/light-bulb.png" alt="Tip" className="w-4 h-4 inline mr-1" /> Try the <Link href="/login" className="text-cyan-400 hover:text-cyan-300 underline">login page</Link> instead
                           </div>
                         )}
                       </div>
@@ -312,12 +319,12 @@ export default function SignupPage() {
                 >
                   {isLoading ? (
                     <span className="flex items-center justify-center">
-                      <span className="animate-spin mr-2">⚡</span>
+                      <img src="/lightning-bolt.png" alt="Creating" className="w-5 h-5 animate-spin mr-2" />
                       CREATING_HERO...
                     </span>
                   ) : (
                     <span className="flex items-center justify-center">
-                      <span className="mr-2">🎮</span>
+                      <img src="/gaming-controller.png" alt="Gaming" className="w-5 h-5 mr-2" />
                       INITIALIZE_HERO
                     </span>
                   )}
@@ -389,7 +396,10 @@ export default function SignupPage() {
           {/* System Info */}
           <div className={`mt-6 text-center text-xs text-gray-500 transition-all duration-1000 delay-700 ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}>
             <div>FIT_HERO Registration System v2.4.1</div>
-            <div className="mt-1">Secure encryption enabled 🛡️</div>
+            <div className="mt-1 flex items-center">
+              Secure encryption enabled 
+              <img src="/shield.png" alt="Secure" className="w-4 h-4 ml-1" />
+            </div>
           </div>
         </div>
       </div>

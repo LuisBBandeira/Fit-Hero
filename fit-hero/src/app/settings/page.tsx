@@ -107,15 +107,15 @@ export default function SettingsPage() {
   ], []);
 
   const fitnessGoals = [
-    { id: 'BUILD_MUSCLE', name: 'BUILD MUSCLE', icon: '💪', description: 'Gain strength and muscle mass' },
-    { id: 'IMPROVE_CARDIO', name: 'IMPROVE CARDIO', icon: '❤️', description: 'Enhance cardiovascular fitness' },
-    { id: 'LOSE_WEIGHT', name: 'LOSE WEIGHT', icon: '📉', description: 'Reduce body fat percentage' },
-    { id: 'GENERAL_FITNESS', name: 'GENERAL FITNESS', icon: '⚡', description: 'Overall health improvement' }
+    { id: 'BUILD_MUSCLE', name: 'BUILD MUSCLE', icon: '/gym.png', description: 'Gain strength and muscle mass' },
+    { id: 'IMPROVE_CARDIO', name: 'IMPROVE CARDIO', icon: '/heart.png', description: 'Enhance cardiovascular fitness' },
+    { id: 'LOSE_WEIGHT', name: 'LOSE WEIGHT', icon: '/chart.png', description: 'Reduce body fat percentage' },
+    { id: 'GENERAL_FITNESS', name: 'GENERAL FITNESS', icon: '/lightning-bolt.png', description: 'Overall health improvement' }
   ];
 
   const trainingLocations = [
-    { id: 'GYM_TRAINING', name: 'GYM TRAINING', icon: '🏋️', description: 'Full equipment access and group motivation' },
-    { id: 'HOME_TRAINING', name: 'HOME TRAINING', icon: '🏠', description: 'Bodyweight and minimal equipment workouts' }
+    { id: 'GYM_TRAINING', name: 'GYM TRAINING', icon: '/gym.png', description: 'Full equipment access and group motivation' },
+    { id: 'HOME_TRAINING', name: 'HOME TRAINING', icon: '/house.png', description: 'Bodyweight and minimal equipment workouts' }
   ];
 
   const commonDietaryRestrictions = [
@@ -325,7 +325,8 @@ export default function SettingsPage() {
         {/* Page Title */}
         <div className={`text-center mb-6 md:mb-8 transition-all duration-1000 delay-500 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
           <div className="text-green-400 text-xl md:text-3xl font-bold mb-2 md:mb-4 animate-pulse">
-            ⚙️ SYSTEM CONFIGURATION
+            <img src="/gear.png" alt="System Configuration" className="w-6 h-6 inline mr-2" />
+            SYSTEM CONFIGURATION
           </div>
           <div className="text-gray-300 text-sm md:text-lg mb-2 md:mb-4">
             <span className="hidden md:inline">Customize your FIT_HERO experience and preferences</span>
@@ -340,8 +341,8 @@ export default function SettingsPage() {
         {/* Loading State */}
         {isLoading && (
           <div className="text-center py-8">
-            <div className="text-green-400 text-xl">
-              <span className="animate-spin mr-2">⚡</span>
+            <div className="text-green-400 text-xl flex items-center justify-center">
+              <img src="/lightning-bolt.png" alt="Loading" className="w-6 h-6 animate-spin mr-2" />
               LOADING PLAYER DATA...
             </div>
           </div>
@@ -367,7 +368,10 @@ export default function SettingsPage() {
           {/* Personal Information Section */}
           <div className={`transition-all duration-1000 delay-600 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
             <div className="border border-green-800 rounded-lg bg-gray-900 p-3 md:p-6">
-              <div className="text-green-400 text-lg md:text-xl font-bold mb-4 md:mb-6">👤 PERSONAL INFORMATION</div>
+              <div className="text-green-400 text-lg md:text-xl font-bold mb-4 md:mb-6 flex items-center gap-2">
+                <img src="/user.png" alt="User" className="w-5 h-5 md:w-6 md:h-6" />
+                PERSONAL INFORMATION
+              </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
                 <div>
@@ -450,7 +454,10 @@ export default function SettingsPage() {
           {/* Character Selection - Full Width */}
           <div className={`transition-all duration-1000 delay-700 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
             <div className="border border-green-800 rounded-lg bg-gray-900 p-3 md:p-6">
-              <div className="text-green-400 text-lg md:text-xl font-bold mb-4 md:mb-6">🎭 CHARACTER SELECTION</div>
+              <div className="text-green-400 text-lg md:text-xl font-bold mb-4 md:mb-6 flex items-center">
+                <img src="/preforming-arts.png" alt="Character Selection" className="w-6 h-6 md:w-8 md:h-8 mr-2" />
+                CHARACTER SELECTION
+              </div>
               
               <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4">
                 {characters.map((character) => (
@@ -499,7 +506,10 @@ export default function SettingsPage() {
             {/* Fitness Goals */}
             <div className={`transition-all duration-1000 delay-800 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
               <div className="border border-green-800 rounded-lg bg-gray-900 p-3 md:p-6 h-full">
-                <div className="text-green-400 text-lg md:text-xl font-bold mb-4 md:mb-6">🎯 FITNESS OBJECTIVES</div>
+                <div className="text-green-400 text-lg md:text-xl font-bold mb-4 md:mb-6 flex items-center">
+                  <img src="/target.png" alt="Fitness Objectives" className="w-6 h-6 md:w-8 md:h-8 mr-2" />
+                  FITNESS OBJECTIVES
+                </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4">
                   {fitnessGoals.map((goal) => (
@@ -512,7 +522,9 @@ export default function SettingsPage() {
                           : 'border-green-800 bg-gray-800 hover:border-green-400'
                       }`}
                     >
-                      <div className="text-2xl md:text-3xl mb-1 md:mb-2">{goal.icon}</div>
+                      <div className="mb-1 md:mb-2 flex justify-center">
+                        <img src={goal.icon} alt={goal.name} className="w-8 h-8 md:w-12 md:h-12" />
+                      </div>
                       <div className="text-green-400 font-bold text-xs md:text-sm mb-1">
                         <span className="hidden md:inline">{goal.name}</span>
                         <span className="md:hidden">
@@ -532,7 +544,10 @@ export default function SettingsPage() {
             {/* Training Environment */}
             <div className={`transition-all duration-1000 delay-900 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
               <div className="border border-green-800 rounded-lg bg-gray-900 p-3 md:p-6 h-full">
-                <div className="text-green-400 text-lg md:text-xl font-bold mb-4 md:mb-6">🏋️ TRAINING ENVIRONMENT</div>
+                <div className="text-green-400 text-lg md:text-xl font-bold mb-4 md:mb-6 flex items-center">
+                  <img src="/gym.png" alt="Training Environment" className="w-6 h-6 md:w-8 md:h-8 mr-2" />
+                  TRAINING ENVIRONMENT
+                </div>
                 
                 <div className="space-y-2 md:space-y-4">
                   {trainingLocations.map((location) => (
@@ -545,7 +560,9 @@ export default function SettingsPage() {
                           : 'border-green-800 bg-gray-800 hover:border-green-400'
                       }`}
                     >
-                      <div className="text-3xl md:text-4xl mb-2 md:mb-3">{location.icon}</div>
+                      <div className="mb-2 md:mb-3 flex justify-center">
+                        <img src={location.icon} alt={location.name} className="w-12 h-12 md:w-16 md:h-16" />
+                      </div>
                       <div className="text-green-400 font-bold text-xs md:text-sm mb-1">
                         <span className="hidden md:inline">{location.name}</span>
                         <span className="md:hidden">
@@ -563,7 +580,10 @@ export default function SettingsPage() {
           {/* Dietary Preferences - Full Width */}
           <div className={`transition-all duration-1000 delay-1000 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
             <div className="border border-green-800 rounded-lg bg-gray-900 p-3 md:p-6">
-              <div className="text-green-400 text-lg md:text-xl font-bold mb-4 md:mb-6">🍽️ DIETARY PREFERENCES</div>
+              <div className="text-green-400 text-lg md:text-xl font-bold mb-4 md:mb-6 flex items-center">
+                <img src="/salad.png" alt="Dietary Preferences" className="w-6 h-6 md:w-8 md:h-8 mr-2" />
+                DIETARY PREFERENCES
+              </div>
               
               <div className="space-y-4 md:space-y-6 md:grid md:grid-cols-2 md:gap-6 md:space-y-0">
                 {/* Forbidden Foods */}
@@ -618,12 +638,12 @@ export default function SettingsPage() {
             >
               {isSaving ? (
                 <span className="flex items-center justify-center">
-                  <span className="animate-spin mr-2">⚡</span>
+                  <img src="/lightning-bolt.png" alt="Saving" className="w-5 h-5 animate-spin mr-2" />
                   <span>SAVING SETTINGS...</span>
                 </span>
               ) : (
                 <span className="flex items-center justify-center">
-                  <span className="mr-2">💾</span>
+                  <img src="/floppy-disk.png" alt="Save" className="w-5 h-5 mr-2" />
                   <span>SAVE CONFIGURATION</span>
                 </span>
               )}

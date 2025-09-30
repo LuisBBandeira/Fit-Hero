@@ -86,13 +86,17 @@ export default function AIServiceDashboard() {
           className="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded-md transition-colors"
           disabled={loading}
         >
-          🔄 Refresh
+          <img src="/gear.png" alt="Refresh" className="w-4 h-4 inline mr-1" />
+          Refresh
         </button>
       </div>
 
       {error && (
         <div className="bg-red-50 border border-red-200 rounded-md p-3 mb-4">
-          <p className="text-red-700 text-sm">❌ {error}</p>
+          <p className="text-red-700 text-sm flex items-center gap-1">
+            <img src="/cross.png" alt="Error" className="w-3 h-3" />
+            {error}
+          </p>
         </div>
       )}
 
@@ -102,7 +106,12 @@ export default function AIServiceDashboard() {
           <div className="flex items-center space-x-3">
             <div className={`w-3 h-3 rounded-full ${status.running ? 'bg-green-500' : 'bg-red-500'}`}></div>
             <span className="font-medium">
-              {status.running ? '✅ Running' : '❌ Stopped'}
+              <div className="flex items-center gap-1">
+                {status.running ? 
+                  <><img src="/checkmark.png" alt="Running" className="w-3 h-3" /> Running</> : 
+                  <><img src="/cross.png" alt="Stopped" className="w-3 h-3" /> Stopped</>
+                }
+              </div>
             </span>
           </div>
 
@@ -130,7 +139,17 @@ export default function AIServiceDashboard() {
                   : 'bg-green-600 hover:bg-green-700 text-white'
               }`}
             >
-              {loading ? '⏳ Starting...' : '▶️ Start Service'}
+              {loading ? (
+                <>
+                  <img src="/hourglass.png" alt="Loading" className="w-4 h-4 inline mr-1" />
+                  Starting...
+                </>
+              ) : (
+                <>
+                  <img src="/rocket.png" alt="Start" className="w-4 h-4 inline mr-1" />
+                  Start Service
+                </>
+              )}
             </button>
 
             <button
@@ -142,13 +161,26 @@ export default function AIServiceDashboard() {
                   : 'bg-red-600 hover:bg-red-700 text-white'
               }`}
             >
-              {loading ? '⏳ Stopping...' : '⏹️ Stop Service'}
+              {loading ? (
+                <>
+                  <img src="/hourglass.png" alt="Loading" className="w-4 h-4 inline mr-1" />
+                  Stopping...
+                </>
+              ) : (
+                <>
+                  <img src="/prohibited.png" alt="Stop" className="w-4 h-4 inline mr-1" />
+                  Stop Service
+                </>
+              )}
             </button>
           </div>
 
           {/* Auto-start Info */}
           <div className="bg-blue-50 border border-blue-200 rounded-md p-3 mt-4">
-            <h3 className="text-sm font-medium text-blue-800 mb-1">ℹ️ Auto-Start Enabled</h3>
+            <h3 className="text-sm font-medium text-blue-800 mb-1 flex items-center">
+              <img src="/light-bulb.png" alt="Info" className="w-4 h-4 mr-1" />
+              Auto-Start Enabled
+            </h3>
             <p className="text-xs text-blue-700">
               The AI service will automatically start when needed and stop after 5 minutes of inactivity.
             </p>

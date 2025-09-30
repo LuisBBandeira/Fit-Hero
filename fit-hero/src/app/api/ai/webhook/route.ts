@@ -104,7 +104,7 @@ async function handleWorkoutPlanGenerated(playerId: string, data: any) {
 async function handleMealPlanGenerated(playerId: string, data: any) {
   console.log(`✅ Meal plan generated for player ${playerId}`);
   
-  console.log(`🍽️ Meal plan data:`, {
+  console.log(`MEAL Meal plan data:`, {
     month: data?.month,
     year: data?.year,
     daily_calories: data?.daily_calories,

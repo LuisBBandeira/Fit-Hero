@@ -55,7 +55,11 @@ export default function SubtleNotificationSystem() {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
               <span className="text-sm">
-                {notification.type === 'success' ? '✅' : 'ℹ️'}
+                {notification.type === 'success' ? (
+                  <img src="/star.png" alt="Success" className="w-4 h-4" />
+                ) : (
+                  <img src="/light-bulb.png" alt="Info" className="w-4 h-4" />
+                )}
               </span>
               <span className="text-sm font-medium">{notification.message}</span>
             </div>
@@ -63,7 +67,7 @@ export default function SubtleNotificationSystem() {
               onClick={() => removeNotification(notification.id)}
               className="text-gray-400 hover:text-white transition-colors ml-3 text-xs"
             >
-              ✕
+              <img src="/cross.png" alt="Close" className="w-3 h-3" />
             </button>
           </div>
         </div>

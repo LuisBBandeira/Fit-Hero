@@ -84,7 +84,7 @@ export default function AIActivationWidget() {
     return (
       <div className="border border-green-800 rounded-lg bg-gray-900 p-6 animate-pulse">
         <div className="flex items-center justify-center">
-          <div className="animate-spin mr-3">⚡</div>
+          <img src="/lightning-bolt.png" alt="Loading" className="w-6 h-6 animate-spin mr-3" />
           <span className="text-green-400">Checking AI Service Status...</span>
         </div>
       </div>
@@ -94,7 +94,10 @@ export default function AIActivationWidget() {
   if (!status?.hasPlayer) {
     return (
       <div className="border border-yellow-600 rounded-lg bg-yellow-900/20 p-6">
-        <div className="text-yellow-400 font-bold mb-2">⚠️ PLAYER PROFILE REQUIRED</div>
+        <div className="text-yellow-400 font-bold mb-2 flex items-center">
+          <img src="/warning.png" alt="Warning" className="w-5 h-5 mr-2" />
+          PLAYER PROFILE REQUIRED
+        </div>
         <div className="text-yellow-300 text-sm">
           Create your character profile first to activate AI services.
         </div>
@@ -106,13 +109,17 @@ export default function AIActivationWidget() {
     <div className="border border-green-800 rounded-lg bg-gray-900 p-6">
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
-        <div className="text-green-400 font-bold text-lg">🤖 AI SERVICE STATUS</div>
+        <div className="text-green-400 font-bold text-lg flex items-center gap-2">
+          <img src="/robot.png" alt="AI" className="w-5 h-5" />
+          AI SERVICE STATUS
+        </div>
         <button
           onClick={checkActivationStatus}
           disabled={isLoading}
           className="text-cyan-400 hover:text-cyan-300 text-sm transition-colors"
         >
-          🔄 Refresh
+          <img src="/gear.png" alt="Refresh" className="w-4 h-4 inline mr-1" />
+          Refresh
         </button>
       </div>
 
@@ -121,7 +128,7 @@ export default function AIActivationWidget() {
         {status?.aiActivated ? (
           <div className="bg-green-900/30 border border-green-600 rounded p-4">
             <div className="flex items-center mb-2">
-              <span className="text-green-400 mr-2">✅</span>
+              <img src="/checkmark.png" alt="Running" className="w-4 h-4 mr-2" />
               <span className="text-green-300 font-semibold">AI Service Active</span>
             </div>
             <div className="text-green-200 text-sm">
@@ -132,7 +139,12 @@ export default function AIActivationWidget() {
             <div className="mt-3 grid grid-cols-2 gap-4 text-xs">
               <div className={`p-2 rounded ${status.plans?.hasWorkoutPlan ? 'bg-green-800/30 text-green-300' : 'bg-red-800/30 text-red-300'}`}>
                 <div className="font-semibold">Workout Plan</div>
-                <div>{status.plans?.hasWorkoutPlan ? '✅ Generated' : '❌ Missing'}</div>
+                <div className="flex items-center gap-1">
+                  {status.plans?.hasWorkoutPlan ? 
+                    <><img src="/checkmark.png" alt="Generated" className="w-3 h-3" /> Generated</> : 
+                    <><img src="/cross.png" alt="Missing" className="w-3 h-3" /> Missing</>
+                  }
+                </div>
                 {status.plans?.latestWorkoutPlan && (
                   <div className="text-xs mt-1 text-gray-400">
                     {status.plans.latestWorkoutPlan.month}/{status.plans.latestWorkoutPlan.year}
@@ -142,7 +154,12 @@ export default function AIActivationWidget() {
               
               <div className={`p-2 rounded ${status.plans?.hasMealPlan ? 'bg-green-800/30 text-green-300' : 'bg-red-800/30 text-red-300'}`}>
                 <div className="font-semibold">Meal Plan</div>
-                <div>{status.plans?.hasMealPlan ? '✅ Generated' : '❌ Missing'}</div>
+                <div className="flex items-center gap-1">
+                  {status.plans?.hasMealPlan ? 
+                    <><img src="/checkmark.png" alt="Generated" className="w-3 h-3" /> Generated</> : 
+                    <><img src="/cross.png" alt="Missing" className="w-3 h-3" /> Missing</>
+                  }
+                </div>
                 {status.plans?.latestMealPlan && (
                   <div className="text-xs mt-1 text-gray-400">
                     {status.plans.latestMealPlan.month}/{status.plans.latestMealPlan.year}
@@ -154,7 +171,7 @@ export default function AIActivationWidget() {
         ) : (
           <div className="bg-yellow-900/30 border border-yellow-600 rounded p-4">
             <div className="flex items-center mb-2">
-              <span className="text-yellow-400 mr-2">⚠️</span>
+              <img src="/warning.png" alt="Warning" className="w-5 h-5 text-yellow-400 mr-2" />
               <span className="text-yellow-300 font-semibold">AI Service Not Activated</span>
             </div>
             <div className="text-yellow-200 text-sm mb-3">
@@ -181,12 +198,12 @@ export default function AIActivationWidget() {
             >
               {isActivating ? (
                 <span className="flex items-center justify-center">
-                  <span className="animate-spin mr-2">⚡</span>
+                  <img src="/lightning-bolt.png" alt="Activating" className="w-5 h-5 animate-spin mr-2" />
                   Activating AI...
                 </span>
               ) : (
                 <span className="flex items-center justify-center">
-                  <span className="mr-2">🚀</span>
+                  <img src="/rocket.png" alt="Launch" className="w-5 h-5 mr-2" />
                   Activate AI Service
                 </span>
               )}
@@ -198,7 +215,7 @@ export default function AIActivationWidget() {
         {error && (
           <div className="bg-red-900/30 border border-red-600 rounded p-4">
             <div className="flex items-start">
-              <span className="text-red-400 mr-2 mt-0.5">❌</span>
+              <img src="/cross.png" alt="Error" className="w-4 h-4 mr-2 mt-0.5" />
               <div>
                 <div className="text-red-300 font-semibold">Error</div>
                 <div className="text-red-200 text-sm">{error}</div>
@@ -211,7 +228,7 @@ export default function AIActivationWidget() {
         {success && (
           <div className="bg-green-900/30 border border-green-600 rounded p-4">
             <div className="flex items-start">
-              <span className="text-green-400 mr-2 mt-0.5">✅</span>
+              <img src="/checkmark.png" alt="Success" className="w-4 h-4 mr-2 mt-0.5" />
               <div>
                 <div className="text-green-300 font-semibold">Success</div>
                 <div className="text-green-200 text-sm">{success}</div>
@@ -240,12 +257,12 @@ export default function AIActivationWidget() {
             >
               {isActivating ? (
                 <span className="flex items-center justify-center">
-                  <span className="animate-spin mr-2">⚡</span>
+                  <img src="/lightning-bolt.png" alt="Regenerating" className="w-5 h-5 animate-spin mr-2" />
                   Regenerating...
                 </span>
               ) : (
                 <span className="flex items-center justify-center">
-                  <span className="mr-2">🔄</span>
+                  <img src="/gear.png" alt="Refresh" className="w-5 h-5 mr-2" />
                   Regenerate AI Plans
                 </span>
               )}

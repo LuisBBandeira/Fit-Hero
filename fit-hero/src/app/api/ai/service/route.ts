@@ -67,7 +67,7 @@ export async function POST(request: NextRequest) {
 
     switch (action) {
       case 'start':
-        console.log('🚀 Starting AI service via API request...')
+        console.log('ROCKET Starting AI service via API request...')
         result = await aiServiceManager.startAIService()
         message = result ? 'AI service started successfully' : 'Failed to start AI service'
         break

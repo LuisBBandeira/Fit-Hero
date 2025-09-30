@@ -80,7 +80,7 @@ export default function SmartPlanLoader({
     return loadingComponent || (
       <div className="border border-green-800 rounded-lg bg-gray-900 p-6 animate-pulse">
         <div className="flex items-center justify-center space-x-3">
-          <div className="animate-spin text-green-400">⚡</div>
+          <img src="/lightning-bolt.png" alt="Loading" className="w-6 h-6 animate-spin text-green-400" />
           <div className="text-green-400">
             Generating your personalized {planType} plan...
           </div>

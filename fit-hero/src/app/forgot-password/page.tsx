@@ -109,7 +109,8 @@ export default function ForgotPasswordPage() {
             <div className="p-6">
               <div className="mb-6">
                 <div className="text-green-400 text-xl font-bold mb-2 animate-pulse">
-                  🔓 PASSWORD RECOVERY
+                  <img src="/lock-unlocked.png" alt="Recovery" className="w-6 h-6 inline mr-2" />
+                  PASSWORD RECOVERY
                 </div>
                 <div className="text-gray-300 text-sm mb-4">
                   Enter your email to receive password reset instructions
@@ -137,7 +138,7 @@ export default function ForgotPasswordPage() {
                 {error && (
                   <div className="bg-red-900/30 border border-red-600 text-red-400 px-4 py-3 rounded mb-4">
                     <div className="flex items-start">
-                      <span className="mr-2 mt-0.5">⚠️</span>
+                      <img src="/warning.png" alt="Warning" className="w-4 h-4 mr-2 mt-0.5" />
                       <div>
                         <div className="font-semibold text-red-300 mb-1">Recovery Error</div>
                         <div className="text-sm">{error}</div>
@@ -149,7 +150,7 @@ export default function ForgotPasswordPage() {
                 {success && (
                   <div className="bg-green-900/30 border border-green-600 text-green-400 px-4 py-3 rounded mb-4">
                     <div className="flex items-start">
-                      <span className="mr-2 mt-0.5">✅</span>
+                      <img src="/checkmark.png" alt="Success" className="w-4 h-4 mr-2 mt-0.5" />
                       <div>
                         <div className="font-semibold text-green-300 mb-1">Recovery Initiated</div>
                         <div className="text-sm">{success}</div>
@@ -165,12 +166,12 @@ export default function ForgotPasswordPage() {
                 >
                   {isLoading ? (
                     <span className="flex items-center justify-center">
-                      <span className="animate-spin mr-2">🔄</span>
+                      <img src="/gear.png" alt="Loading" className="w-5 h-5 animate-spin mr-2" />
                       PROCESSING_RECOVERY...
                     </span>
                   ) : (
                     <span className="flex items-center justify-center">
-                      <span className="mr-2">📧</span>
+                      <img src="/mail.png" alt="Email" className="w-5 h-5 mr-2" />
                       SEND_RECOVERY_EMAIL
                     </span>
                   )}
@@ -206,7 +207,10 @@ export default function ForgotPasswordPage() {
           {/* System Info */}
           <div className={`mt-6 text-center text-xs text-gray-500 transition-all duration-1000 delay-700 ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}>
             <div>FIT_HERO Password Recovery System v2.4.1</div>
-            <div className="mt-1">Secure recovery protocol active 🔒</div>
+            <div className="mt-1 flex items-center">
+              Secure recovery protocol active 
+              <img src="/lock-locked.png" alt="Secure" className="w-4 h-4 ml-1" />
+            </div>
           </div>
         </div>
       </div>

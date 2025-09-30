@@ -213,7 +213,7 @@ export class TodaysPlanService {
             id: 'todays_workout',
             name: todaysWorkout.name || `Day ${dayOfMonth} Workout`,
             exercises: exercises,
-            icon: '🏋️'
+            icon: '/gym.png'
           }];
         }
       

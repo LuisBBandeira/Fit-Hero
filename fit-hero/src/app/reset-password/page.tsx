@@ -142,7 +142,9 @@ function ResetPasswordForm() {
     return (
       <div className="min-h-screen bg-black text-green-400 font-mono flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin text-4xl mb-4">🔄</div>
+          <div className="mb-4 flex justify-center">
+            <img src="/gear.png" alt="Loading" className="w-16 h-16 animate-spin" />
+          </div>
           <div>Validating reset link...</div>
         </div>
       </div>
@@ -174,7 +176,10 @@ function ResetPasswordForm() {
 
               <div className="p-6">
                 <div className="text-red-400 text-xl font-bold mb-4 animate-pulse">
-                  ❌ INVALID RESET LINK
+                  <div className="flex items-center gap-2">
+                    <img src="/cross.png" alt="Error" className="w-4 h-4" />
+                    INVALID RESET LINK
+                  </div>
                 </div>
                 <div className="text-gray-300 text-sm mb-6">
                   {error}
@@ -184,7 +189,8 @@ function ResetPasswordForm() {
                     href="/forgot-password"
                     className="block w-full bg-yellow-600 hover:bg-yellow-500 text-black font-bold py-3 rounded transition-all duration-300 text-center"
                   >
-                    🔄 REQUEST_NEW_RESET
+                    <img src="/gear.png" alt="Request" className="w-5 h-5 inline mr-2" />
+                    REQUEST_NEW_RESET
                   </Link>
                   <Link 
                     href="/login"
@@ -265,7 +271,8 @@ function ResetPasswordForm() {
             <div className="p-6">
               <div className="mb-6">
                 <div className="text-green-400 text-xl font-bold mb-2 animate-pulse">
-                  🔑 SET NEW PASSWORD
+                  <img src="/lock-unlocked.png" alt="Password" className="w-6 h-6 inline mr-2" />
+                  SET NEW PASSWORD
                 </div>
                 <div className="text-gray-300 text-sm mb-4">
                   Enter your new secure password
@@ -327,7 +334,7 @@ function ResetPasswordForm() {
                 {error && (
                   <div className="bg-red-900/30 border border-red-600 text-red-400 px-4 py-3 rounded mb-4">
                     <div className="flex items-start">
-                      <span className="mr-2 mt-0.5">⚠️</span>
+                      <img src="/warning.png" alt="Warning" className="w-4 h-4 mr-2 mt-0.5" />
                       <div>
                         <div className="font-semibold text-red-300 mb-1">Reset Error</div>
                         <div className="text-sm">{error}</div>
@@ -339,7 +346,7 @@ function ResetPasswordForm() {
                 {success && (
                   <div className="bg-green-900/30 border border-green-600 text-green-400 px-4 py-3 rounded mb-4">
                     <div className="flex items-start">
-                      <span className="mr-2 mt-0.5">✅</span>
+                      <img src="/checkmark.png" alt="Success" className="w-4 h-4 mr-2 mt-0.5" />
                       <div>
                         <div className="font-semibold text-green-300 mb-1">Password Reset</div>
                         <div className="text-sm">{success}</div>
@@ -355,12 +362,12 @@ function ResetPasswordForm() {
                 >
                   {isLoading ? (
                     <span className="flex items-center justify-center">
-                      <span className="animate-spin mr-2">🔄</span>
+                      <img src="/gear.png" alt="Loading" className="w-5 h-5 animate-spin mr-2" />
                       UPDATING_PASSWORD...
                     </span>
                   ) : (
                     <span className="flex items-center justify-center">
-                      <span className="mr-2">🔐</span>
+                      <img src="/lock-locked.png" alt="Reset" className="w-5 h-5 mr-2" />
                       UPDATE_PASSWORD
                     </span>
                   )}
@@ -372,7 +379,10 @@ function ResetPasswordForm() {
           {/* System Info */}
           <div className={`mt-6 text-center text-xs text-gray-500 transition-all duration-1000 delay-700 ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}>
             <div>FIT_HERO Password Reset System v2.4.1</div>
-            <div className="mt-1">Secure reset protocol active 🔒</div>
+            <div className="mt-1 flex items-center">
+              Secure reset protocol active 
+              <img src="/lock-locked.png" alt="Secure" className="w-4 h-4 ml-1" />
+            </div>
           </div>
         </div>
       </div>
@@ -385,7 +395,9 @@ export default function ResetPasswordPage() {
     <Suspense fallback={
       <div className="min-h-screen bg-black text-green-400 font-mono flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin text-4xl mb-4">🔄</div>
+          <div className="mb-4 flex justify-center">
+            <img src="/gear.png" alt="Loading" className="w-16 h-16 animate-spin" />
+          </div>
           <div>Loading...</div>
         </div>
       </div>

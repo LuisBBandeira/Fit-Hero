@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
       preferences: requestData.preferred_activities || []
     }
 
-    console.log('🎯 Monthly plan request:', monthlyPlanRequest)
+    console.log('TARGET Monthly plan request:', monthlyPlanRequest)
 
     // Call the Monthly Plan Service
     const monthlyPlanService = new MonthlyPlanService()

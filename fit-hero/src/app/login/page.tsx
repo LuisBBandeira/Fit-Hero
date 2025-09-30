@@ -132,7 +132,8 @@ export default function LoginPage() {
             <div className="p-6">
               <div className="mb-6">
                 <div className="text-green-400 text-xl font-bold mb-2 animate-pulse">
-                  🔐 USER AUTHENTICATION
+                  <img src="/lock-locked.png" alt="Authentication" className="w-6 h-6 inline mr-2" />
+                  USER AUTHENTICATION
                 </div>
                 <div className="text-gray-300 text-sm mb-4">
                   Enter your credentials to access the fitness matrix
@@ -176,13 +177,13 @@ export default function LoginPage() {
                 {error && (
                   <div className="bg-red-900/30 border border-red-600 text-red-400 px-4 py-3 rounded mb-4">
                     <div className="flex items-start">
-                      <span className="mr-2 mt-0.5">⚠️</span>
+                      <img src="/warning.png" alt="Warning" className="w-5 h-5 mr-2 mt-0.5" />
                       <div>
                         <div className="font-semibold text-red-300 mb-1">Authentication Error</div>
                         <div className="text-sm">{error}</div>
                         {(error.includes('Google') || error.includes('GitHub')) && (
                           <div className="mt-2 text-xs text-red-300">
-                            💡 Use the social login buttons below instead
+                            <img src="/light-bulb.png" alt="Tip" className="w-4 h-4 inline mr-1" />                             <img src="/light-bulb.png" alt="Tip" className="w-4 h-4 inline mr-1" /> Use the social login buttons below instead
                           </div>
                         )}
                       </div>
@@ -197,12 +198,12 @@ export default function LoginPage() {
                 >
                   {isLoading ? (
                     <span className="flex items-center justify-center">
-                      <span className="animate-spin mr-2">⚡</span>
+                      <img src="/lightning-bolt.png" alt="Loading" className="w-5 h-5 animate-spin mr-2" />
                       AUTHENTICATING...
                     </span>
                   ) : (
                     <span className="flex items-center justify-center">
-                      <span className="mr-2">🚀</span>
+                      <img src="/rocket.png" alt="Login" className="w-5 h-5 mr-2" />
                       EXECUTE_LOGIN
                     </span>
                   )}
@@ -283,7 +284,10 @@ export default function LoginPage() {
           {/* System Info */}
           <div className={`mt-6 text-center text-xs text-gray-500 transition-all duration-1000 delay-700 ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}>
             <div>FIT_HERO Authentication System v2.4.1</div>
-            <div className="mt-1">Secure connection established 🔒</div>
+            <div className="mt-1 flex items-center">
+              Secure connection established 
+              <img src="/lock-locked.png" alt="Secure" className="w-4 h-4 ml-1" />
+            </div>
           </div>
         </div>
       </div>

@@ -46,13 +46,13 @@ export default function AINotification({ show, onClose, type, title, message }: 
   const getIcon = () => {
     switch (type) {
       case 'success':
-        return '✅';
+        return <img src="/checkmark.png" alt="Success" className="w-5 h-5" />;
       case 'error':
-        return '❌';
+        return <img src="/cross.png" alt="Error" className="w-5 h-5" />;
       case 'info':
-        return 'ℹ️';
+        return <img src="/light-bulb.png" alt="Info" className="w-5 h-5" />;
       default:
-        return '🤖';
+        return <img src="/robot.png" alt="AI" className="w-5 h-5" />;
     }
   };
 
@@ -63,7 +63,7 @@ export default function AINotification({ show, onClose, type, title, message }: 
       <div className={`border rounded-lg p-4 max-w-sm shadow-lg ${getStyles()}`}>
         <div className="flex items-start justify-between">
           <div className="flex items-start space-x-3">
-            <span className="text-xl">{getIcon()}</span>
+            {getIcon()}
             <div className="flex-1">
               <div className="font-bold text-sm mb-1">{title}</div>
               <div className="text-xs leading-relaxed">{message}</div>
@@ -76,7 +76,7 @@ export default function AINotification({ show, onClose, type, title, message }: 
             }}
             className="text-gray-400 hover:text-white transition-colors ml-2"
           >
-            ✕
+            <img src="/cross.png" alt="Close" className="w-3 h-3" />
           </button>
         </div>
       </div>
